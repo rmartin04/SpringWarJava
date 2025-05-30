@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="assets/css/login-style.css">
+</head>
+
+<body>
+    <h2>¡Logueate y batalla con nosotros!</h2>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form action="/login" method="POST">
+                <h1>Crear una cuenta</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt=""></a>
+                    <a href="#" class="social"><img src="assets/img/brand-google.svg" alt=""></a>
+                    <a href="#" class="social"><img src="assets/img/brand-linkedin.svg" alt=""></a>
+                </div>
+                <span>O usa una cuenta para registrarte</span>
+                <input type="text" id="usuario" name="usuario" placeholder="Usuario" />
+                <input type="email" id="email" name="email" placeholder="Email" />
+                <input type="password" id="contrasenia" name="contrasenia" placeholder="Contraseña" />
+                <input type="hidden" id="crearCuenta" name="crearCuenta" value="crearCuenta"/>
+                <button>Registrarte</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="/login" method="POST">
+                <h1>Iniciar sesión</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt=""></a>
+                    <a href="#" class="social"><img src="assets/img/brand-google.svg" alt=""></a>
+                    <a href="#" class="social"><img src="assets/img/brand-linkedin.svg" alt=""></a>
+                </div>
+                <span>O usa tus cuentas</span>
+                <input type="email" id="email" name="email" placeholder="Email" />
+                <input type="password" id="contrasenia" name="contrasenia" placeholder="Contraseña" />
+                <input type="hidden" id="iniciarSesion" name="iniciarSesion" value="iniciarSesion"/>
+                <a href="#">¿Olvidaste la contraseña?</a>
+                <button>Entrar</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>¡Bienvenido de nuevo!</h1>
+                    <p>Manténte conectado con nosotros para acceder a tu área personal</p>
+                    <button class="ghost" id="signIn">Entrar</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>¡Hey, amigo!</h1>
+                    <p>Entra a tu área personal y mira todos los detalles de tu cuenta</p>
+                    <button class="ghost" id="signUp">Entrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            Creado con <i class="fa fa-heart"></i> por
+            <a target="_blank" href="https://daroscode.es">&copy; 2025. Samuel y Ricardo - Java war web</a>
+            - Todos los derechos reservados
+        </p>
+    </footer>
+
+    <script src="assets/js/login.js"></script>
+
+</body>
+
+</html>
