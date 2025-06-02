@@ -3,9 +3,7 @@ package com.warsrpingbootjava.WarSpringJava.clases;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.javawarweb.excepciones.FuerzaGuerreroException;
-import es.javawarweb.excepciones.FuerzaYResistenciaException;
-import es.javawarweb.excepciones.ResistenciaGuerreroException;
+
 
 public abstract class Guerrero{
     private static final Logger logger = LoggerFactory.getLogger(Guerrero.class);

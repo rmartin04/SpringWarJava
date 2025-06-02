@@ -1,5 +1,7 @@
 package com.warsrpingbootjava.WarSpringJava.entities;
 
+import com.warsrpingbootjava.WarSpringJava.clases.Guerrero;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
