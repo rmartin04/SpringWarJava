@@ -5,14 +5,15 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.javawarweb.clases.Guerrero;
-import es.javawarweb.clases.VehiculosGuerra;
-import es.javawarweb.excepciones.AtaqueDefensaException;
-import es.javawarweb.excepciones.AtaqueMuyPoderosoException;
-import es.javawarweb.excepciones.DefensaMuyPoderosaException;
-import es.javawarweb.excepciones.EmbarcarGuerrerosDiferentesException;
-import es.javawarweb.excepciones.EmbarcarGuerrerosException;
-import es.javawarweb.excepciones.VidaMaximaPermitidaException;
+import com.warsrpingbootjava.WarSpringJava.clases.Guerrero;
+import com.warsrpingbootjava.WarSpringJava.clases.VehiculosGuerra;
+import com.warsrpingbootjava.WarSpringJava.excepciones.AtaqueDefensaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.AtaqueMuyPoderosoException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.DefensaMuyPoderosaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosDiferentesException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

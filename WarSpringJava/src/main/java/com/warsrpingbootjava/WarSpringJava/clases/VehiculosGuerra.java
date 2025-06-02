@@ -7,11 +7,12 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.javawarweb.excepciones.AtaqueDefensaException;
-import es.javawarweb.excepciones.AtaqueMuyPoderosoException;
-import es.javawarweb.excepciones.DefensaMuyPoderosaException;
-import es.javawarweb.excepciones.EmbarcarGuerrerosException;
-import es.javawarweb.excepciones.VidaMaximaPermitidaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.AtaqueDefensaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.AtaqueMuyPoderosoException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.DefensaMuyPoderosaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
+
 import es.javawarweb.interfaces.Tripulable;
 
 public abstract class VehiculosGuerra implements Tripulable {

@@ -1,9 +1,10 @@
 package com.warsrpingbootjava.WarSpringJava.entities;
 
-import es.javawarweb.clases.Guerrero;
-import es.javawarweb.excepciones.FuerzaGuerreroException;
-import es.javawarweb.excepciones.FuerzaYResistenciaException;
-import es.javawarweb.excepciones.ResistenciaGuerreroException;
+import com.warsrpingbootjava.WarSpringJava.clases.Guerrero;
+import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -3,6 +3,10 @@ package com.warsrpingbootjava.WarSpringJava.clases;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
+
 
 
 public abstract class Guerrero{

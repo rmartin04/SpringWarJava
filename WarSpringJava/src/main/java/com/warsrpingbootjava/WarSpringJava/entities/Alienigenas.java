@@ -1,6 +1,9 @@
 package com.warsrpingbootjava.WarSpringJava.entities;
 
 import com.warsrpingbootjava.WarSpringJava.clases.Guerrero;
+import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
