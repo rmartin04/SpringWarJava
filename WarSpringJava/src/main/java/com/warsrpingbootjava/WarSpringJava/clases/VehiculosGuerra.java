@@ -12,8 +12,9 @@ import com.warsrpingbootjava.WarSpringJava.excepciones.AtaqueMuyPoderosoExceptio
 import com.warsrpingbootjava.WarSpringJava.excepciones.DefensaMuyPoderosaException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
+import com.warsrpingbootjava.WarSpringJava.interfaces.Tripulable;
 
-import es.javawarweb.interfaces.Tripulable;
+
 
 public abstract class VehiculosGuerra implements Tripulable {
 
