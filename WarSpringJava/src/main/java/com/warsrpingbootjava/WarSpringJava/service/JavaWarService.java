@@ -7,11 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.warsrpingbootjava.WarSpringJava.clases.Guerrero;
-import com.warsrpingbootjava.WarSpringJava.entities.Alienigenas;
-import com.warsrpingbootjava.WarSpringJava.entities.Humanos;
-import com.warsrpingbootjava.WarSpringJava.entities.NaveDestructora;
-import com.warsrpingbootjava.WarSpringJava.entities.Tanque;
+import com.warsrpingbootjava.WarSpringJava.beans.AlienigenasBean;
+import com.warsrpingbootjava.WarSpringJava.beans.HumanosBean;
+import com.warsrpingbootjava.WarSpringJava.beans.NaveDestructoraBean;
+import com.warsrpingbootjava.WarSpringJava.beans.TanqueBean;
+import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
 import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
@@ -50,29 +50,29 @@ public class JavaWarService {
 	    // Método que crea los humanos
 	    private List<Guerrero> crearHumanos()
 	            throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException, Exception {
-	        return crearGuerreros(() -> new Humanos("Soldado", 6, 4), 10);
+	        return crearGuerreros(() -> new HumanosBean("Soldado", 6, 4), 10);
 	    }
 
 	    // Método que crea los alienigenas
 	    private List<Guerrero> crearAlienigenas()
 	            throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException, Exception {
-	        return crearGuerreros(() -> new Alienigenas("Bicho", 6, 4), 10);
+	        return crearGuerreros(() -> new AlienigenasBean("Bicho", 6, 4), 10);
 	    }
 
 	    // Método que crea el tanque
-	    private Tanque crearTanque()
+	    private TanqueBean crearTanque()
 	            throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException, Exception {
 	        List<Guerrero> listadoHumanos = crearHumanos();
-	        Tanque tanque = new Tanque("el tigre real", "T-34", 6, 3, listadoHumanos);
+	        TanqueBean tanque = new TanqueBean("el tigre real", "T-34", 6, 3, listadoHumanos);
 	        logger.info(tanque.toString());
 	        return tanque;
 	    }
 
 	    // Método que crea la nave
-	    private NaveDestructora crearNave()
+	    private NaveDestructoraBean crearNave()
 	            throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException, Exception {
 	        List<Guerrero> listadoAlienigenas = crearAlienigenas();
-	        NaveDestructora nave = new NaveDestructora("Nostromo", "U.S.C.S.S", 6, 4, listadoAlienigenas);
+	        NaveDestructoraBean nave = new NaveDestructoraBean("Nostromo", "U.S.C.S.S", 6, 4, listadoAlienigenas);
 	        logger.info(nave.toString());
 	        return nave;
 	    }

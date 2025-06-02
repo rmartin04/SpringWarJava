@@ -7,7 +7,10 @@ import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 
@@ -18,7 +21,11 @@ public  class Guerrero{
 
     private static int contador; 
     // Atributos que van a tener y heredar los guerreros
-    @Id
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Long id;
+	
     private int idGuerrero;
     private String tipoGuerrero;
     private int fuerzaBase;

@@ -14,9 +14,11 @@ import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosExceptio
 import com.warsrpingbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
 import com.warsrpingbootjava.WarSpringJava.interfaces.Tripulable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 
 @Entity
@@ -25,7 +27,11 @@ public  class VehiculosGuerra implements Tripulable {
 
     private static final Logger logger = LoggerFactory.getLogger(VehiculosGuerra.class);
 
-    // Atributos de la clase Vehiculos de guerra
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Long id;
+	
     private int puntosVida;
     private String nombreVehiculo;
     private String tipoVehiculo;
