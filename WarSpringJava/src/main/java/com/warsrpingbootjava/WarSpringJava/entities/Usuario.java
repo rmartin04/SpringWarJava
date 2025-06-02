@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_USUARIOS_WAR")
-public class UsuarioEntity {
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,19 +25,19 @@ public class UsuarioEntity {
 	private String contrasenia;
 
 	// Constructores
-	public UsuarioEntity() {}
+	public Usuario() {}
 	
-	public UsuarioEntity(Long id) {
+	public Usuario(Long id) {
 		this.id = id;
 	}
 	
-	public UsuarioEntity(String email, String contrasenia) {
+	public Usuario(String email, String contrasenia) {
 		super();
 		this.email = email;
 		this.contrasenia = contrasenia;
 	}
 	
-	public UsuarioEntity(String email, String contrasenia, String usuario) {
+	public Usuario(String email, String contrasenia, String usuario) {
 		this(email, contrasenia);
 		this.usuario = usuario;
 	}
