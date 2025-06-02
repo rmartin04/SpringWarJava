@@ -2,9 +2,11 @@ package com.warsrpingbootjava.WarSpringJava.beans;
 
 import org.springframework.stereotype.Component;
 
-import jakarta.persistence.Column;
+import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
+
+
 @Component
-public class AlienigenasBean {
+public class AlienigenasBean extends Guerrero{
 	
 	private Long id;
     private String tipoGuerrero;

@@ -1,4 +1,4 @@
-package com.warsrpingbootjava.WarSpringJava.clases;
+package com.warsrpingbootjava.WarSpringJava.entities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,13 +7,18 @@ import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 
-public abstract class Guerrero{
+@Entity
+
+public  class Guerrero{
     private static final Logger logger = LoggerFactory.getLogger(Guerrero.class);
 
     private static int contador; 
     // Atributos que van a tener y heredar los guerreros
+    @Id
     private int idGuerrero;
     private String tipoGuerrero;
     private int fuerzaBase;

@@ -1,4 +1,4 @@
-package com.warsrpingbootjava.WarSpringJava.clases;
+package com.warsrpingbootjava.WarSpringJava.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,14 @@ import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosExceptio
 import com.warsrpingbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
 import com.warsrpingbootjava.WarSpringJava.interfaces.Tripulable;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 
-public abstract class VehiculosGuerra implements Tripulable {
+@Entity
+
+public  class VehiculosGuerra implements Tripulable {
 
     private static final Logger logger = LoggerFactory.getLogger(VehiculosGuerra.class);
 

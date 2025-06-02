@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.warsrpingbootjava.WarSpringJava.clases.Guerrero;
-import jakarta.persistence.Column;
+import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
 @Component
 public class TanqueBean {
 	
@@ -18,6 +17,20 @@ public class TanqueBean {
 	    private List<Guerrero> guerreros;
 	    
 		public TanqueBean() {}
+		
+		
+
+		public TanqueBean(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
+				List<Guerrero> guerreros) {
+			super();
+			this.nombreVehiculo = nombreVehiculo;
+			this.tipoVehiculo = tipoVehiculo;
+			this.ataqueBase = ataqueBase;
+			this.defensaBase = defensaBase;
+			this.guerreros = guerreros;
+		}
+
+
 
 		public TanqueBean(int puntosVida, String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
 				List<Guerrero> guerreros) {

@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.warsrpingbootjava.WarSpringJava.clases.Guerrero;
-import jakarta.persistence.Column;
+import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
 @Component
 public class NaveDestructoraBean {
 	
@@ -19,6 +18,21 @@ public class NaveDestructoraBean {
 
 
 	    public NaveDestructoraBean() {}
+	    
+	    
+
+
+		public NaveDestructoraBean(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
+				List<Guerrero> guerreros) {
+			super();
+			this.nombreVehiculo = nombreVehiculo;
+			this.tipoVehiculo = tipoVehiculo;
+			this.ataqueBase = ataqueBase;
+			this.defensaBase = defensaBase;
+			this.guerreros = guerreros;
+		}
+
+
 
 
 		public NaveDestructoraBean(int puntosVida, String nombreVehiculo, String tipoVehiculo, int ataqueBase,
