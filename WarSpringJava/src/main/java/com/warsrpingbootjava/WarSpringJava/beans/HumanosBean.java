@@ -1,8 +1,10 @@
 package com.warsrpingbootjava.WarSpringJava.beans;
 
-import jakarta.persistence.Column;
+import org.springframework.stereotype.Component;
 
-public class HumanosDTO {
+import jakarta.persistence.Column;
+@Component
+public class HumanosBean {
 	
 	private Long id;
     private String tipoGuerrero;
@@ -10,11 +12,11 @@ public class HumanosDTO {
     private int resistencia;
     
     // Constructor sin parámetros
-	public HumanosDTO() {
+	public HumanosBean() {
 	}
 	
 
-	public HumanosDTO(String tipoGuerrero, int fuerzaBase, int resistencia) {
+	public HumanosBean(String tipoGuerrero, int fuerzaBase, int resistencia) {
 		super();
 		this.tipoGuerrero = tipoGuerrero;
 		this.fuerzaBase = fuerzaBase;
@@ -22,7 +24,7 @@ public class HumanosDTO {
 	}
 
 
-	public HumanosDTO(Long id, String tipoGuerrero, int fuerzaBase, int resistencia) {
+	public HumanosBean(Long id, String tipoGuerrero, int fuerzaBase, int resistencia) {
 		super();
 		this.id = id;
 		this.tipoGuerrero = tipoGuerrero;

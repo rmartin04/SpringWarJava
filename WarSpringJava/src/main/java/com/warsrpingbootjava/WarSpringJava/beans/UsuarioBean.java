@@ -1,6 +1,9 @@
 package com.warsrpingbootjava.WarSpringJava.beans;
 
-public class UsuarioDTO {
+import org.springframework.stereotype.Component;
+
+@Component
+public class UsuarioBean {
 	
 	private Long id;
 	private String usuario;
@@ -8,15 +11,15 @@ public class UsuarioDTO {
 	private String contrasenia;
 	
 	// Constructores
-	public UsuarioDTO() {}
+	public UsuarioBean() {}
 	
-	public UsuarioDTO(String email, String contrasenia) {
+	public UsuarioBean(String email, String contrasenia) {
 		super();
 		this.email = email;
 		this.contrasenia = contrasenia;
 	}
 	
-	public UsuarioDTO(String email, String contrasenia, String usuario) {
+	public UsuarioBean(String email, String contrasenia, String usuario) {
 		this(email, contrasenia);
 		this.usuario = usuario;
 	}

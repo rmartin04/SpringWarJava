@@ -1,25 +1,28 @@
 package com.warsrpingbootjava.WarSpringJava.beans;
 
-import jakarta.persistence.Column;
+import org.springframework.stereotype.Component;
 
-public class AlienigenasDTO {
+import jakarta.persistence.Column;
+@Component
+public class AlienigenasBean {
+	
 	private Long id;
     private String tipoGuerrero;
     private int fuerzaBase;
     private int resistencia;
     
     // Constructor sin parámetros
-        public AlienigenasDTO() {
+        public AlienigenasBean() {
         }
 
-		public AlienigenasDTO(String tipoGuerrero, int fuerzaBase, int resistencia) {
+		public AlienigenasBean(String tipoGuerrero, int fuerzaBase, int resistencia) {
 			super();
 			this.tipoGuerrero = tipoGuerrero;
 			this.fuerzaBase = fuerzaBase;
 			this.resistencia = resistencia;
 		}
 
-		public AlienigenasDTO(Long id, String tipoGuerrero, int fuerzaBase, int resistencia) {
+		public AlienigenasBean(Long id, String tipoGuerrero, int fuerzaBase, int resistencia) {
 			super();
 			this.id = id;
 			this.tipoGuerrero = tipoGuerrero;
