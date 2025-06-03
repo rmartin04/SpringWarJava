@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.warsrpingbootjava.WarSpringJava.beans.NaveDestructoraBean;
 import com.warsrpingbootjava.WarSpringJava.beans.TanqueBean;
@@ -16,6 +17,13 @@ import com.warsrpingbootjava.WarSpringJava.interfaces.CheckedSupplier2.CheckedSu
 
 public class JavaWarService {
 	   private static final Logger logger = LoggerFactory.getLogger(JavaWarService.class);
+	   
+	   @Autowired
+	   TanqueBean tanque;
+	   @Autowired
+	   NaveDestructoraBean nave;
+	   
+	   
 	
 	   private void ejecutarLucha() {
 	        try {
@@ -28,15 +36,15 @@ public class JavaWarService {
 	   private NaveDestructoraBean crearNave()
 	            throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException, Exception {
 	        List<Guerrero> listadoAlienigenas = crearAlienigenas();
-	        NaveDestructoraBean nave = new NaveDestructoraBean("Nostromo", "U.S.C.S.S", 6, 4, listadoAlienigenas);
+	        nave = new NaveDestructoraBean("Nostromo", "U.S.C.S.S", 6, 4, listadoAlienigenas);
 	        logger.info(nave.toString());
 	        return nave;
 	    }
 	   
 
 	    public void simularLucha() {
-	        TanqueBean tanque = null;
-	        NaveDestructoraBean nave = null;
+	        tanque = null;
+	        nave = null;
 	        try {
 	            tanque = crearTanque();
 	            tanque.embarcarGuerreros();
