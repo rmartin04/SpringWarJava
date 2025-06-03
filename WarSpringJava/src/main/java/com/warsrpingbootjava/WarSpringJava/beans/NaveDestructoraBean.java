@@ -2,11 +2,19 @@ package com.warsrpingbootjava.WarSpringJava.beans;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
+import com.warsrpingbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosDiferentesException;
+import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
 @Component
-public class NaveDestructoraBean {
+public class NaveDestructoraBean extends VehiculosGuerra {
+	
+	private static final Logger logger = LoggerFactory.getLogger(VehiculosGuerra.class);
+	
 	
 	 	private Long idNaveDestructora;
 	    private int puntosVida;
@@ -151,6 +159,16 @@ public class NaveDestructoraBean {
 			return builder.toString();
 		}
 	    
+	    public void embarcarGuerreros() throws EmbarcarGuerrerosException, EmbarcarGuerrerosDiferentesException {
+	        for (Guerrero guerrero : getGuerreros()) {
+	            if ("Bicho".equalsIgnoreCase(guerrero.getTipoGuerrero())) {
+	                logger.info("Se ha embarcado al Guerrero " + guerrero.getTipoGuerrero() + " correctamente.");
+	                logger.info(guerrero.toString());
+	            } else {
+	                throw new EmbarcarGuerrerosDiferentesException("No se pueden embarcar otro tipo de guerreros en el " + this.getNombreVehiculo());
+	            }
+	        }
+	    }
 	    
 
 }
