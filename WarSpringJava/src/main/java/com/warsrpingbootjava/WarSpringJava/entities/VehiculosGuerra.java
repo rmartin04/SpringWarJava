@@ -19,6 +19,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -31,12 +33,18 @@ public  class VehiculosGuerra implements Tripulable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
-	
+	@Column(name = "PUNTOS_VIDA")
     private int puntosVida;
+	@Column(name = "NOMBRE_VEHICULO")
     private String nombreVehiculo;
+	@Column(name = "TIPO_VEHICULO")
     private String tipoVehiculo;
+	@Column(name = "ATAQUE_BASE")
     private int ataqueBase;
+	@Column(name = "DEFENSA_BASE")
     private int defensaBase;
+    @OneToMany(mappedBy = "vehiculoGuerra")
+	@Column(name = "GUERREROS")
     private List<Guerrero> guerreros;
     // Constructor sin parámetros
     public VehiculosGuerra() {

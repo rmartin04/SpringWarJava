@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 
 @Entity
@@ -25,11 +26,17 @@ public  class Guerrero{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
-	
+	@Column(name = "ID_GUERRERO")
     private int idGuerrero;
+	@Column(name = "TIPO_GUERRERO")
     private String tipoGuerrero;
+	@Column(name = "FUERZA_BASE")
     private int fuerzaBase;
+	@Column(name = "RESISTENCIA")
     private int resistencia;
+	
+	@ManyToOne
+	private VehiculosGuerra vehiculoGuerra;
 
     public Guerrero() {
     }
