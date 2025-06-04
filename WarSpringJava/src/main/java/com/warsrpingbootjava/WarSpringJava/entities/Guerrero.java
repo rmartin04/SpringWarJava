@@ -73,13 +73,14 @@ public  class Guerrero{
     }
 
     // Getter & Setters
-    public int getIdGuerrero() {
-        return idGuerrero;
-    }
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setIdGuerrero(int idGuerrero) {
-        this.idGuerrero = idGuerrero;
-    }
+
 
     public String getTipoGuerrero() {
         return tipoGuerrero;
@@ -115,5 +116,6 @@ public  class Guerrero{
         sb.append("Resistencia: ").append(resistencia);
         return sb.toString();
     }
+
 
 }
