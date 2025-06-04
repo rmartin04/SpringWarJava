@@ -7,41 +7,44 @@
     <title>Login</title>
 
     <link rel="stylesheet" th:href="@{assets/css/login-style.css}" />
-
-    <link rel="stylesheet" th:href="@{static/assets/css/login-style.css}">
-
 </head>
 
 <body>
     <h2>¡Logueate y batalla con nosotros!</h2>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="/login" method="POST">
+            <form th:action="@{/login}" th:object="${usuarioBean}" method="POST">
                 <h1>Crear una cuenta</h1>
                 <div class="social-container">
-                    <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt=""></a>
-                    <a href="#" class="social"><img src="assets/img/brand-google.svg" alt=""></a>
-                    <a href="#" class="social"><img src="assets/img/brand-linkedin.svg" alt=""></a>
+                    <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt="icon Facebook"></a>
+                    <a href="#" class="social"><img src="assets/img/brand-google.svg" alt="icon Google"></a>
+                    <a href="#" class="social"><img src="assets/img/brand-linkedin.svg" alt="icon linkedInd"></a>
                 </div>
                 <span>O usa una cuenta para registrarte</span>
-                <input type="text" id="usuario" name="usuario" placeholder="Usuario" />
-                <input type="email" id="email" name="email" placeholder="Email" />
-                <input type="password" id="contrasenia" name="contrasenia" placeholder="Contraseña" />
+                <input type="text" th:field="*{usuario}" placeholder="Usuario" />
+                <p th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="error"></p>
+                
+                <input type="email" th:field="*{email}" placeholder="Email" />
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></p>
+                
+                <input type="password" th:field="*{contrasenia}" placeholder="Contraseña" />
+               	<p th:if="${#fields.hasErrors('contrasenia')}" th:errors="*{contrasenia}" class="error"></p>
+               	
                 <input type="hidden" id="crearCuenta" name="crearCuenta" value="crearCuenta"/>
                 <button>Registrarte</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="/login" method="POST">
+            <form th:action="@{/login}" th:object="${usuarioBean}" method="POST">
                 <h1>Iniciar sesión</h1>
                 <div class="social-container">
-                    <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt=""></a>
-                    <a href="#" class="social"><img src="assets/img/brand-google.svg" alt=""></a>
-                    <a href="#" class="social"><img src="assets/img/brand-linkedin.svg" alt=""></a>
+                    <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt="icon Facebook"></a>
+                    <a href="#" class="social"><img src="assets/img/brand-google.svg" alt="icon Google"></a>
+                    <a href="#" class="social"><img src="assets/img/brand-linkedin.svg" alt="icon LinkedInd"></a>
                 </div>
                 <span>O usa tus cuentas</span>
-                <input type="email" id="email" name="email" placeholder="Email" />
-                <input type="password" id="contrasenia" name="contrasenia" placeholder="Contraseña" />
+                <input type="text" th:field="*{usuario}" placeholder="Usuario" />
+                <input type="password" th:field="*{contrasenia}" placeholder="Contraseña" />
                 <input type="hidden" id="iniciarSesion" name="iniciarSesion" value="iniciarSesion"/>
                 <a href="#">¿Olvidaste la contraseña?</a>
                 <button>Entrar</button>

@@ -257,3 +257,8 @@ footer a {
 	color: #3c97bf;
 	text-decoration: none;
 }
+
+.error {
+    color: red;
+    font-size: 0.9em;
+}

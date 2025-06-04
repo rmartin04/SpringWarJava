@@ -13,8 +13,7 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	@Autowired
-	private UsuarioBean usuarioBean;
+	private UsuarioBean usuarioBean = new UsuarioBean();
 	
 	public UsuarioBean validarUsuario(String usuario, String contrasenia) {	
 		Usuario userValido = usuarioRepository.findByUsuarioAndContrasenia(usuario, contrasenia);	

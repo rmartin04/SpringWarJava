@@ -1,19 +1,19 @@
 package com.warsrpingbootjava.WarSpringJava.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
-	public class HomeController {
-	/**
-	 * * Este es el controlador que maneja la ruta raíz de la aplicación.
-	 * @return
-	 */
+import com.warsrpingbootjava.WarSpringJava.beans.UsuarioBean;
 
-	    @GetMapping("/")
-	    public String home() {
-	        return "login"; // nombre del archivo HTML sin la extensión
-	    }
-	}
+@Controller
+public class HomeController {
+
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("usuarioBean", new UsuarioBean());
+        return "login";
+    }
+}
 
 

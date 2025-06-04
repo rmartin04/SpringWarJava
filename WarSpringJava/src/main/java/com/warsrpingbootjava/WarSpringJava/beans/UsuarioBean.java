@@ -1,13 +1,21 @@
 package com.warsrpingbootjava.WarSpringJava.beans;
 
-import org.springframework.stereotype.Component;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-@Component
 public class UsuarioBean {
 	
 	private Long id;
+	
+	@NotBlank(message = "El usuario no puede estar vacío")
 	private String usuario;
+	
+	@Email(message = "El email debe ser válido")
+	@NotBlank(message = "El email no puede estar vacío")
 	private String email;
+	
+	@Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
 	private String contrasenia;
 	
 	// Constructores
