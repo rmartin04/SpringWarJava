@@ -14,12 +14,12 @@ import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosExceptio
 import com.warsrpingbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
 import com.warsrpingbootjava.WarSpringJava.interfaces.Tripulable;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 
@@ -43,7 +43,8 @@ public  class VehiculosGuerra implements Tripulable {
     private int ataqueBase;
 	@Column(name = "DEFENSA_BASE")
     private int defensaBase;
-    @OneToMany(mappedBy = "vehiculoGuerra")
+	
+    @OneToMany(mappedBy = "vehiculoGuerra",cascade = CascadeType.ALL)
 	@Column(name = "GUERREROS")
     private List<Guerrero> guerreros;
     // Constructor sin parámetros
@@ -138,8 +139,19 @@ public  class VehiculosGuerra implements Tripulable {
     public void setTipoVehiculo(String tipoVehiculo) {
         this.tipoVehiculo = tipoVehiculo;
     }
+    
 
-    public List<Guerrero> getGuerreros() {
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public List<Guerrero> getGuerreros() {
         return guerreros;
     }
 
