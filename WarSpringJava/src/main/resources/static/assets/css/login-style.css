@@ -257,8 +257,26 @@ footer a {
 	color: #3c97bf;
 	text-decoration: none;
 }
+.error-container {
+    margin-top: 40px;
+}
+
+.error,
+.error-message,
+.success-message {
+	margin: 0;
+	line-height: 13px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
 
 .error {
+	font-weight: 300;;
     color: red;
-    font-size: 0.9em;
+}
+.success-message {
+    color: green;
+}
+.error-message {
+    color: red;
 }

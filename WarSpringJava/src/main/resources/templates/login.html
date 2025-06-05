@@ -35,7 +35,7 @@
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form th:action="@{/login}" th:object="${usuarioBean}" method="POST">
+            <form th:action="@{/dashboard}" th:object="${loginBean}" method="POST">
                 <h1>Iniciar sesión</h1>
                 <div class="social-container">
                     <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt="icon Facebook"></a>
@@ -43,9 +43,15 @@
                     <a href="#" class="social"><img src="assets/img/brand-linkedin.svg" alt="icon LinkedInd"></a>
                 </div>
                 <span>O usa tus cuentas</span>
+                
                 <input type="text" th:field="*{usuario}" placeholder="Usuario" />
+                <p th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="error"></p>
+                
                 <input type="password" th:field="*{contrasenia}" placeholder="Contraseña" />
+                <p th:if="${#fields.hasErrors('contrasenia')}" th:errors="*{contrasenia}" class="error"></p>
+                
                 <input type="hidden" id="iniciarSesion" name="iniciarSesion" value="iniciarSesion"/>
+                
                 <a href="#">¿Olvidaste la contraseña?</a>
                 <button>Entrar</button>
             </form>
@@ -65,6 +71,11 @@
             </div>
         </div>
     </div>
+    
+    <div class="error-container">
+        <p th:if="${error}" class="error-message" th:text="${error}"></p>
+        <p th:if="${logout}" class="success-message" th:text="${logout}"></p>
+   </div>
 
     <footer>
         <p>

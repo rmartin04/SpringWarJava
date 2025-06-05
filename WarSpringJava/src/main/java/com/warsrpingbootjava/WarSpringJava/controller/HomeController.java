@@ -12,6 +12,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("usuarioBean", new UsuarioBean());
+        model.addAttribute("loginBean", new UsuarioBean());
         return "login";
     }
 }

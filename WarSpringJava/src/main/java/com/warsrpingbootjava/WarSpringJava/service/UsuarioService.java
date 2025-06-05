@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.warsrpingbootjava.WarSpringJava.beans.UsuarioBean;
 import com.warsrpingbootjava.WarSpringJava.entities.Usuario;
+import com.warsrpingbootjava.WarSpringJava.excepciones.UsuarioExisteException;
 import com.warsrpingbootjava.WarSpringJava.excepciones.UsuarioNoEncontradoException;
 import com.warsrpingbootjava.WarSpringJava.repositories.UsuarioRepository;
 
@@ -15,33 +16,21 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 	private UsuarioBean usuarioBean = new UsuarioBean();
 	
-	public UsuarioBean validarUsuario(String usuario, String contrasenia) {	
-		Usuario userValido = usuarioRepository.findByUsuarioAndContrasenia(usuario, contrasenia);	
-        if (usuario == null || contrasenia == null) {
-            throw new UsuarioNoEncontradoException("Usuario o contraseña no pueden ser nulos");
-        }
-        
-        if (userValido == null) {
-			throw new UsuarioNoEncontradoException("Usuario o contraseña incorrectos");
-		}
-		
-		return convertirAUsuarioBean(userValido);
-	}
-	
-	public UsuarioBean convertirAUsuarioBean(Usuario usuario) {
-		if (usuario != null) {
-			usuarioBean.setUsuario(usuario.getUsuario());
-			usuarioBean.setContrasenia(usuario.getContrasenia());
-			return usuarioBean;
-		} else {
-			throw new IllegalArgumentException("El usuario no puede ser nulo");
-		}
-	}
-	
-	public UsuarioBean registrarUsuario(UsuarioBean usuarioBean) {
+	/**
+	 * Registra un nuevo usuario.
+	 * 
+	 * @param usuarioBean El objeto UsuarioBean con los datos del nuevo usuario.
+	 * @return UsuarioBean con los datos del usuario registrado.
+	 * @throws UsuarioExisteException Si el usuario ya existe.
+	 */
+	public UsuarioBean registrarUsuario(UsuarioBean usuarioBean) throws UsuarioExisteException {
 		
 		if (usuarioBean == null || usuarioBean.getUsuario() == null || usuarioBean.getContrasenia() == null) {
 			throw new IllegalArgumentException("El usuario o la contraseña no pueden ser nulos");
+		}
+		
+		if (usuarioRepository.findByUsuario(usuarioBean.getUsuario()) != null) {
+			throw new UsuarioExisteException("El usuario ya existe");
 		}
 		
 		Usuario nuevoUsuario = new Usuario();
@@ -53,5 +42,47 @@ public class UsuarioService {
 		
 		return convertirAUsuarioBean(nuevoUsuario);
 	}
+	
+	/**
+	 * Valida un usuario y contraseña.
+	 * 
+	 * @param usuario    El nombre de usuario.
+	 * @param contrasenia La contraseña del usuario.
+	 * @return UsuarioBean con los datos del usuario si la validación es exitosa.
+	 * @throws UsuarioNoEncontradoException Si el usuario o la contraseña son incorrectos.
+	 * @throws UsuarioExisteException 
+	 */
+	public UsuarioBean validarUsuario(String usuario, String contrasenia) throws UsuarioNoEncontradoException {	
+	    if (usuario == null || contrasenia == null || usuario.trim().isEmpty() || contrasenia.trim().isEmpty()) {
+	        throw new IllegalArgumentException("Usuario y contraseña no pueden ser nulos o vacíos");
+	    }
+
+	    Usuario userValido = usuarioRepository.findByUsuarioAndContrasenia(usuario, contrasenia);
+
+	    if (userValido == null) {
+	        throw new UsuarioNoEncontradoException("Usuario o contraseña incorrectos");
+	    }	        
+		return convertirAUsuarioBean(userValido);
+	}
+	
+	/**
+	 * Convierte un objeto Usuario a UsuarioBean.
+	 * 
+	 * @param usuario El objeto Usuario a convertir.
+	 * @return UsuarioBean con los datos del usuario.
+	 * @throws IllegalArgumentException Si el usuario es nulo.
+	 */
+	public UsuarioBean convertirAUsuarioBean(Usuario usuario) {
+	    if (usuario == null) {
+	        throw new IllegalArgumentException("El usuario no puede ser nulo");
+	    }
+	    UsuarioBean bean = new UsuarioBean();
+	    bean.setUsuario(usuario.getUsuario());
+	    bean.setContrasenia(usuario.getContrasenia());
+	    bean.setEmail(usuario.getEmail()); // recuerda setear email si existe
+	    return bean;
+	}
+	
+
 
 }

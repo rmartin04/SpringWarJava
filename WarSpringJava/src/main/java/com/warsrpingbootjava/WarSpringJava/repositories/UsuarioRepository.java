@@ -10,4 +10,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	// Por ejemplo, para buscar usuarios por nombre de usuario o correo electrónico
 
 	Usuario findByUsuarioAndContrasenia(String usuario, String contrasenia);
+	
+	Usuario findByUsuario(String usuario);
 }
