@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos y Guerreros</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid 
+#ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: 
+#f4f4f4;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: 
+#007bff;
+            color: 
+white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: 
+#0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Vehículos y Guerreros</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Vehículo</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Puntos de Vida</th>
+                <th>Ataque Base</th>
+                <th>Defensa Base</th>
+                <th>Guerreros</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vehiculo : ${vehiculos}">
+                <td th:text="${vehiculo.id}"></td>
+                <td th:text="${vehiculo.nombreVehiculo}"></td>
+                <td th:text="${vehiculo.tipoVehiculo}"></td>
+                <td th:text="${vehiculo.puntosVida}"></td>
+                <td th:text="${vehiculo.ataqueBase}"></td>
+                <td th:text="${vehiculo.defensaBase}"></td>
+                <td th:text="${#strings.join(vehiculo.guerreros.stream().map(g -> g.nombre).toList(), ', ')}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Iniciar Batalla</h2>
+    <form action="/batallas/iniciar" method="post">
+        <label for="vehiculo1">ID Vehículo 1:</label>
+        <input type="number" id="vehiculo1" name="vehiculoId1" required>
+        <label for="vehiculo2">ID Vehículo 2:</label>
+        <input type="number" id="vehiculo2" name="vehiculoId2" required>
+        <button type="submit">Iniciar Batalla</button>
+    </form>
+</body>
+</html>
