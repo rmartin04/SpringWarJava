@@ -46,7 +46,7 @@ public class GuerreroController {
 @PostMapping("/guerrero/guardar")
 public String guardarGuerrero(@ModelAttribute Guerrero guerrero) {
     guerreroService.guardar(guerrero);
-    return "redirect:/guerreros";
+    return "guerrero-form";
 }
 
 }
