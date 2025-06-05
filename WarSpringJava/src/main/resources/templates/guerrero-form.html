@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir Guerrero</title>
+</head>
+<body>
+    <h2>Añadir Guerrero</h2>
+
+    <form th:action="@{/guerrero/guardar}" th:object="${guerrero}" method="post">
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" required /><br>
+
+        <label>Tipo:</label>
+        <select th:field="*{tipo}">
+            <option value="T1">T1</option>
+            <option value="T2">T2</option>
+            <!-- Más tipos si necesitas -->
+        </select><br>
+
+        <label>Ataque:</label>
+        <input type="number" th:field="*{ataque}" required /><br>
+
+        <label>Defensa:</label>
+        <input type="number" th:field="*{defensa}" required /><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>
