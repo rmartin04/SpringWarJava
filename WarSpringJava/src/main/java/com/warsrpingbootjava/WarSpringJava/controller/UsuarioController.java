@@ -61,7 +61,7 @@ import com.warsrpingbootjava.WarSpringJava.service.UsuarioService;
 				
 				try {
 					usuarioService.validarUsuario(loginBean.getUsuario(), loginBean.getContrasenia());	
-					return new ModelAndView("iniciar-sesion");
+					return new ModelAndView("index");
 				} catch (UsuarioNoEncontradoException e) {
 					mav.addObject("error", e.getMessage());
 					e.printStackTrace();
