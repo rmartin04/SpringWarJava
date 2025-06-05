@@ -35,4 +35,8 @@ public class GuerreroService {
     public void eliminarGuerrero(Long id) {
         guerreroRepository.deleteById(id);
     }
+
+	public void guardar(Guerrero guerrero) {
+		guerreroRepository.save(guerrero);
+	}
 }

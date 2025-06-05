@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Vehículos</title>
+</head>
+<body>
+    <h1>LISTADO VEHICULOS</h1>
+
+    <!-- Barra de navegación -->
+    <nav>
+        <a href="/guerreros">Guerreros</a> |
+        <a href="/logout">🔴</a>
+    </nav>
+
+    <!-- Tabla de vehículos -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Vida</th>
+                <th>Ataque</th>
+                <th>Defensa</th>
+                <th>Num Guerreros</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vehiculo : ${vehiculos}">
+                <td th:text="${vehiculo.nombre}">VEH1</td>
+                <td th:text="${vehiculo.tipo}">T1</td>
+                <td th:text="${vehiculo.vida}">1000</td>
+                <td th:text="${vehiculo.ataque}">8</td>
+                <td th:text="${vehiculo.defensa}">2</td>
+                <td th:text="${vehiculo.numGuerreros}">1</td>
+                <td>
+                    <a th:href="@{'/vehiculo/eliminar/' + ${vehiculo.id}}">❌</a>
+                    <a th:href="@{'/vehiculo/añadirGuerrero/' + ${vehiculo.id}}">➕</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <!-- Botones -->
+    <a href="/vehiculo/nuevo"><button>Añadir Vehículo</button></a>
+    <a href="/batalla/iniciar"><button>Iniciar Combate</button></a>
+
+    <!-- Resultado de batalla -->
+    <p th:if="${mensaje != null}" th:text="${mensaje}">El vehículo XXXX ha ganado la batalla</p>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,5 +46,15 @@ public class VehiculoController {
     public String listarVehiculos(Model model) {
         model.addAttribute("vehiculos", vehiculoService.listarVehiculos());
         return "vehiculos";
+    }
+    @GetMapping("/vehiculo/nuevo")
+    public String mostrarFormularioVehiculo(Model model) {
+        model.addAttribute("vehiculo", new VehiculosGuerra());
+        return "vehiculo-form";
+    }
+    @PostMapping("/vehiculo/guardar")
+    public String guardarVehiculo(@ModelAttribute VehiculosGuerra vehiculo) {
+        vehiculoService.guardarVehiculo(vehiculo);
+        return "redirect:/vehiculos";
     }
 }

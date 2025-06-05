@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Guerreros</title>
+</head>
+<body>
+    <h1>LISTADO GUERREROS</h1>
+
+    <!-- Barra de navegación -->
+    <nav>
+        <a href="/vehiculos">Vehículos</a> |
+        <a href="/logout">🔴</a>
+    </nav>
+
+    <!-- Filtro por tipo -->
+    <form method="get" action="/guerreros/filtrar">
+        <label>Tipo:</label>
+        <select name="tipo">
+            <option value="">Todos</option>
+            <option value="T1">T1</option>
+            <option value="T2">T2</option>
+            <!-- Agrega más tipos según tu lógica -->
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Tabla de guerreros -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Vida</th>
+                <th>Ataque</th>
+                <th>Defensa</th>
+                <th>Num Guerreros</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="guerrero : ${guerreros}">
+                <td th:text="${guerrero.nombre}">Guerrero 1</td>
+                <td th:text="${guerrero.tipo}">T1</td>
+                <td th:text="${guerrero.vida}">100</td>
+                <td th:text="${guerrero.ataque}">10</td>
+                <td th:text="${guerrero.defensa}">5</td>
+                <td th:text="${guerrero.numGuerreros}">1</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <!-- Botón para añadir guerrero -->
+    <a href="/guerrero/nuevo"><button>Añadir Guerrero</button></a>
+</body>
+</html>

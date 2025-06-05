@@ -39,4 +39,8 @@ public class VehiculoService {
     public void eliminarVehiculo(Long id) {
         vehiculosGuerraRepository.deleteById(id);
     }
+
+	public void guardarVehiculo(VehiculosGuerra vehiculo) {
+		vehiculosGuerraRepository.save(vehiculo);
+	}
 }
