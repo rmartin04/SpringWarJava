@@ -20,9 +20,10 @@ public class BatallaService {
      * @param vehiculoId2 ID del segundo vehículo.
      * @return El vehículo ganador o null si hay empate.
      */
-    public VehiculosGuerra iniciarBatalla(Long vehiculoId1, Long vehiculoId2) {
+    public String iniciarBatalla(Long vehiculoId1, Long vehiculoId2) {
         VehiculosGuerra vehiculo1 = vehiculosGuerraRepository.findById(vehiculoId1).orElse(null);
         VehiculosGuerra vehiculo2 = vehiculosGuerraRepository.findById(vehiculoId2).orElse(null);
+        String ganador = null;
 
         if (vehiculo1 == null || vehiculo2 == null) {
             throw new IllegalArgumentException("Uno o ambos vehículos no existen.");
@@ -47,11 +48,14 @@ public class BatallaService {
 
         // Determinar el ganador
         if (vehiculo1.getPuntosVida() > vehiculo2.getPuntosVida()) {
-            return vehiculo1;
+        	ganador = vehiculo1.getNombreVehiculo() + " ha ganado la batalla.";
+            return ganador;
         } else if (vehiculo2.getPuntosVida() > vehiculo1.getPuntosVida()) {
-            return vehiculo2;
+        	ganador = vehiculo2.getNombreVehiculo() + " ha ganado la batalla.";
+            return ganador;
         } else {
-            return null; // Empate
+        	ganador = "La batalla ha terminado en empate.";
+            return ganador; // Empate
         }
     }
 
