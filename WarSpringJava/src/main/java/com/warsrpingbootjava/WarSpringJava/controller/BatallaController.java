@@ -19,7 +19,7 @@ public class BatallaController {
     private BatallaService batallaService;
 
     @PostMapping("/iniciar")
-    public VehiculosGuerra empezarBatalla(@RequestParam Long idVehiculo1, @RequestParam Long idVehiculo2) {
+    public String empezarBatalla(@RequestParam Long idVehiculo1, @RequestParam Long idVehiculo2) {
     	
         return batallaService.iniciarBatalla(idVehiculo1, idVehiculo2);
     }
