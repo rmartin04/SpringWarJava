@@ -3,6 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado de Guerreros</title>
+    <style>
+        body {
+            background-color: #0b0f1a;
+            color: #e0e6f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00bfff;
+            text-shadow: 0 0 10px #00bfff;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            color: #00ffcc;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        form {
+            background-color: #1a1f2b;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.2);
+        }
+
+        label, select, button {
+            display: block;
+            margin: 10px auto;
+            width: 90%;
+        }
+
+        select {
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            background-color: #2a2f3d;
+            color: #fff;
+        }
+
+        button {
+            background-color: #00bfff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #009acd;
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1a1f2b;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.2);
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #2f374a;
+            text-align: center;
+        }
+
+        th {
+            background-color: #00bfff;
+            color: #0b0f1a;
+        }
+
+        td {
+            color: #e0e6f0;
+        }
+
+        a button {
+            display: block;
+            margin: 30px auto 0 auto;
+            padding: 10px 20px;
+            background-color: #00ffcc;
+            color: #0b0f1a;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        a button:hover {
+            background-color: #00ccaa;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
     <h1>LISTADO GUERREROS</h1>
@@ -10,13 +122,13 @@
     <!-- Barra de navegación -->
     <nav>
         <a href="/vehiculos">Vehículos</a> |
-        <a href="/logout">🔴</a>
+        <a href="/logout" title="Cerrar sesión">🔴</a>
     </nav>
 
     <!-- Filtro por tipo -->
     <form method="get" action="/guerreros/filtrar">
-        <label>Tipo:</label>
-        <select name="tipo">
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo">
             <option value="">Todos</option>
             <option value="T1">T1</option>
             <option value="T2">T2</option>
@@ -26,7 +138,7 @@
     </form>
 
     <!-- Tabla de guerreros -->
-    <table border="1">
+    <table>
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -48,8 +160,6 @@
             </tr>
         </tbody>
     </table>
-
-    <br>
 
     <!-- Botón para añadir guerrero -->
     <a href="/guerrero/nuevo"><button>Añadir Guerrero</button></a>

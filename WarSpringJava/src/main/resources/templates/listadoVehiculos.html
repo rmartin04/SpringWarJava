@@ -3,9 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado de Vehículos</title>
+    <style>
+        body {
+            background-color: #0b0f1a;
+            color: #e0e6f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            color: #00bfff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1a1f2b;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #2f374a;
+            text-align: center;
+        }
+
+        th {
+            background-color: #00ffcc;
+            color: #0b0f1a;
+        }
+
+        td {
+            color: #e0e6f0;
+        }
+
+        td a {
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+
+        td a:hover {
+            transform: scale(1.2);
+        }
+
+        a button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #00bfff;
+            color: #0b0f1a;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        a button:hover {
+            background-color: #009acd;
+            transform: scale(1.05);
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #ffffff;
+            background-color: #1a1f2b;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>LISTADO VEHICULOS</h1>
+    <h1>LISTADO VEHÍCULOS</h1>
 
     <!-- Barra de navegación -->
     <nav>
@@ -14,7 +110,7 @@
     </nav>
 
     <!-- Tabla de vehículos -->
-    <table border="1">
+    <table>
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -42,11 +138,11 @@
         </tbody>
     </table>
 
-    <br>
-
     <!-- Botones -->
-    <a href="/vehiculo/nuevo"><button>Añadir Vehículo</button></a>
-    <a href="/batalla/iniciar"><button>Iniciar Combate</button></a>
+    <div style="text-align: center;">
+        <a href="/vehiculo/nuevo"><button>Añadir Vehículo</button></a>
+        <a href="/batalla/iniciar"><button>Iniciar Combate</button></a>
+    </div>
 
     <!-- Resultado de batalla -->
     <p th:if="${mensaje != null}" th:text="${mensaje}">El vehículo XXXX ha ganado la batalla</p>
