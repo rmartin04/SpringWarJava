@@ -14,7 +14,6 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	private UsuarioBean usuarioBean = new UsuarioBean();
 	
 	/**
 	 * Registra un nuevo usuario.
@@ -55,6 +54,14 @@ public class UsuarioService {
 	public UsuarioBean validarUsuario(String usuario, String contrasenia) throws UsuarioNoEncontradoException {	
 	    if (usuario == null || contrasenia == null || usuario.trim().isEmpty() || contrasenia.trim().isEmpty()) {
 	        throw new IllegalArgumentException("Usuario y contraseña no pueden ser nulos o vacíos");
+	    }
+	    
+	    if (usuarioRepository.findByUsuario(usuario) == null) {
+	        throw new UsuarioNoEncontradoException("Usuario no encontrado");
+	    }
+	    
+	    if (usuarioRepository.findByContrasenia(contrasenia) == null) {
+	        throw new UsuarioNoEncontradoException("Contraseña incorrecta");
 	    }
 
 	    Usuario userValido = usuarioRepository.findByUsuarioAndContrasenia(usuario, contrasenia);

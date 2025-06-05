@@ -65,8 +65,8 @@ import com.warsrpingbootjava.WarSpringJava.service.UsuarioService;
 				} catch (UsuarioNoEncontradoException e) {
 					mav.addObject("error", e.getMessage());
 					e.printStackTrace();
+					return mav;
 				}
-				return new ModelAndView("iniciar-sesion");
 				
 			} else {
 				return new ModelAndView("error"); // Manejo de error si no se selecciona ninguna opción
