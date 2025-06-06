@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Dimension by HTML5 UP</title>
+		<title>JavaWar | Inicio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -27,11 +27,11 @@
 				    </div>
 				    <nav>
 				        <ul>
-				            <li><a href="#intro">Manual</a></li>
-				            <li><a href="#work">Batallas</a></li>
-				            <li><a href="#about">Acerca de</a></li>
-				            <li><a href="#contact">Contacto</a></li>
-				            <!--<li><a href="#elements">Elementos</a></li>-->
+				            <li><a href="#manual">Manual</a></li>
+				            <li><a href="#guerreros">Guerreros</a></li>
+				            <li><a href="#naves">Naves</a></li>
+				            <li><a href="#contacto">Contacto</a></li>
+				            <li><a href="#elementos">Elementos</a></li>
 				        </ul>
 				    </nav>
 				</header>
@@ -39,8 +39,8 @@
 				<!-- Main -->
 					<main id="main">
 
-						 <!-- Intro -->
-					    <article id="intro">
+						 <!-- manual -->
+					    <article id="manual">
 					        <h2 class="major">Introducción</h2>
 					        <span class="image main"><img src="images/pic01.jpg" alt="Batalla épica" /></span>
 					        <p>Bienvenido a JavaWar, la plataforma donde los guerreros digitales luchan por el control. Aquí podrás registrarte, iniciar sesión y unirte a la batalla.<br />
@@ -48,48 +48,51 @@
 					        <p>Gestiona tu cuenta, participa en enfrentamientos, y evoluciona para convertirte en el guerrero definitivo. La guerra digital está por comenzar, ¿te unes?</p>
 					    </article>
 					
-					    <!-- Work -->
-					    <article id="work">
-					        <h2 class="major">Batallas</h2>
+					    <!-- guerreros -->
+					    <article id="guerreros">
+					        <h2 class="major">Juega</h2>
 					        <span class="image main"><img src="images/pic02.jpg" alt="Estrategia y batalla" /></span>
 					        <p>En esta sección podrás ver las batallas en curso, retar a otros usuarios y mejorar tus estrategias para ganar cada combate.</p>
 					        <p>Participa en torneos, sube en el ranking de guerreros y demuestra tus habilidades. El trabajo duro y la estrategia serán la clave para la victoria.</p>
+					        <a href="/listado-guerreros" class="button">Ver Guerreros</a>
 					    </article>
 					
-					    <!-- About -->
-					    <article id="about">
+					    <!-- naves -->
+					    <article id="naves">
 					        <h2 class="major">Acerca de JavaWar</h2>
 					        <span class="image main"><img src="images/pic03.jpg" alt="Acerca de JavaWar" /></span>
 					        <p>JavaWar es un proyecto dedicado a crear una experiencia interactiva donde la gestión de usuarios y la competencia digital se unen. Desarrollado con tecnología Java y Spring Boot para ofrecer un rendimiento robusto y seguro.</p>
 					        <p>Nuestro objetivo es fomentar una comunidad de jugadores apasionados por la programación y la batalla digital, combinando diversión y aprendizaje.</p>
+					        <a href="/listadoGuerreros" class="button">Ver Guerreros</a>
 					    </article>
 
-                            <!-- Elements -->
-                            <article id="elements">
-                                <h2 class="major">Elementos</h2>
-                                <p>Esta sección está destinada a mostrar los diferentes elementos y componentes que puedes encontrar en JavaWar, desde formularios de registro hasta tablas de clasificación.</p>
-                                <ul class="features">
-                                    <li>
-                                        <h3>Registro de Usuario</h3>
-                                        <p>Formulario para crear una nueva cuenta y unirte a la batalla.</p>
-                                    </li>
-                                    <li>
-                                        <h3>Inicio de Sesión</h3>
-                                        <p>Accede a tu cuenta para participar en las batallas y gestionar tu perfil.</p>
-                                    </li>
-                                    <li>
-                                        <h3>Perfil de Usuario</h3>
-                                        <p>Visualiza y edita tu información personal, estadísticas y logros.</p>
-                                    </li>
-                                </ul>
-                            </article>	
-						<!-- Contact -->
-							<article id="contact">
-								<h2 class="major">Contact</h2>
+                         <!-- Elements -->
+                         <article id="elementos">
+                             <h2 class="major">Elementos</h2>
+                             <p>Esta sección está destinada a mostrar los diferentes elementos y componentes que puedes encontrar en JavaWar, desde formularios de registro hasta tablas de clasificación.</p>
+                             <ul class="features">
+                                 <li>
+                                     <h3>Registro de Usuario</h3>
+                                     <p>Formulario para crear una nueva cuenta y unirte a la batalla.</p>
+                                 </li>
+                                 <li>
+                                     <h3>Inicio de Sesión</h3>
+                                     <p>Accede a tu cuenta para participar en las batallas y gestionar tu perfil.</p>
+                                 </li>
+                                 <li>
+                                     <h3>Perfil de Usuario</h3>
+                                     <p>Visualiza y edita tu información personal, estadísticas y logros.</p>
+                                 </li>
+                             </ul>
+                         </article>	
+                         
+						<!-- contacto -->
+							<article id="contacto">
+								<h2 class="major">Contacto</h2>
 								<form method="post" action="#">
 									<div class="fields">
 										<div class="field half">
-											<label for="name">Name</label>
+											<label for="name">Nombre</label>
 											<input type="text" name="name" id="name" />
 										</div>
 										<div class="field half">
@@ -97,13 +100,13 @@
 											<input type="text" name="email" id="email" />
 										</div>
 										<div class="field">
-											<label for="message">Message</label>
+											<label for="message">Mensaje</label>
 											<textarea name="message" id="message" rows="4"></textarea>
 										</div>
 									</div>
 									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Reset" /></li>
+										<li><input type="submit" value="Enviar" class="primary" /></li>
+										<li><input type="reset" value="Borrar" /></li>
 									</ul>
 								</form>
 								<ul class="icons">

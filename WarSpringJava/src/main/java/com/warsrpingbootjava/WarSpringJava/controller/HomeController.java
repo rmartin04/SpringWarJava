@@ -16,6 +16,12 @@ public class HomeController {
         model.addAttribute("loginBean", new LoginBean());
         return "login";
     }
+    
+    @GetMapping("/listado-guerreros")
+    public String listadoGuerreros(Model model) {
+		return "listado-guerreros";
+    }
 }
 
 
+	

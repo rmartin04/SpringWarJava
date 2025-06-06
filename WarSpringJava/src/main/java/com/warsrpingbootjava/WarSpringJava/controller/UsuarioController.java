@@ -59,7 +59,7 @@ import jakarta.validation.Valid;
 		) 
 		{
 			ModelAndView mav = new ModelAndView("login");
-			mav.addObject("usuarioBean", new UsuarioBean());  // para registro
+			mav.addObject("usuarioBean", new UsuarioBean());  
 			mav.addObject("loginBean", new LoginBean());  
 			
 			if (loginBindingResult.hasErrors()) {
