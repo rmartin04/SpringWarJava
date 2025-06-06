@@ -13,7 +13,7 @@
     <h2>¡Logueate y batalla con nosotros!</h2>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form th:action="@{/login}" th:object="${usuarioBean}" method="POST">
+            <form th:action="@{/registrarUsuario}" th:object="${usuarioBean}" method="POST">
                 <h1>Crear una cuenta</h1>
                 <div class="social-container">
                     <a href="#" class="social"><img src="assets/img/brand-facebook.svg" alt="icon Facebook"></a>
@@ -30,7 +30,6 @@
                 <input type="password" th:field="*{contrasenia}" placeholder="Contraseña" />
                	<p th:if="${#fields.hasErrors('contrasenia')}" th:errors="*{contrasenia}" class="error"></p>
                	
-                <input type="hidden" id="crearCuenta" name="crearCuenta" value="crearCuenta"/>
                 <button>Registrarte</button>
             </form>
         </div>
@@ -49,8 +48,6 @@
                 
                 <input type="password" th:field="*{contrasenia}" placeholder="Contraseña" />
                 <p th:if="${#fields.hasErrors('contrasenia')}" th:errors="*{contrasenia}" class="error"></p>
-                
-                <input type="hidden" id="iniciarSesion" name="iniciarSesion" value="iniciarSesion"/>
                 
                 <a href="#">¿Olvidaste la contraseña?</a>
                 <button>Entrar</button>
