@@ -2,14 +2,13 @@
 package com.warsrpingbootjava.WarSpringJava.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.warsrpingbootjava.WarSpringJava.entities.VehiculosGuerra;
 import com.warsrpingbootjava.WarSpringJava.service.BatallaService;
-
 
 @Controller
 @RequestMapping("/batallas")
@@ -19,10 +18,14 @@ public class BatallaController {
     private BatallaService batallaService;
 
     @PostMapping("/iniciar")
-    public String empezarBatalla(@RequestParam Long idVehiculo1, @RequestParam Long idVehiculo2) {
-    	
-        return batallaService.iniciarBatalla(idVehiculo1, idVehiculo2);
+    public ResponseEntity<String> empezarBatalla(@RequestParam Long idVehiculo1, @RequestParam Long idVehiculo2) {
+        try {
+            String resultado = batallaService.iniciarBatalla(idVehiculo1, idVehiculo2);
+            return ResponseEntity.ok(resultado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error interno del servidor: " + e.getMessage());
+        }
     }
-
-   
 }
