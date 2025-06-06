@@ -45,7 +45,7 @@ public  class VehiculosGuerra implements Tripulable {
     private int defensaBase;
 	
     @OneToMany(mappedBy = "vehiculoGuerra",cascade = CascadeType.ALL)	
-    private List<Guerrero> guerreros;
+    private List<Guerrero> guerreros = new ArrayList<>();
     // Constructor sin parámetros
     public VehiculosGuerra() {
     	
