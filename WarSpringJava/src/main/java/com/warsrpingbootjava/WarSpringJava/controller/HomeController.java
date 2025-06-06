@@ -21,6 +21,11 @@ public class HomeController {
     public String listadoGuerreros(Model model) {
 		return "listado-guerreros";
     }
+    
+    @GetMapping("/listado-vehiculos")
+    public String listadoVehiculos(Model model) {
+		return "listado-vehiculos";
+    }
 }
 
 
