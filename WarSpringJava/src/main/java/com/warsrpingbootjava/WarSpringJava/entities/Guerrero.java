@@ -27,10 +27,10 @@ public  class Guerrero{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
-	@Column(name = "ID_GUERRERO")
-    private int idGuerrero;
+	@Column(name = "NOMBRE")
+    private String nombre;
 	@Column(name = "TIPO_GUERRERO")
-    private String tipoGuerrero;
+    private String tipo;
 	@Column(name = "FUERZA_BASE")
     private int fuerzaBase;
 	@Column(name = "RESISTENCIA")
@@ -46,8 +46,8 @@ public  class Guerrero{
     // Constructor
     public Guerrero(String tipoGuerrero, int fuerzaBase, int resistencia)
             throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException {
-        this.idGuerrero = ++contador;
-        this.tipoGuerrero = tipoGuerrero;
+        this.id = (long) ++contador;
+        this.tipo = tipoGuerrero;
 
         // Validaciones de ataque y defensa
         if (fuerzaBase + resistencia > 10) {
@@ -80,14 +80,21 @@ public  class Guerrero{
 		this.id = id;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 
-    public String getTipoGuerrero() {
-        return tipoGuerrero;
+
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoGuerrero(String tipoGuerrero) {
-        this.tipoGuerrero = tipoGuerrero;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public int getFuerzaBase() {
@@ -109,9 +116,9 @@ public  class Guerrero{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n***Características del " + getTipoGuerrero() + "***\n");
-        sb.append("Id guerrero: ").append(idGuerrero).append("\n");
-        sb.append("Tipo de Guerrero:").append(tipoGuerrero).append("\n");
+        sb.append("\n***Características del " + getTipo() + "***\n");
+        sb.append("Id guerrero: ").append(id).append("\n");
+        sb.append("Tipo de Guerrero:").append(tipo).append("\n");
         sb.append("Fuerza Base: ").append(fuerzaBase).append("\n");
         sb.append("Resistencia: ").append(resistencia);
         return sb.toString();
