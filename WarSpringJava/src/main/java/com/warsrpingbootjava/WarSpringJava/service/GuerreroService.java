@@ -7,6 +7,7 @@ import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
 import com.warsrpingbootjava.WarSpringJava.repositories.GuerreroRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GuerreroService {
@@ -18,25 +19,25 @@ public class GuerreroService {
         return guerreroRepository.save(guerrero);
     }
 
-    public Guerrero obtenerGuerreroPorId(Long id) {
-        return guerreroRepository.findById(id).orElse(null);
+    public Optional<Guerrero> obtenerGuerreroPorId(Long id) {
+        return guerreroRepository.findById(id); // Devuelve un Optional en lugar de null
     }
 
     public List<Guerrero> listarGuerreros() {
         return guerreroRepository.findAll();
     }
-    
-	public Guerrero actualizarGuerrero(Guerrero guerrero) {
-		if (guerrero.getId() == null || !guerreroRepository.existsById(guerrero.getId())) {
-			return null; // O lanzar una excepción si se prefiere
-		}
-		return guerreroRepository.save(guerrero);
-	}
-    public void eliminarGuerrero(Long id) {
-        guerreroRepository.deleteById(id);
+
+    public Guerrero actualizarGuerrero(Guerrero guerrero) {
+        if (guerrero.getId() == null || !guerreroRepository.existsById(guerrero.getId())) {
+            throw new IllegalArgumentException("El guerrero con ID " + guerrero.getId() + " no existe.");
+        }
+        return guerreroRepository.save(guerrero);
     }
 
-	public void guardar(Guerrero guerrero) {
-		guerreroRepository.save(guerrero);
-	}
+    public void eliminarGuerrero(Long id) {
+        if (!guerreroRepository.existsById(id)) {
+            throw new IllegalArgumentException("El guerrero con ID " + id + " no existe.");
+        }
+        guerreroRepository.deleteById(id);
+    }
 }

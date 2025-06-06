@@ -1,12 +1,16 @@
 
 package com.warsrpingbootjava.WarSpringJava.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.warsrpingbootjava.WarSpringJava.entities.VehiculosGuerra;
-import com.warsrpingbootjava.WarSpringJava.repositories.VehiculosGuerraRepository;
 
-import java.util.List;
+import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
+import com.warsrpingbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warsrpingbootjava.WarSpringJava.repositories.GuerreroRepository;
+import com.warsrpingbootjava.WarSpringJava.repositories.VehiculosGuerraRepository;
 
 @Service
 public class VehiculoService {
@@ -14,25 +18,41 @@ public class VehiculoService {
     @Autowired
     private VehiculosGuerraRepository vehiculosGuerraRepository;
 
-    public VehiculosGuerra crearVehiculo(VehiculosGuerra vehiculo) {
+    @Autowired
+    private GuerreroRepository guerreroRepository;
+
+    // Guarda o actualiza un vehículo
+    public VehiculosGuerra guardarVehiculo(VehiculosGuerra vehiculo) {
         return vehiculosGuerraRepository.save(vehiculo);
     }
 
-    public VehiculosGuerra obtenerVehiculoPorId(Long id) {
-        return vehiculosGuerraRepository.findById(id).orElse(null);
+    // Obtiene un vehículo por su ID
+    public Optional<VehiculosGuerra> obtenerVehiculoPorId(Long id) {
+        return vehiculosGuerraRepository.findById(id);
     }
 
+    // Lista todos los vehículos
     public List<VehiculosGuerra> listarVehiculos() {
         return vehiculosGuerraRepository.findAll();
     }
 
     public VehiculosGuerra embarcarGuerreros(Long vehiculoId, List<Long> guerreroIds) {
-        VehiculosGuerra vehiculo = obtenerVehiculoPorId(vehiculoId);
-        if (vehiculo != null) {
-            // Lógica para embarcar guerreros en el vehículo
-            // Por ejemplo, agregar guerreros a una lista en el vehículo
+        // Buscar el vehículo
+        Optional<VehiculosGuerra> optionalVehiculo = obtenerVehiculoPorId(vehiculoId);
+
+        if (optionalVehiculo.isPresent()) {
+            VehiculosGuerra vehiculo = optionalVehiculo.get();
+
+            // Buscar los guerreros por sus IDs
+            List<Guerrero> guerreros = guerreroRepository.findAllById(guerreroIds);
+
+            // Agregar los guerreros al vehículo
+            vehiculo.getGuerreros().addAll(guerreros);
+
+            // Guardar el vehículo actualizado
             return vehiculosGuerraRepository.save(vehiculo);
         }
+
         return null;
     }
 
@@ -40,7 +60,5 @@ public class VehiculoService {
         vehiculosGuerraRepository.deleteById(id);
     }
 
-	public void guardarVehiculo(VehiculosGuerra vehiculo) {
-		vehiculosGuerraRepository.save(vehiculo);
-	}
+	
 }
