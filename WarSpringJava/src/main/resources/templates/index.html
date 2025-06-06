@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 	<head>
 		<title>JavaWar | Inicio</title>
 		<meta charset="utf-8" />
@@ -12,6 +12,19 @@
 
 		<!-- Wrapper -->
 			<div id="wrapper">
+			
+			    <section class="container-cuenta">
+                    
+                    <div class="container-count">
+                    	<img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32"/>
+                    </div>
+			    	
+			    	<div class="container-logout">
+                		<form method="post" action="/logout">
+                			<button type="submit" class="button">Cerrar sesión</button>
+               			</form>
+			    	</div>
+			    </section>
 
 				<header id="header">
 				    <div class="logo">

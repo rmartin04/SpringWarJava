@@ -576,6 +576,47 @@ input, select, textarea {
 		color: rgba(255, 255, 255, 0.5) !important;
 		opacity: 1.0;
 	}
+	
+	/* User style */
+	
+	.container-cuenta {
+		position: fixed;
+		top: 20px;
+		right: 20px;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center !important;
+	    gap: 1rem;
+	    
+	    .container-count {
+	        line-height: 15px;
+        }
+	    
+		.container-logout {
+		    form {
+		    	margin: 0;
+		    	
+		    	button {
+		    		font-size: 0.6rem;
+	                height: 2.20rem;
+	                line-height: 2.20rem;
+		    	}
+		    }
+	    }
+	}
+	
+	.filter-container {
+	    display: flex;
+	    flex-flow: row wrap;
+	    justify-content: space-between;
+	    align-items: center;
+	    gap: 2rem;
+	    
+	    & .filter-content {
+	    	flex: 1 1 350px;
+	    }
+	}
+	
 
 /* Box */
 
