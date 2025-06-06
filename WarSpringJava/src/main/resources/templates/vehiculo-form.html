@@ -83,17 +83,18 @@
         <input type="text" th:field="*{nombreVehiculo}" required />
 
         <label>Tipo:</label>
-        <select th:field="*{tipo}">
+        <select th:field="*{tipoVehiculo}">
             <option value="T1">T1</option>
             <option value="T2">T2</option>
             <!-- Agrega más tipos si es necesario -->
         </select>
-
+	     <label>Puntos de Vida:</label>
+        <input type="number" th:field="*{puntosVida}" required />
         <label>Ataque:</label>
-        <input type="number" th:field="*{ataque}" required />
+        <input type="number" th:field="*{ataqueBase}" required />
 
         <label>Defensa:</label>
-        <input type="number" th:field="*{defensa}" required />
+        <input type="number" th:field="*{defensaBase}" required />
 
         <button type="submit">Guardar</button>
     </form>

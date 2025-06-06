@@ -49,6 +49,6 @@ public class GuerreroController {
     @PostMapping("/guerrero/guardar")
     public String guardarGuerrero(@ModelAttribute Guerrero guerrero) {
         guerreroService.crearGuerrero(guerrero); // Usar crearGuerrero en lugar de guardar
-        return "redirect:/guerreros/listar"; // Redirigir a la lista de guerreros
+        return "redirect:/listado-guerreros"; // Redirigir a la lista de guerreros
     }
 }

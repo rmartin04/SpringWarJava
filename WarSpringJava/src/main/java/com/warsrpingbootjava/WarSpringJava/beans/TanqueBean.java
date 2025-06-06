@@ -144,8 +144,8 @@ public class TanqueBean extends VehiculosGuerra{
 		  // Métodos
 	    public void embarcarGuerreros() throws EmbarcarGuerrerosException, EmbarcarGuerrerosDiferentesException {
 	        for (Guerrero guerrero : getGuerreros()) {
-	            if ("Soldado".equalsIgnoreCase(guerrero.getTipoGuerrero())) {
-	                logger.info("Se ha embarcado al Guerrero " + guerrero.getTipoGuerrero() + " correctamente.");
+	            if ("Soldado".equalsIgnoreCase(guerrero.getTipo())) {
+	                logger.info("Se ha embarcado al Guerrero " + guerrero.getTipo() + " correctamente.");
 	                logger.info(guerrero.toString());
 	            } else {
 	                throw new EmbarcarGuerrerosDiferentesException("No se pueden embarcar otro tipo de guerreros en el " + this.getNombreVehiculo());

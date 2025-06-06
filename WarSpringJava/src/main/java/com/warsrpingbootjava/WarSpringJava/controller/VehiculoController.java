@@ -47,7 +47,7 @@ public class VehiculoController {
     @GetMapping("/vehiculos")
     public String listarVehiculos(Model model) {
         model.addAttribute("vehiculos", vehiculoService.listarVehiculos());
-        return "vehiculos";
+        return "listado-vehiculos";
     }
 
     @GetMapping("/vehiculo/nuevo")
@@ -59,6 +59,6 @@ public class VehiculoController {
     @PostMapping("/vehiculo/guardar")
     public String guardarVehiculo(@ModelAttribute VehiculosGuerra vehiculo) {
         vehiculoService.guardarVehiculo(vehiculo);
-        return "redirect:/vehiculos";
+        return "redirect:/listado-vehiculos";
     }
 }

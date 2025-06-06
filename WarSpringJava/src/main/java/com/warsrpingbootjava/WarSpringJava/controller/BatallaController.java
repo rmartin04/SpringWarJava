@@ -4,20 +4,20 @@ package com.warsrpingbootjava.WarSpringJava.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.warsrpingbootjava.WarSpringJava.service.BatallaService;
 
 @Controller
-@RequestMapping("/batallas")
+@RequestMapping("/batalla")
 public class BatallaController {
 
     @Autowired
     private BatallaService batallaService;
 
-    @PostMapping("/iniciar")
+    @GetMapping("/iniciar")
     public ResponseEntity<String> empezarBatalla(@RequestParam Long idVehiculo1, @RequestParam Long idVehiculo2) {
         try {
             String resultado = batallaService.iniciarBatalla(idVehiculo1, idVehiculo2);
