@@ -1,4 +1,4 @@
-package com.warsrpingbootjava.WarSpringJava.beans;
+package com.warspringbootjava.WarSpringJava.beans;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

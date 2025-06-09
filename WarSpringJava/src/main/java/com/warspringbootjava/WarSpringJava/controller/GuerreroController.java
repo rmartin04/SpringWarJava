@@ -1,5 +1,5 @@
 
-package com.warsrpingbootjava.WarSpringJava.controller;
+package com.warspringbootjava.WarSpringJava.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
-import com.warsrpingbootjava.WarSpringJava.service.GuerreroService;
+import com.warspringbootjava.WarSpringJava.entities.Guerrero;
+import com.warspringbootjava.WarSpringJava.service.GuerreroService;
 
 @Controller
 @RequestMapping("/guerreros")

@@ -1,4 +1,4 @@
-package com.warsrpingbootjava.WarSpringJava.excepciones;
+package com.warspringbootjava.WarSpringJava.excepciones;
 
 public class VidaMaximaPermitidaException extends Exception{
 

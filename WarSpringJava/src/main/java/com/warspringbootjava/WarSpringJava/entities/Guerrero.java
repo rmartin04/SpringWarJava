@@ -1,11 +1,11 @@
-package com.warsrpingbootjava.WarSpringJava.entities;
+package com.warspringbootjava.WarSpringJava.entities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
+import com.warspringbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
+import com.warspringbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
+import com.warspringbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,6 @@ import jakarta.persistence.ManyToOne;
 public  class Guerrero{
     private static final Logger logger = LoggerFactory.getLogger(Guerrero.class);
 
-    private static int contador; 
     // Atributos que van a tener y heredar los guerreros
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,32 +43,12 @@ public  class Guerrero{
     }
 
     // Constructor
-    public Guerrero(String tipoGuerrero, int fuerzaBase, int resistencia)
+    public Guerrero(String nombre, String tipoGuerrero, int fuerzaBase, int resistencia)
             throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException {
-        this.id = (long) ++contador;
+    	this.nombre = nombre;
         this.tipo = tipoGuerrero;
-
-        // Validaciones de ataque y defensa
-        if (fuerzaBase + resistencia > 10) {
-            throw new FuerzaYResistenciaException("La suma del fuerza y la resistencia no puede superar los 10 puntos.");
-        }
-        if (fuerzaBase > 10) {
-            throw new FuerzaGuerreroException("El total de la fuerza no puede ser mayor a 10.");
-        }
-        if (resistencia > 10) {
-            throw new ResistenciaGuerreroException("El total de la resistencia no puede ser mayor a 10.");
-        }
-        // Asignación de valores
-        if (fuerzaBase < 5) {
-            // Si la fuerza es menor a 5, se asignan valores por defecto
-            this.fuerzaBase = 5;
-            // Para que la suma no exceda 10, la resistencia se ajusta al máximo permitido
-            this.resistencia = Math.min(resistencia, 10 - this.fuerzaBase);
-        } else {
-            // Si la fuerza es suficiente, se asignan los valores proporcionados
-            this.fuerzaBase = fuerzaBase;
-            this.resistencia = resistencia;
-        }
+        this.fuerzaBase = fuerzaBase;
+        this.resistencia = resistencia;
     }
 
     // Getter & Setters

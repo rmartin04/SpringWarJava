@@ -1,4 +1,4 @@
-package com.warsrpingbootjava.WarSpringJava.entities;
+package com.warspringbootjava.WarSpringJava.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,12 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.warsrpingbootjava.WarSpringJava.excepciones.AtaqueDefensaException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.AtaqueMuyPoderosoException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.DefensaMuyPoderosaException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
-import com.warsrpingbootjava.WarSpringJava.interfaces.Tripulable;
+import com.warspringbootjava.WarSpringJava.excepciones.AtaqueDefensaException;
+import com.warspringbootjava.WarSpringJava.excepciones.AtaqueMuyPoderosoException;
+import com.warspringbootjava.WarSpringJava.excepciones.DefensaMuyPoderosaException;
+import com.warspringbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
+import com.warspringbootjava.WarSpringJava.excepciones.VidaMaximaPermitidaException;
+import com.warspringbootjava.WarSpringJava.interfaces.Tripulable;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

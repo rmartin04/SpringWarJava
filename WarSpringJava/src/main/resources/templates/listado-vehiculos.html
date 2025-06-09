@@ -1,150 +1,209 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Listado de Vehículos</title>
-    <style>
-        body {
-            background-color: #0b0f1a;
-            color: #e0e6f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #00ffcc;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-
-        nav {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        nav a {
-            color: #00bfff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #ffffff;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #1a1f2b;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #2f374a;
-            text-align: center;
-        }
-
-        th {
-            background-color: #00ffcc;
-            color: #0b0f1a;
-        }
-
-        td {
-            color: #e0e6f0;
-        }
-
-        td a {
-            margin: 0 5px;
-            text-decoration: none;
-            font-size: 18px;
-            transition: transform 0.2s;
-        }
-
-        td a:hover {
-            transform: scale(1.2);
-        }
-
-        a button {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #00bfff;
-            color: #0b0f1a;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        a button:hover {
-            background-color: #009acd;
-            transform: scale(1.05);
-        }
-
-        p {
-            text-align: center;
-            font-size: 18px;
-            margin-top: 20px;
-            color: #ffffff;
-            background-color: #1a1f2b;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
-        }
-    </style>
+    <title>JavaWar | Listado de Guerreros</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript>
+        <link rel="stylesheet" th:href="@{assets/css/noscript.css}" />
+    </noscript>
 </head>
+
+
 <body>
-    <h1>LISTADO VEHÍCULOS</h1>
 
-    <!-- Barra de navegación -->
-    <nav>
-        <a href="/listado-guerreros">Guerreros</a> |
-        <a href="/logout">🔴</a>
-    </nav>
+    <div id="wrapper">
+        <section class="container-cuenta">
+            <div class="content-count">
+                <img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32" />
+                <span>
+                    ¡Hola!
+                    <span class="user-name" th:text="${usuarioLogueado.usuario}"></span>
+                </span>
+            </div>
 
-    <!-- Tabla de vehículos -->
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Vida</th>
-                <th>Ataque</th>
-                <th>Defensa</th>
-                <th>Num Guerreros</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="vehiculo : ${vehiculos}">
-                <td th:text="${vehiculo.nombreVehiculo}">VEH1</td>
-                <td th:text="${vehiculo.tipo}">T1</td>
-                <td th:text="${vehiculo.vida}">1000</td>
-                <td th:text="${vehiculo.ataque}">8</td>
-                <td th:text="${vehiculo.defensa}">2</td>
-                <td th:text="${vehiculo.numGuerreros}">1</td>
-                <td>
-                    <a th:href="@{'/vehiculo/eliminar/' + ${vehiculo.id}}">❌</a>
-                    <a th:href="@{'/vehiculo/añadirGuerrero/' + ${vehiculo.id}}">➕</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <div class="container-logout">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </section>
 
-    <!-- Botones -->
-    <div style="text-align: center;">
-        <a href="/vehiculo/nuevo"><button>Añadir Vehículo</button></a>
-        <a href="/batalla/iniciar"><button>Iniciar Combate</button></a>
+        <header id="header">
+            <h1>LISTADO VEHÍCULOS</h1>
+            <section id="section-filters">
+                <!-- Filtro por tipo -->
+                <article class="filter-container">
+
+                    <div class="filter-content_left">
+                        <a href="#crear-guerreros">Añadir Vehículos</a>
+                        <a th:href="@{/listado-vehiculos}">Lista de Guerreros</a>
+                    </div>
+
+                    <div class="filter-content_right">
+                        <div class="filter-content">
+                            <form method="get" action="/guerreros/filtrar">
+                                <input type="radio" name="tipo" value="T1" id="tipoT1" />
+                                <label for="tipoT1">Tanque</label>
+
+                                <input type="radio" name="tipo" value="T2" id="tipoT2" />
+                                <label for="tipoT2">Nave</label>
+                            </form>
+                        </div>
+
+                        <div class="filter-content">
+                            <form class="search-box">
+                                <input type="text" placeholder=" " />
+                                <button type="reset"></button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Tabla de guerreros -->
+            <article id="section-guerreros">
+                <table class="alt">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Vida</th>
+                            <th>Ataque</th>
+                            <th>Defensa</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="guerrero : ${guerreros}">
+                            <td th:text="${guerrero.nombre}">Guerrero 1</td>
+                            <td th:text="${guerrero.tipo}">T1</td>
+                            <td th:text="${guerrero.vida}">100</td>
+                            <td th:text="${guerrero.ataque}">10</td>
+                            <td th:text="${guerrero.defensa}">5</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 1</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                            <td>
+                                <!--                         <a th:href="@{redirect:/guerreros/editar/{id}(id=${guerrero.id})}">Editar</a> -->
+                                <!--                         <a th:href="@{redirect:/guerreros/eliminar/{id}(id=${guerrero.id})}">Eliminar</a> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 2</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 3</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 4</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 5</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 6</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 7</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 8</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">Total Guerreros:0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </article>
+
+        </header>
+
+        <main id="main">
+            <!-- crear-guerrero -->
+            <article id="crear-guerreros">
+                <h2 class="major">Contacto</h2>
+                <form method="post" action="#">
+                    <div class="fields">
+                        <div class="field half">
+                            <label for="name">Nombre</label>
+                            <input type="text" name="name" id="name" />
+                        </div>
+                        <div class="field half">
+                            <label for="email">Email</label>
+                            <input type="text" name="email" id="email" />
+                        </div>
+                        <div class="field">
+                            <label for="message">Mensaje</label>
+                            <textarea name="message" id="message" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <ul class="actions">
+                        <li><input type="submit" value="Enviar" class="primary" /></li>
+                        <li><input type="reset" value="Borrar" /></li>
+                    </ul>
+                </form>
+                <ul class="icons">
+                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                </ul>
+            </article>
+        </main>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">&copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.</p>
+        </footer>
+
+        <!-- BG -->
+        <div id="bg" style="z-index: -1;"></div>
+
     </div>
-
-    <!-- Resultado de batalla -->
-    <p th:if="${mensaje != null}" th:text="${mensaje}">El vehículo XXXX ha ganado la batalla</p>
+    <!-- Scripts -->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/browser.min.js}"></script>
+    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script th:src="@{/assets/js/util.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
 </body>
+
 </html>

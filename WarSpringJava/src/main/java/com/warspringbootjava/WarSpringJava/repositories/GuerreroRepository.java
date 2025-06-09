@@ -1,8 +1,8 @@
-package com.warsrpingbootjava.WarSpringJava.repositories;
+package com.warspringbootjava.WarSpringJava.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
+import com.warspringbootjava.WarSpringJava.entities.Guerrero;
 
 public interface GuerreroRepository extends JpaRepository<Guerrero, Long> {
 	

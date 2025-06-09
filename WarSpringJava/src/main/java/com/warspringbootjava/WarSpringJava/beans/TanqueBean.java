@@ -1,4 +1,6 @@
-package com.warsrpingbootjava.WarSpringJava.beans;
+package com.warspringbootjava.WarSpringJava.beans;
+
+
 
 import java.util.List;
 
@@ -6,31 +8,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
-import com.warsrpingbootjava.WarSpringJava.entities.VehiculosGuerra;
-import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosDiferentesException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
+import com.warspringbootjava.WarSpringJava.entities.Guerrero;
+import com.warspringbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warspringbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosDiferentesException;
+import com.warspringbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
 @Component
-public class NaveDestructoraBean extends VehiculosGuerra {
+public class TanqueBean extends VehiculosGuerra{
 	
-	private static final Logger logger = LoggerFactory.getLogger(VehiculosGuerra.class);
+	 private static final Logger logger = LoggerFactory.getLogger(VehiculosGuerra.class);
 	
-	
-	 	private Long idNaveDestructora;
-	    private int puntosVida;
-	    private String nombreVehiculo;
-	    private String tipoVehiculo;	   
-	    private int ataqueBase;	 
+	    private Long idTanque;
+	    private int puntosVida;	   
+	    private String nombreVehiculo;	  
+	    private String tipoVehiculo;	  
+	    private int ataqueBase;	   
 	    private int defensaBase;	  
 	    private List<Guerrero> guerreros;
-
-
-	    public NaveDestructoraBean() {}
 	    
-	    
+		public TanqueBean() {}
+		
+		
 
-
-		public NaveDestructoraBean(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
+		public TanqueBean(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
 				List<Guerrero> guerreros) {
 			super();
 			this.nombreVehiculo = nombreVehiculo;
@@ -42,10 +41,21 @@ public class NaveDestructoraBean extends VehiculosGuerra {
 
 
 
+		public TanqueBean(int puntosVida, String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
+				List<Guerrero> guerreros) {
+			super();
+			this.puntosVida = puntosVida;
+			this.nombreVehiculo = nombreVehiculo;
+			this.tipoVehiculo = tipoVehiculo;
+			this.ataqueBase = ataqueBase;
+			this.defensaBase = defensaBase;
+			this.guerreros = guerreros;
+		}
 
-		public NaveDestructoraBean(int puntosVida, String nombreVehiculo, String tipoVehiculo, int ataqueBase,
+		public TanqueBean(Long idTanque, int puntosVida, String nombreVehiculo, String tipoVehiculo, int ataqueBase,
 				int defensaBase, List<Guerrero> guerreros) {
 			super();
+			this.idTanque = idTanque;
 			this.puntosVida = puntosVida;
 			this.nombreVehiculo = nombreVehiculo;
 			this.tipoVehiculo = tipoVehiculo;
@@ -54,95 +64,67 @@ public class NaveDestructoraBean extends VehiculosGuerra {
 			this.guerreros = guerreros;
 		}
 
-
-		public NaveDestructoraBean(Long idNaveDestructora, int puntosVida, String nombreVehiculo, String tipoVehiculo,
-				int ataqueBase, int defensaBase, List<Guerrero> guerreros) {
-			super();
-			this.idNaveDestructora = idNaveDestructora;
-			this.puntosVida = puntosVida;
-			this.nombreVehiculo = nombreVehiculo;
-			this.tipoVehiculo = tipoVehiculo;
-			this.ataqueBase = ataqueBase;
-			this.defensaBase = defensaBase;
-			this.guerreros = guerreros;
+		public Long getIdTanque() {
+			return idTanque;
 		}
 
-
-		public Long getIdNaveDestructora() {
-			return idNaveDestructora;
+		public void setIdTanque(Long idTanque) {
+			this.idTanque = idTanque;
 		}
-
-
-		public void setIdNaveDestructora(Long idNaveDestructora) {
-			this.idNaveDestructora = idNaveDestructora;
-		}
-
 
 		public int getPuntosVida() {
 			return puntosVida;
 		}
 
-
 		public void setPuntosVida(int puntosVida) {
 			this.puntosVida = puntosVida;
 		}
-
 
 		public String getNombreVehiculo() {
 			return nombreVehiculo;
 		}
 
-
 		public void setNombreVehiculo(String nombreVehiculo) {
 			this.nombreVehiculo = nombreVehiculo;
 		}
-
 
 		public String getTipoVehiculo() {
 			return tipoVehiculo;
 		}
 
-
 		public void setTipoVehiculo(String tipoVehiculo) {
 			this.tipoVehiculo = tipoVehiculo;
 		}
-
 
 		public int getAtaqueBase() {
 			return ataqueBase;
 		}
 
-
 		public void setAtaqueBase(int ataqueBase) {
 			this.ataqueBase = ataqueBase;
 		}
-
 
 		public int getDefensaBase() {
 			return defensaBase;
 		}
 
-
 		public void setDefensaBase(int defensaBase) {
 			this.defensaBase = defensaBase;
 		}
-
 
 		public List<Guerrero> getGuerreros() {
 			return guerreros;
 		}
 
-
 		public void setGuerreros(List<Guerrero> guerreros) {
 			this.guerreros = guerreros;
 		}
 
-
 		@Override
 		public String toString() {
 			StringBuilder builder = new StringBuilder();
-			builder.append("NaveDestructoraDTO [idNaveDestructora=");
-			builder.append(idNaveDestructora);
+			builder.append("TanqueDTO [idTanque=");
+			builder.append(idTanque);
 			builder.append(", puntosVida=");
 			builder.append(puntosVida);
 			builder.append(", nombreVehiculo=");
@@ -158,10 +140,11 @@ public class NaveDestructoraBean extends VehiculosGuerra {
 			builder.append("]");
 			return builder.toString();
 		}
-	    
+		
+		  // Métodos
 	    public void embarcarGuerreros() throws EmbarcarGuerrerosException, EmbarcarGuerrerosDiferentesException {
 	        for (Guerrero guerrero : getGuerreros()) {
-	            if ("Bicho".equalsIgnoreCase(guerrero.getTipo())) {
+	            if ("Soldado".equalsIgnoreCase(guerrero.getTipo())) {
 	                logger.info("Se ha embarcado al Guerrero " + guerrero.getTipo() + " correctamente.");
 	                logger.info(guerrero.toString());
 	            } else {
@@ -169,6 +152,11 @@ public class NaveDestructoraBean extends VehiculosGuerra {
 	            }
 	        }
 	    }
+		
+		
+		
+		
+	    
 	    
 
 }

@@ -1,117 +1,215 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Listado de Guerreros</title>
+    <title>JavaWar | Listado de Guerreros</title>
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" th:href="@{assets/css/noscript.css}" /></noscript>
+    <noscript>
+        <link rel="stylesheet" th:href="@{assets/css/noscript.css}" />
+    </noscript>
 </head>
 
-<style>
-	#mains {
-	    width: 100%;
-	}
-</style>
 
 <body>
 
-<div id="wrapper">
-	<section class="container-cuenta">
-                    
-    <div class="container-count">
-    	<img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32"/>
+    <div id="wrapper">
+        <section class="container-cuenta">
+            <div class="content-count">
+                <img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32" />
+                <span>
+                    ¡Hola!
+                    <span class="user-name" th:text="${usuarioLogueado.usuario}"></span>
+                </span>
+            </div>
+
+            <div class="container-logout">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </section>
+
+        <header id="header">
+            <h1>LISTADO GUERREROS</h1>
+            <section id="section-filters">
+                <!-- Filtro por tipo -->
+                <article class="filter-container">
+
+                    <div class="filter-content_left">
+                        <a href="#crear-guerreros">Añadir Guerrero</a>
+                        <a th:href="@{/listado-vehiculos}">Lista de Vehículos</a>
+                    </div>
+
+                    <div class="filter-content_right">
+                        <div class="filter-content">
+                            <form method="get" action="/guerreros/filtrar">
+                                <input type="radio" name="tipo" value="T1" id="tipoT1" />
+                                <label for="tipoT1">Alienigenas</label>
+
+                                <input type="radio" name="tipo" value="T2" id="tipoT2" />
+                                <label for="tipoT2">Soldado</label>
+                            </form>
+                        </div>
+
+                        <div class="filter-content">
+                            <form class="search-box">
+                                <input type="text" placeholder=" " />
+                                <button type="reset"></button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Tabla de guerreros -->
+            <article id="section-guerreros">
+                <table class="alt">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Vida</th>
+                            <th>Ataque</th>
+                            <th>Defensa</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="guerrero : ${guerreros}">
+                            <td th:text="${guerrero.nombre}">Guerrero 1</td>
+                            <td th:text="${guerrero.tipo}">T1</td>
+                            <td th:text="${guerrero.vida}">100</td>
+                            <td th:text="${guerrero.ataque}">10</td>
+                            <td th:text="${guerrero.defensa}">5</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 1</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                            <td>
+                                <!--                         <a th:href="@{redirect:/guerreros/editar/{id}(id=${guerrero.id})}">Editar</a> -->
+                                <!--                         <a th:href="@{redirect:/guerreros/eliminar/{id}(id=${guerrero.id})}">Eliminar</a> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 2</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 3</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 4</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 5</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 6</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 7</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Guerrero 8</td>
+                            <td>T1</td>
+                            <td>1000</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">Total Guerreros:0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </article>
+
+        </header>
+
+        <main id="main">
+            <!-- crear-guerrero -->
+            <article id="crear-guerreros">
+                <h2 class="major">Contacto</h2>
+                <form method="post" action="#">
+                   <div class="fields">
+                       <div class="field">
+                           <label for="name">Nombre</label>
+                           <input type="text" name="name" id="name" />
+                       </div>
+                       
+                        <div class="field">
+                            <label for="ataque">Ataque</label>
+                            <input type="number" name="ataque" id="ataque" />
+                        </div>
+                        <div class="field">
+                            <label for="defensa">Defensa</label>
+                            <input type="number" name="defensa" id="defensa" />
+                        </div>
+
+	                   	
+                       <div class="field">
+                           <input type="radio" name="tipo" value="T1" id="tipoT1" />
+                           <label for="tipoT1">Alienigenas</label>
+
+                           <input type="radio" name="tipo" value="T2" id="tipoT2" />
+                           <label for="tipoT2">Soldado</label>
+                       </div>
+
+                   	
+                    <ul class="actions">
+                        <li><input type="submit" value="Añadir" class="primary" /></li>
+                        <li><input type="reset" value="Borrar" /></li>
+                    </ul>
+                </form>
+         
+            </article>
+        </main>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">&copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.</p>
+        </footer>
+
+        <!-- BG -->
+        <div id="bg" style="z-index: -1;"></div>
+
     </div>
-  	
-  	<div class="container-logout">
-		<form method="post" action="/logout">
-			<button type="submit" class="button">Cerrar sesión</button>
-		</form>
-  	</div>
-  </section>
-	
-	<header id="header">
-		<h1>LISTADO GUERREROS</h1>
-	</header>
-    
-	<main id="mains">
-		<!-- Filtro por tipo -->
-		<section class="filter-container">		
-			<div class="filter-content">
-			    <form method="get" action="/guerreros/filtrar">
-			        <label for="tipo">Tipo:</label>
-			        <select name="tipo" id="tipo">
-			            <option value="">Todos</option>
-			            <option value="T1">T1</option>
-			            <option value="T2">T2</option>
-			        </select>
-			        <button type="submit">Filtrar</button>
-			    </form>
-		    </div>
-		    
-		    <div class="filter-content">
-			    <form method="get" action="/guerreros/filtrar">
-			        <label for="tipo">Tipo:</label>
-			        <select name="tipo" id="tipo">
-			            <option value="">Todos</option>
-			            <option value="T1">T1</option>
-			            <option value="T2">T2</option>
-			        </select>
-			        <button type="submit">Filtrar</button>
-			    </form>
-		    </div>
-		    
-		    <div class="filter-content">
-			    <form method="get" action="/guerreros/filtrar">
-			        <label for="tipo">Tipo:</label>
-			        <select name="tipo" id="tipo">
-			            <option value="">Todos</option>
-			            <option value="T1">T1</option>
-			            <option value="T2">T2</option>
-			        </select>
-			        <button type="submit">Filtrar</button>
-			    </form>
-		    </div>	
-		</section>
-	    
-	    <!-- Tabla de guerreros -->
-	    <table>
-	        <thead>
-	            <tr>
-	                <th>Nombre</th>
-	                <th>Tipo</th>
-	                <th>Vida</th>
-	                <th>Ataque</th>
-	                <th>Defensa</th>
-	                <th>Num Guerreros</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr th:each="guerrero : ${guerreros}">
-	                <td th:text="${guerrero.nombre}">Guerrero 1</td>
-	                <td th:text="${guerrero.tipo}">T1</td>
-	                <td th:text="${guerrero.vida}">100</td>
-	                <td th:text="${guerrero.ataque}">10</td>
-	                <td th:text="${guerrero.defensa}">5</td>
-	                <td th:text="${guerrero.numGuerreros}">1</td>
-	            </tr>
-	        </tbody>
-	    </table>
-	</main>
-  
-	<footer id="footer">
-    	<!-- Botón para añadir guerrero -->	
-	    <a href="guerreros/guerrero/nuevo"><button>Añadir Guerrero</button></a>
-	</footer>
-	
-	<!-- BG -->
-	<div id="bg" style="z-index: -1;"></div>
-    
-</div>
     <!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/browser.min.js}"></script>
+    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script th:src="@{/assets/js/util.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
 </body>
+
 </html>

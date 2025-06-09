@@ -1,8 +1,8 @@
-package com.warsrpingbootjava.WarSpringJava.beans;
+package com.warspringbootjava.WarSpringJava.beans;
 
 import org.springframework.stereotype.Component;
 
-import com.warsrpingbootjava.WarSpringJava.entities.Guerrero;
+import com.warspringbootjava.WarSpringJava.entities.Guerrero;
 
 
 @Component

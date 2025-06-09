@@ -5,8 +5,8 @@
 		<title>JavaWar | Inicio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" th:href="@{assets/css/noscript.css}" /></noscript>
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+		<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	</head>
 	<body class="is-preload">
 
@@ -14,15 +14,18 @@
 			<div id="wrapper">
 			
 			    <section class="container-cuenta">
-                    
-                    <div class="container-count">
+                    <div class="content-count">
                     	<img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32"/>
+                    	<span>
+							¡Hola!
+                    		<span class="user-name" th:text="${usuarioLogueado.usuario}"></span>                    	
+                    	</span>
                     </div>
 			    	
 			    	<div class="container-logout">
-                		<form method="post" action="/logout">
-                			<button type="submit" class="button">Cerrar sesión</button>
-               			</form>
+                		<form th:action="@{/logout}" method="post">
+						  <button type="submit">Cerrar sesión</button>
+						</form>
 			    	</div>
 			    </section>
 
@@ -43,8 +46,7 @@
 				            <li><a href="#manual">Manual</a></li>
 				            <li><a href="#guerreros">Guerreros</a></li>
 				            <li><a href="#naves">Naves</a></li>
-				            <li><a href="#contacto">Contacto</a></li>
-				            <li><a href="#elementos">Elementos</a></li>
+				            <li><a href="#reglas">Reglas</a></li>
 				        </ul>
 				    </nav>
 				</header>
@@ -54,34 +56,40 @@
 
 						 <!-- manual -->
 					    <article id="manual">
-					        <h2 class="major">Introducción</h2>
-					        <span class="image main"><img src="images/pic01.jpg" alt="Batalla épica" /></span>
+					        <h2 class="major">Instrucciones</h2>
+					        <span class="image main">
+							  <img th:src="@{/assets/img/pic01.jpg}" alt="Batalla épica" />
+							</span>
 					        <p>Bienvenido a JavaWar, la plataforma donde los guerreros digitales luchan por el control. Aquí podrás registrarte, iniciar sesión y unirte a la batalla.<br />
-					        ¿Listo para demostrar tu poder? Descubre nuestras <a href="#work">batallas activas</a> y prepárate para el combate.</p>
+					        ¿Listo para demostrar tu poder? Descubre nuestras <a href="#work">batallas activas</a> y prepárate para el combate.</p>		 
 					        <p>Gestiona tu cuenta, participa en enfrentamientos, y evoluciona para convertirte en el guerrero definitivo. La guerra digital está por comenzar, ¿te unes?</p>
 					    </article>
 					
 					    <!-- guerreros -->
 					    <article id="guerreros">
-					        <h2 class="major">Juega</h2>
-					        <span class="image main"><img src="images/pic02.jpg" alt="Estrategia y batalla" /></span>
+					        <h2 class="major">Tus guerreros</h2>
+					        <span class="image main">
+							  <img th:src="@{/assets/img/pic01.jpg}" alt="Batalla épica" />
+							</span>
 					        <p>En esta sección podrás ver las batallas en curso, retar a otros usuarios y mejorar tus estrategias para ganar cada combate.</p>
 					        <p>Participa en torneos, sube en el ranking de guerreros y demuestra tus habilidades. El trabajo duro y la estrategia serán la clave para la victoria.</p>
-					        <a href="/listado-guerreros" class="button">Ver Guerreros</a>
+					        <a th:href="@{/listado-guerreros}" class="button">Ver Guerreros</a>
 					    </article>
 					
 					    <!-- naves -->
 					    <article id="naves">
-					        <h2 class="major">Acerca de JavaWar</h2>
-					        <span class="image main"><img src="images/pic03.jpg" alt="Acerca de JavaWar" /></span>
+					        <h2 class="major">Tus naves</h2>
+					        <span class="image main">
+							  <img th:src="@{/assets/img/pic01.jpg}" alt="Batalla épica" />
+							</span>
 					        <p>JavaWar es un proyecto dedicado a crear una experiencia interactiva donde la gestión de usuarios y la competencia digital se unen. Desarrollado con tecnología Java y Spring Boot para ofrecer un rendimiento robusto y seguro.</p>
 					        <p>Nuestro objetivo es fomentar una comunidad de jugadores apasionados por la programación y la batalla digital, combinando diversión y aprendizaje.</p>
-					        <a href="/listado-vehiculos" class="button">Ver Vehiculos</a>
+					        <a th:href="@{/listado-vehiculos}" class="button">Ver Vehículos</a>
 					    </article>
 
                          <!-- Elements -->
-                         <article id="elementos">
-                             <h2 class="major">Elementos</h2>
+                         <article id="reglas">
+                             <h2 class="major">Reglas</h2>
                              <p>Esta sección está destinada a mostrar los diferentes elementos y componentes que puedes encontrar en JavaWar, desde formularios de registro hasta tablas de clasificación.</p>
                              <ul class="features">
                                  <li>
@@ -98,37 +106,6 @@
                                  </li>
                              </ul>
                          </article>	
-                         
-						<!-- contacto -->
-							<article id="contacto">
-								<h2 class="major">Contacto</h2>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<label for="name">Nombre</label>
-											<input type="text" name="name" id="name" />
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
-										</div>
-										<div class="field">
-											<label for="message">Mensaje</label>
-											<textarea name="message" id="message" rows="4"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Enviar" class="primary" /></li>
-										<li><input type="reset" value="Borrar" /></li>
-									</ul>
-								</form>
-								<ul class="icons">
-									<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</article>
 
 						</main>
 
@@ -143,11 +120,11 @@
 			<div id="bg"></div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script th:src="@{/assets/js/jquery.min.js}"></script>
+			<script th:src="@{/assets/js/browser.min.js}"></script>
+			<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+			<script th:src="@{/assets/js/util.js}"></script>
+			<script th:src="@{/assets/js/main.js}"></script>
 
 	</body>
 </html>

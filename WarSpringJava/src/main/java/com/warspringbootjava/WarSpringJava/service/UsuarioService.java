@@ -1,13 +1,13 @@
-package com.warsrpingbootjava.WarSpringJava.service;
+package com.warspringbootjava.WarSpringJava.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.warsrpingbootjava.WarSpringJava.beans.UsuarioBean;
-import com.warsrpingbootjava.WarSpringJava.entities.Usuario;
-import com.warsrpingbootjava.WarSpringJava.excepciones.UsuarioExisteException;
-import com.warsrpingbootjava.WarSpringJava.excepciones.UsuarioNoEncontradoException;
-import com.warsrpingbootjava.WarSpringJava.repositories.UsuarioRepository;
+import com.warspringbootjava.WarSpringJava.beans.UsuarioBean;
+import com.warspringbootjava.WarSpringJava.entities.Usuario;
+import com.warspringbootjava.WarSpringJava.excepciones.UsuarioExisteException;
+import com.warspringbootjava.WarSpringJava.excepciones.UsuarioNoEncontradoException;
+import com.warspringbootjava.WarSpringJava.repositories.UsuarioRepository;
 
 @Service
 public class UsuarioService {

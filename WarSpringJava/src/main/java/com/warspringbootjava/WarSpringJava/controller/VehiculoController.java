@@ -1,5 +1,5 @@
 
-package com.warsrpingbootjava.WarSpringJava.controller;
+package com.warspringbootjava.WarSpringJava.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.warsrpingbootjava.WarSpringJava.entities.VehiculosGuerra;
-import com.warsrpingbootjava.WarSpringJava.service.VehiculoService;
+import com.warspringbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warspringbootjava.WarSpringJava.service.VehiculoService;
 
 @Controller
 public class VehiculoController {

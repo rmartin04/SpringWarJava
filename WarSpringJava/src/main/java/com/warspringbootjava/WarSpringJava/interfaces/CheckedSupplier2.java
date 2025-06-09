@@ -1,4 +1,4 @@
-package com.warsrpingbootjava.WarSpringJava.interfaces;
+package com.warspringbootjava.WarSpringJava.interfaces;
 
 public interface CheckedSupplier2 {
 
