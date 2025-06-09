@@ -1,12 +1,5 @@
 package com.warspringbootjava.WarSpringJava.entities;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.warspringbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
-import com.warspringbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
-import com.warspringbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,24 +7,38 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
 
 public  class Guerrero{
-    private static final Logger logger = LoggerFactory.getLogger(Guerrero.class);
 
     // Atributos que van a tener y heredar los guerreros
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+	
+	@NotBlank(message = "El nombre es obligatorio")
+	@Size(min = 3, max = 20)
 	@Column(name = "NOMBRE")
     private String nombre;
+	
+	@NotBlank(message = "El tipo de guerrero es obligatorio")
 	@Column(name = "TIPO_GUERRERO")
     private String tipo;
+	
+    @Min(value = 0, message = "La fuerza mínima es 0")
+    @Max(value = 10, message = "La fuerza máxima es 10")
 	@Column(name = "FUERZA_BASE")
     private int fuerzaBase;
+	
+    @Min(value = 0, message = "La resistencia mínima es 0")
+    @Max(value = 10, message = "La resistencia máxima es 10")
 	@Column(name = "RESISTENCIA")
     private int resistencia;
 	
@@ -43,8 +50,7 @@ public  class Guerrero{
     }
 
     // Constructor
-    public Guerrero(String nombre, String tipoGuerrero, int fuerzaBase, int resistencia)
-            throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException {
+    public Guerrero(String nombre, String tipoGuerrero, int fuerzaBase, int resistencia) {
     	this.nombre = nombre;
         this.tipo = tipoGuerrero;
         this.fuerzaBase = fuerzaBase;

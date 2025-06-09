@@ -1,54 +1,62 @@
-
+ 
 package com.warspringbootjava.WarSpringJava.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.warspringbootjava.WarSpringJava.entities.Guerrero;
 import com.warspringbootjava.WarSpringJava.service.GuerreroService;
 
+import jakarta.validation.Valid;
+
 @Controller
 @RequestMapping("/guerreros")
 public class GuerreroController {
 
-    @Autowired
-    private GuerreroService guerreroService;
+    private final GuerreroService guerreroService;
 
-    @PostMapping("/crear")
-    public Guerrero crearGuerrero(@RequestBody Guerrero guerrero) {
-        return guerreroService.crearGuerrero(guerrero);
+    public GuerreroController(GuerreroService guerreroService) {
+        this.guerreroService = guerreroService;
     }
-
-    @GetMapping("/{id}")
-    public Guerrero obtenerGuerrero(@PathVariable Long id) {
-        Optional<Guerrero> guerrero = guerreroService.obtenerGuerreroPorId(id);
-        return guerrero.orElse(null); // Manejo del Optional
+    
+    @GetMapping
+    public String listarGuerreros(Model model) {
+        List<Guerrero> guerreros = guerreroService.listarGuerreros();
+        model.addAttribute("guerreros", guerreros);
+        return "listado-guerreros";
     }
-
-    @GetMapping("/listar")
-    public List<Guerrero> listarGuerreros() {
-        return guerreroService.listarGuerreros();
-    }
-
-    @GetMapping("/guerrero/nuevo")
-    public String mostrarFormularioGuerrero(Model model) {
+    
+    @GetMapping("/nuevo")
+    public String nuevo(Model model) {
         model.addAttribute("guerrero", new Guerrero());
-        return "guerrero-form";
+        return "crear-guerrero";
     }
 
-    @PostMapping("/guerrero/guardar")
-    public String guardarGuerrero(@ModelAttribute Guerrero guerrero) {
-        guerreroService.crearGuerrero(guerrero); // Usar crearGuerrero en lugar de guardar
-        return "redirect:/listado-guerreros"; // Redirigir a la lista de guerreros
+    @PostMapping
+    public String crearGuerrero(
+        @Valid @ModelAttribute("guerrero") Guerrero guerrero,
+        BindingResult br,
+        Model model
+    ) {
+        if (br.hasErrors()) {
+            model.addAttribute("error", "Corrige los datos del guerrero.");
+            return "crear-guerrero";
+        }
+        try {
+            guerreroService.crearGuerrero(guerrero);
+            model.addAttribute("success", "Guerrero creado exitosamente.");
+            model.addAttribute("guerrero", new Guerrero()); // limpia el formulario
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "crear-guerrero";
     }
+
 }

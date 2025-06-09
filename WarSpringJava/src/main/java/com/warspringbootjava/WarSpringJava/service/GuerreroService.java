@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.warspringbootjava.WarSpringJava.entities.Guerrero;
+import com.warspringbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
+import com.warspringbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
+import com.warspringbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
 import com.warspringbootjava.WarSpringJava.repositories.GuerreroRepository;
 
 @Service
@@ -16,7 +19,20 @@ public class GuerreroService {
     @Autowired
     private GuerreroRepository guerreroRepository;
 
-    public Guerrero crearGuerrero(Guerrero guerrero) {
+    public Guerrero crearGuerrero(Guerrero guerrero) throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException{
+    	int fuerza = guerrero.getFuerzaBase();
+    	int resistencia = guerrero.getResistencia();
+    	int fuerzaYResistencia = fuerza + resistencia;
+		
+    	if (fuerza < 0 || fuerza > 10) {
+            throw new FuerzaGuerreroException("La fuerza debe estar entre 0 y 10");
+        }
+        if (resistencia < 0 || resistencia > 10) {
+            throw new ResistenciaGuerreroException("La resistencia debe estar entre 0 y 10");
+        }
+        if (fuerzaYResistencia > 10) {
+        	throw new FuerzaYResistenciaException("La fuerza y resistencia deben estar entre 0 y 10");
+        }
         return guerreroRepository.save(guerrero);
     }
 
@@ -27,6 +43,10 @@ public class GuerreroService {
     public List<Guerrero> listarGuerreros() {
         return guerreroRepository.findAll();
     }
+    
+    public List<Guerrero> buscarGuerrerosPorTipo(String tipo) {
+		return guerreroRepository.findByTipo(tipo);
+	}
 
     public Guerrero actualizarGuerrero(Guerrero guerrero) {
         if (guerrero.getId() == null || !guerreroRepository.existsById(guerrero.getId())) {

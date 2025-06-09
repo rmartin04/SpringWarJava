@@ -1015,6 +1015,10 @@ input, select, textarea {
 
 		table tfoot {
 			border-top: solid 2px #ffffff;
+			
+			td {
+				text-align: center;
+			}
 		}
 
 		table.alt {
@@ -1150,8 +1154,14 @@ input, select, textarea {
 /*Sections*/
 
     #section-filters,
-    #section-guerreros {
+    #section-guerreros,
+    #mains {
+        max-width: 1200px;
         width: 100%;
+    }
+    
+    #crear-guerreros-form {
+    	max-width: 700px;
     }
     
     #section-guerreros {

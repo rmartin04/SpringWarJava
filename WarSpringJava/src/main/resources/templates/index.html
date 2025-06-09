@@ -16,10 +16,7 @@
 			    <section class="container-cuenta">
                     <div class="content-count">
                     	<img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32"/>
-                    	<span>
-							¡Hola!
-                    		<span class="user-name" th:text="${usuarioLogueado.usuario}"></span>                    	
-                    	</span>
+                   		<span th:if="${usuarioLogueado}" th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'"></span>                   	
                     </div>
 			    	
 			    	<div class="container-logout">
@@ -73,7 +70,7 @@
 							</span>
 					        <p>En esta sección podrás ver las batallas en curso, retar a otros usuarios y mejorar tus estrategias para ganar cada combate.</p>
 					        <p>Participa en torneos, sube en el ranking de guerreros y demuestra tus habilidades. El trabajo duro y la estrategia serán la clave para la victoria.</p>
-					        <a th:href="@{/listado-guerreros}" class="button">Ver Guerreros</a>
+					        <a th:href="@{/guerreros}" class="button">Ver Guerreros</a>
 					    </article>
 					
 					    <!-- naves -->
