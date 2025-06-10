@@ -21,6 +21,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -33,14 +37,29 @@ public  class VehiculosGuerra implements Tripulable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+	// Atributos que van a tener los vehículos de guerra
+	// Puntos de vida del vehículo, por defecto 1000
+	@Min(value = 0, message = "Los puntos de vida mínimos son 0")
+	@Max(value = 1000, message = "Los puntos de vida máximos son 1000")
 	@Column(name = "PUNTOS_VIDA")
     private int puntosVida;
+	
+	@NotBlank(message = "El nombre es obligatorio")
+	@Size(min = 3, max = 20)
 	@Column(name = "NOMBRE_VEHICULO")
     private String nombreVehiculo;
+	@NotBlank(message = "El tipo de vehiculo es obligatorio")
 	@Column(name = "TIPO_VEHICULO")
     private String tipoVehiculo;
+	// Atributos de ataque y defensa
+	// Estos atributos no pueden ser negativos ni superar el total de 10
+	@Min(value = 0, message = "El ataque mínimo es 0")
+    @Max(value = 10, message = "El ataque máximo es 10")
 	@Column(name = "ATAQUE_BASE")
     private int ataqueBase;
+	
+	@Min(value = 0, message = "La defensa mínima es 0")
+	@Max(value = 10, message = "La defensa máxima es 10")
 	@Column(name = "DEFENSA_BASE")
     private int defensaBase;
 	
@@ -53,49 +72,14 @@ public  class VehiculosGuerra implements Tripulable {
 
     // Constructores
     public VehiculosGuerra(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
-            List<Guerrero> guerreros) throws VidaMaximaPermitidaException, AtaqueDefensaException,
-            AtaqueMuyPoderosoException, DefensaMuyPoderosaException, EmbarcarGuerrerosException {
-        if (puntosVida > 1000) {
-            throw new VidaMaximaPermitidaException("No se puede tener más de 1000 puntos de vida. ¡Deja de hacer trampa tronco!");
-        } else {
-            this.puntosVida = 1000;
-        }
-
-        this.nombreVehiculo = nombreVehiculo;
-        this.tipoVehiculo = tipoVehiculo;
-
-        // Validaciones de ataque y defensa
-        if (ataqueBase + defensaBase > 10) {
-            throw new AtaqueDefensaException("La suma del ataque y la defensa no puede superar los 10 puntos. ¡Ojito que te veo!");
-        }
-        if (ataqueBase > 10) {
-            throw new AtaqueMuyPoderosoException("El total del ataque no puede ser mayor a 10. ¡Jummm!");
-        }
-        if (defensaBase > 10) {
-            throw new DefensaMuyPoderosaException("El total de la defensa no puede ser mayor a 10. ¡Jummm!");
-        }
-
-        // Asignación de valores con comprobación de ataque mínimo
-        if (ataqueBase < 5) {
-            // Si el ataque es menor a 5, se asignan valores por defecto
-            this.ataqueBase = 5;
-            this.defensaBase = 5;
-        } else {
-            this.ataqueBase = ataqueBase;
-            this.defensaBase = defensaBase;
-        }
-
-        // Validación y asignación de la lista de guerreros
-        if (guerreros == null) {
-            this.guerreros = new ArrayList<>();
-        } else {
-            if (guerreros.size() > 10) {
-                throw new EmbarcarGuerrerosException("No se pueden embarcar más de 10 guerreros. ¡TRAMPOSO!");
-            } else {
-                // Se asigna una copia para evitar modificaciones externas
-                this.guerreros = new ArrayList<>(guerreros);
-            }
-        }
+            List<Guerrero> guerreros)  {
+      
+           this.puntosVida = 1000; // Valor por defecto
+           this.nombreVehiculo = nombreVehiculo;
+           this.tipoVehiculo = tipoVehiculo;
+           this.ataqueBase = ataqueBase;
+           this.defensaBase = defensaBase;
+           this.guerreros = guerreros;
     }
 
     // Getters & Setters
