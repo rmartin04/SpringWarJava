@@ -26,7 +26,7 @@ public class GuerreroController {
         this.guerreroService = guerreroService;
     }
     
-    @GetMapping
+    @GetMapping("/listado")
     public String listarGuerreros(Model model) {
         List<Guerrero> guerreros = guerreroService.listarGuerreros();
         model.addAttribute("guerreros", guerreros);

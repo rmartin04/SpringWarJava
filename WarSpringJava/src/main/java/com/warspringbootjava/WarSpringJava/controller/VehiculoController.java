@@ -73,7 +73,7 @@ public class VehiculoController {
     @GetMapping("/vehiculo/nuevo")
     public String mostrarFormularioVehiculo(Model model) {
         model.addAttribute("vehiculo", new VehiculosGuerra());
-        return "vehiculo-form";
+        return "crear-vehiculo";
     }
 
     @PostMapping("/vehiculo/guardar")
