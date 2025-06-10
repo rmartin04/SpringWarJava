@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>JavaWar | Listado de Guerreros</title>
 <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/loading.css}" />
 <noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/noscript.css}" />
 </noscript>
@@ -52,10 +53,10 @@
 								<input type="radio" name="tipo" value="" id="tipoAll" checked />
 								<label for="tipoAll">Todos</label>
 								
-								<input type="radio" name="tipo" value="T1" id="tipoT1" /> 
+								<input type="radio" name="tipo" value="Alienigena" id="tipoT1" /> 
 								<label for="tipoT1">Alienigenas</label> 
 								
-								<input type="radio" name="tipo" value="T2" id="tipoT2" /> 
+								<input type="radio" name="tipo" value="Soldado" id="tipoT2" /> 
 								<label for="tipoT2">Soldado</label>
 							</div>
 
@@ -105,7 +106,6 @@
 
 			</article>
 
-			<div id="loading" style="display: none;">Cargando...</div>
 
 		</main>
 
@@ -120,6 +120,7 @@
 		<div id="bg" style="z-index: -1;"></div>
 
 	</div>
+	<div id="loading" style="display: none;" class="loader"></div>
 	<!-- Scripts -->
 	<script th:inline="javascript">
 //<![CDATA[

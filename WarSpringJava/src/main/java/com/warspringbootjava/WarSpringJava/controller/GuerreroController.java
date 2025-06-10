@@ -51,7 +51,7 @@ public class GuerreroController {
         }
         try {
             guerreroService.crearGuerrero(guerrero);
-            model.addAttribute("success", "Guerrero creado exitosamente.");
+            model.addAttribute("success", guerrero.getTipo() + " creado exitosamente.");
             model.addAttribute("guerrero", new Guerrero()); // limpia el formulario
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
