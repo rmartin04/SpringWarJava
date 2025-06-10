@@ -31,33 +31,6 @@
 
 		<header id="header">
 			<h1>LISTADO GUERREROS</h1>
-			<section id="section-filters">
-				<!-- Filtro por tipo -->
-				<article class="filter-container">
-
-					<div class="filter-content_left">
-						<a th:href="@{/guerreros/nuevo}">Añadir Guerrero</a> <a
-							th:href="@{/listado-vehiculos}">Lista de Vehículos</a>
-					</div>
-
-					<div class="filter-content_right">
-						<div class="filter-content">
-							<form method="get" action="/guerreros/filtrar">
-								<input type="radio" name="tipo" value="T1" id="tipoT1" /> <label
-									for="tipoT1">Alienigenas</label> <input type="radio"
-									name="tipo" value="T2" id="tipoT2" /> <label for="tipoT2">Soldado</label>
-							</form>
-						</div>
-
-						<div class="filter-content">
-							<form class="search-box">
-								<input type="text" placeholder=" " />
-								<button type="reset"></button>
-							</form>
-						</div>
-					</div>
-				</article>
-			</section>
 
 		</header>
 
@@ -65,6 +38,33 @@
 
 			<!-- Tabla de guerreros -->
 			<article id="section-guerreros">
+				<section id="section-filters">
+					<!-- Filtro por tipo -->
+					<article class="filter-container">
+
+						<div class="filter-content_left">
+							<a th:href="@{/guerreros/nuevo}">Añadir Guerrero</a> <a
+								th:href="@{/listado-vehiculos}">Lista de Vehículos</a>
+						</div>
+
+						<div class="filter-content_right">
+							<div class="filter-content">
+								<form method="get" action="/guerreros/filtrar">
+									<input type="radio" name="tipo" value="T1" id="tipoT1" /> <label
+										for="tipoT1">Alienigenas</label> <input type="radio"
+										name="tipo" value="T2" id="tipoT2" /> <label for="tipoT2">Soldado</label>
+								</form>
+							</div>
+
+							<div class="filter-content">
+								<form class="search-box">
+									<input type="text" placeholder=" " />
+									<button type="reset"></button>
+								</form>
+							</div>
+						</div>
+					</article>
+				</section>
 				<table class="alt">
 					<thead>
 						<tr>
@@ -87,15 +87,14 @@
 								onclick="return confirm('¿Eliminar este guerrero?')">Eliminar</a>
 							</td>
 						</tr>
-						
+
 					</tbody>
 
 					<tfoot>
 						<tr>
 							<td colspan="6"
-						        th:text="'Total Guerreros: ' + ${#lists.size(guerreros)}">
-						      	Total Guerreros: 0
-						    </td>
+								th:text="'Total Guerreros: ' + ${#lists.size(guerreros)}">
+								Total Guerreros: 0</td>
 						</tr>
 					</tfoot>
 				</table>

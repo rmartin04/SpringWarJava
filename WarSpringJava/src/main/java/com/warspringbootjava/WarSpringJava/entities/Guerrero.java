@@ -1,4 +1,4 @@
-package com.warspringbootjava.WarSpringJava.entities;
+ package com.warspringbootjava.WarSpringJava.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

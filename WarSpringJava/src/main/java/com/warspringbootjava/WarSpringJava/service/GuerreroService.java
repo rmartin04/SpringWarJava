@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.warspringbootjava.WarSpringJava.entities.Guerrero;
 import com.warspringbootjava.WarSpringJava.excepciones.FuerzaGuerreroException;
 import com.warspringbootjava.WarSpringJava.excepciones.FuerzaYResistenciaException;
+import com.warspringbootjava.WarSpringJava.excepciones.NumeroGuerrerosException;
 import com.warspringbootjava.WarSpringJava.excepciones.ResistenciaGuerreroException;
 import com.warspringbootjava.WarSpringJava.repositories.GuerreroRepository;
 
@@ -19,11 +20,11 @@ public class GuerreroService {
     @Autowired
     private GuerreroRepository guerreroRepository;
 
-    public Guerrero crearGuerrero(Guerrero guerrero) throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException{
+    public Guerrero crearGuerrero(Guerrero guerrero) throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException, NumeroGuerrerosException {
     	int fuerza = guerrero.getFuerzaBase();
     	int resistencia = guerrero.getResistencia();
     	int fuerzaYResistencia = fuerza + resistencia;
-		
+    	
     	if (fuerza < 0 || fuerza > 10) {
             throw new FuerzaGuerreroException("La fuerza debe estar entre 0 y 10");
         }
@@ -33,6 +34,10 @@ public class GuerreroService {
         if (fuerzaYResistencia > 10) {
         	throw new FuerzaYResistenciaException("La fuerza y resistencia deben estar entre 0 y 10");
         }
+        
+        if (guerreroRepository.count() > 10) {
+			throw new NumeroGuerrerosException("No se pueden crear más de 10 guerreros");
+		}
         return guerreroRepository.save(guerrero);
     }
 

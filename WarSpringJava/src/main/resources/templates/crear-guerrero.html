@@ -14,23 +14,23 @@
 
 <body>
     <div id="wrapper">
+        <section class="container-cuenta">
+            <div class="content-count">
+                <img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32" />
+               	<span th:if="${usuarioLogueado}" th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">¡Hola, invitado!</span>
+            </div>
+
+            <div class="container-logout">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </section>
+        
         <main id="crear-guerreros-form">
-
-            <section class="container-cuenta">
-                <div class="content-count">
-                    <img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32" />
-                   	<span th:if="${usuarioLogueado}" th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">¡Hola, invitado!</span>
-                </div>
-
-                <div class="container-logout">
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit">Cerrar sesión</button>
-                    </form>
-                </div>
-            </section>
             <!-- crear-guerrero -->
             <section id="crear-guerreros">
-                <h2 class="major">Crea tus guerreros e inicia la batalla</h2>
+                <h2 class="major">Crea tus guerreros</h2>
                 <form th:action="@{/guerreros}" th:object="${guerrero}" method="post">
                     <div class="fields">
                         <div class="field">
@@ -72,16 +72,24 @@
                     </div>
                 </form>
 
-                <div class="error-container">
-			        <p th:if="${error}" class="error-message" th:text="${error}"></p>
-			        <p th:if="${success}" class="success-message" th:text="${success}"></p>
-			   </div>
 
                 <a th:href="@{/guerreros}" class="button">Volver al listado</a>
+
+				<div class="error-container">
+			        <p th:if="${error}" class="error-message" th:text="${error}"></p>
+			        <p th:if="${success}" class="success-message" th:text="${success}"></p>
+		        </div>
 
             </section>
 
         </main>
+        
+        <!-- Footer -->
+		<footer id="footer">
+			<p class="copyright">
+				&copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
+			</p>
+		</footer>
 
     </div>
 

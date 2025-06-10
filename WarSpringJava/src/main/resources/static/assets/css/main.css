@@ -390,6 +390,7 @@ input, select, textarea {
 	input[type="password"],
 	input[type="email"],
 	input[type="tel"],
+	input[type="number"],
 	select,
 	textarea {
 		-moz-appearance: none;
@@ -415,6 +416,7 @@ input, select, textarea {
 		input[type="password"]:invalid,
 		input[type="email"]:invalid,
 		input[type="tel"]:invalid,
+		input[type="number"]:invalid,
 		select:invalid,
 		textarea:invalid {
 			box-shadow: none;
@@ -424,6 +426,7 @@ input, select, textarea {
 		input[type="password"]:focus,
 		input[type="email"]:focus,
 		input[type="tel"]:focus,
+		input[type="number"]:focus,
 		select:focus,
 		textarea:focus {
 			background: rgba(255, 255, 255, 0.075);
@@ -457,6 +460,7 @@ input, select, textarea {
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],
+	input[type="number"],
 	select {
 		height: 2.75rem;
 	}
@@ -1159,6 +1163,13 @@ input, select, textarea {
         max-width: 1200px;
         width: 100%;
     }
+   
+   #wrapper-page {
+   		display: flex;
+   		flex-direction: row;
+   		justify-content: center;
+   		align-items: center;
+   }
     
     #crear-guerreros-form {
     	max-width: 700px;
@@ -1845,3 +1856,30 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+		
+
+/* Error */		
+.error-container {
+    margin-top: 40px;
+}
+
+.error,
+.error-message,
+.success-message {
+	margin: 0;
+	line-height: 20px;
+    font-size: 0.8em;
+    font-weight: 300;
+}
+
+.error {
+	font-weight: 300;;
+    color: red;
+}
+.success-message {
+	font-size: 1em;
+    color: green;
+}
+.error-message {
+    color: red;
+}
