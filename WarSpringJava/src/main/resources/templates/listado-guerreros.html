@@ -6,7 +6,7 @@
 <title>JavaWar | Listado de Guerreros</title>
 <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
 <noscript>
-	<link rel="stylesheet" th:href="@{assets/css/noscript.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/noscript.css}" />
 </noscript>
 </head>
 
@@ -49,18 +49,22 @@
 
 						<div class="filter-content_right">
 							<div class="filter-content">
-								<form method="get" action="/guerreros/filtrar">
-									<input type="radio" name="tipo" value="T1" id="tipoT1" /> <label
-										for="tipoT1">Alienigenas</label> <input type="radio"
-										name="tipo" value="T2" id="tipoT2" /> <label for="tipoT2">Soldado</label>
-								</form>
+								<input type="radio" name="tipo" value="" id="tipoAll" checked />
+								<label for="tipoAll">Todos</label>
+								
+								<input type="radio" name="tipo" value="T1" id="tipoT1" /> 
+								<label for="tipoT1">Alienigenas</label> 
+								
+								<input type="radio" name="tipo" value="T2" id="tipoT2" /> 
+								<label for="tipoT2">Soldado</label>
 							</div>
 
 							<div class="filter-content">
-								<form class="search-box">
-									<input type="text" placeholder=" " />
-									<button type="reset"></button>
-								</form>
+								<div class="search-box">
+									<input type="text" id="searchBox" placeholder=" " />
+									<button type="reset"
+										onclick="searchBox.value=''; cargarGuerreros();"></button>
+								</div>
 							</div>
 						</div>
 					</article>
@@ -75,7 +79,7 @@
 							<th>Acciones</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="guerreros-body">
 						<tr th:each="guerrero : ${guerreros}">
 							<td th:text="${guerrero.nombre}">Nombre</td>
 							<td th:text="${guerrero.tipo}">Tipo</td>
@@ -93,13 +97,15 @@
 					<tfoot>
 						<tr>
 							<td colspan="6"
-								th:text="'Total Guerreros: ' + ${#lists.size(guerreros)}">
-								Total Guerreros: 0</td>
+								th:text="'Total Guerreros: ' + ${#lists.size(guerreros)}"
+								id="total-guerreros">Total Guerreros: 0</td>
 						</tr>
 					</tfoot>
 				</table>
 
 			</article>
+
+			<div id="loading" style="display: none;">Cargando...</div>
 
 		</main>
 
@@ -115,6 +121,66 @@
 
 	</div>
 	<!-- Scripts -->
+	<script th:inline="javascript">
+//<![CDATA[
+  const radios    = document.querySelectorAll('input[name="tipo"]');
+  const searchBox = document.getElementById('searchBox');
+  const tbody     = document.getElementById('guerreros-body');
+  const totalTd   = document.getElementById('total-guerreros');
+  const loading   = document.getElementById('loading');
+
+  function cargarGuerreros() {
+    // Muestra spinner
+    loading.style.display = 'block';
+
+    // Construye query
+    const tipoEl = document.querySelector('input[name="tipo"]:checked');
+    const tipo   = tipoEl ? tipoEl.value : '';
+    const search = searchBox.value.trim();
+    const params = new URLSearchParams();
+    if (tipo)   params.append('tipo',  tipo);
+    if (search) params.append('search', search);
+
+    fetch(`/api/guerreros?${params}`)
+      .then(res => res.json())
+      .then(data => {
+        // Oculta spinner
+        loading.style.display = 'none';
+        // Limpia y renderiza filas
+        tbody.innerHTML = '';
+        data.forEach(g => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${g.nombre}</td>
+            <td>${g.tipo}</td>
+            <td>${g.fuerzaBase}</td>
+            <td>${g.resistencia}</td>
+            <td>
+              <a href="/guerreros/${g.id}/editar">Editar</a>
+              <a href="/guerreros/${g.id}/eliminar"
+                 onclick="return confirm('¿Eliminar este guerrero?')">Eliminar</a>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+        totalTd.textContent = 'Total Guerreros: ' + data.length;
+      })
+      .catch(err => {
+        loading.style.display = 'none';
+        console.error(err);
+      });
+  }
+
+  // Eventos
+  radios.forEach(r => r.addEventListener('change', cargarGuerreros));
+  searchBox.addEventListener('input', () => {
+    clearTimeout(window._debounce);
+    window._debounce = setTimeout(cargarGuerreros, 300);
+  });
+
+  document.addEventListener('DOMContentLoaded', cargarGuerreros);
+//]]>
+</script>
+
 	<script th:src="@{/assets/js/jquery.min.js}"></script>
 	<script th:src="@{/assets/js/browser.min.js}"></script>
 	<script th:src="@{/assets/js/breakpoints.min.js}"></script>

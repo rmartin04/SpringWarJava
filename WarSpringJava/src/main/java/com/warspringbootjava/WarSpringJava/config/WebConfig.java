@@ -19,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
                     "/registrarUsuario",   
                     "/logout",             
                     "/webjars/**",
+                    "/api/**",
                     "/assets/**" 
             );
     }

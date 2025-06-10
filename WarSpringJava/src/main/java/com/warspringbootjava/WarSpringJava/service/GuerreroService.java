@@ -17,8 +17,11 @@ import com.warspringbootjava.WarSpringJava.repositories.GuerreroRepository;
 @Service
 public class GuerreroService {
 
-    @Autowired
-    private GuerreroRepository guerreroRepository;
+    private final GuerreroRepository repository;
+
+    public GuerreroService(GuerreroRepository repository) {
+        this.repository = repository;
+    }
 
     public Guerrero crearGuerrero(Guerrero guerrero) throws FuerzaYResistenciaException, FuerzaGuerreroException, ResistenciaGuerreroException, NumeroGuerrerosException {
     	int fuerza = guerrero.getFuerzaBase();
@@ -35,35 +38,55 @@ public class GuerreroService {
         	throw new FuerzaYResistenciaException("La fuerza y resistencia deben estar entre 0 y 10");
         }
         
-        if (guerreroRepository.count() > 10) {
+        if (repository.count() > 10) {
 			throw new NumeroGuerrerosException("No se pueden crear más de 10 guerreros");
 		}
-        return guerreroRepository.save(guerrero);
+        return repository.save(guerrero);
     }
 
     public Optional<Guerrero> obtenerGuerreroPorId(Long id) {
-        return guerreroRepository.findById(id); // Devuelve un Optional en lugar de null
+        return repository.findById(id); // Devuelve un Optional en lugar de null
     }
 
     public List<Guerrero> listarGuerreros() {
-        return guerreroRepository.findAll();
+        return repository.findAll();
     }
     
     public List<Guerrero> buscarGuerrerosPorTipo(String tipo) {
-		return guerreroRepository.findByTipo(tipo);
+		return repository.findByTipo(tipo);
 	}
 
     public Guerrero actualizarGuerrero(Guerrero guerrero) {
-        if (guerrero.getId() == null || !guerreroRepository.existsById(guerrero.getId())) {
+        if (guerrero.getId() == null || !repository.existsById(guerrero.getId())) {
             throw new IllegalArgumentException("El guerrero con ID " + guerrero.getId() + " no existe.");
         }
-        return guerreroRepository.save(guerrero);
+        return repository.save(guerrero);
     }
 
     public void eliminarGuerrero(Long id) {
-        if (!guerreroRepository.existsById(id)) {
+        if (!repository.existsById(id)) {
             throw new IllegalArgumentException("El guerrero con ID " + id + " no existe.");
         }
-        guerreroRepository.deleteById(id);
+        repository.deleteById(id);
+    }
+    
+    /**
+     * Filtra guerreros opcionalmente por tipo y/o por fragmento de nombre.
+     * Si 'tipo' es nulo o vacío, se ignora.
+     * Si 'search' es nulo o vacío, se ignora.
+     */
+    public List<Guerrero> filtrarPorTipoYNombre(String tipo, String search) {
+        boolean tieneTipo   = tipo   != null && !tipo.isBlank();
+        boolean tieneSearch = search != null && !search.isBlank();
+
+        if (tieneTipo && tieneSearch) {
+            return repository.findByTipoAndNombreContainingIgnoreCase(tipo, search);
+        } else if (tieneTipo) {
+            return repository.findByTipo(tipo);
+        } else if (tieneSearch) {
+            return repository.findByNombreContainingIgnoreCase(search);
+        } else {
+            return repository.findAll();
+        }
     }
 }

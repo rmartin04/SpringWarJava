@@ -12,5 +12,7 @@ public interface GuerreroRepository extends JpaRepository<Guerrero, Long> {
 	
     List<Guerrero> findByNombreContainingIgnoreCase(String nombre);
     
+    List<Guerrero> findByTipoAndNombreContainingIgnoreCase(String tipo, String nombre);
+
 
 }
