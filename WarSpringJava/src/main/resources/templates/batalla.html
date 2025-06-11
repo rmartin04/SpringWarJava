@@ -1,38 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehículos y Guerreros</title>
+    <meta charset="UTF-8" />
+    <title>Batalla entre Vehículos</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid 
-#ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: 
-#f4f4f4;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: 
-#007bff;
-            color: 
-white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: 
-#0056b3;
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f4f4f4; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #logBatalla { white-space: pre-line; background: #f9f9f9; padding: 10px; border: 1px solid #ccc; height: 300px; overflow-y: scroll; }
     </style>
 </head>
 <body>
@@ -63,12 +41,17 @@ white;
     </table>
 
     <h2>Iniciar Batalla</h2>
-    <form action="/batallas/iniciar" method="post">
+    <form th:action="@{/batalla/iniciar}" method="get">
         <label for="vehiculo1">ID Vehículo 1:</label>
-        <input type="number" id="vehiculo1" name="vehiculoId1" required>
+        <input type="number" id="vehiculo1" name="idVehiculo1" required />
         <label for="vehiculo2">ID Vehículo 2:</label>
-        <input type="number" id="vehiculo2" name="vehiculoId2" required>
+        <input type="number" id="vehiculo2" name="idVehiculo2" required />
         <button type="submit">Iniciar Batalla</button>
     </form>
+
+    <div th:if="${logBatalla != null}">
+        <h2>Log de la Batalla</h2>
+        <div id="logBatalla" th:each="linea : ${logBatalla}" th:text="${linea}"></div>
+    </div>
 </body>
 </html>

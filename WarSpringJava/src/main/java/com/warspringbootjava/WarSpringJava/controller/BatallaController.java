@@ -1,31 +1,62 @@
-
 package com.warspringbootjava.WarSpringJava.controller;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.warspringbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warspringbootjava.WarSpringJava.repositories.VehiculosGuerraRepository;
 import com.warspringbootjava.WarSpringJava.service.BatallaService;
+
+
 
 @Controller
 @RequestMapping("/batalla")
 public class BatallaController {
+	  private static final Logger logger = LoggerFactory.getLogger(BatallaController.class);
 
     @Autowired
     private BatallaService batallaService;
 
+    @Autowired
+    private VehiculosGuerraRepository vehiculosGuerraRepository;
+
+    // Mostrar la página con la lista de vehículos y el formulario
+    @GetMapping
+    public String mostrarPagina(Model model) {
+        List<VehiculosGuerra> vehiculos = vehiculosGuerraRepository.findAll();
+        model.addAttribute("vehiculos", vehiculos);
+        return "batalla"; // nombre de la plantilla HTML sin extensión
+    }
+
+    // Manejar la petición para iniciar la batalla
     @GetMapping("/iniciar")
-    public ResponseEntity<String> empezarBatalla(@RequestParam Long idVehiculo1, @RequestParam Long idVehiculo2) {
+    public String empezarBatalla(
+            @RequestParam Long idVehiculo1,
+            @RequestParam Long idVehiculo2,
+            Model model) {
+
+        List<VehiculosGuerra> vehiculos = vehiculosGuerraRepository.findAll();
+        model.addAttribute("vehiculos", vehiculos);
+
         try {
-            String resultado = batallaService.iniciarBatalla(idVehiculo1, idVehiculo2);
-            return ResponseEntity.ok(resultado);
+            List<String> log = batallaService.iniciarBatallaPorTurnos(idVehiculo1, idVehiculo2);
+            model.addAttribute("logBatalla", log);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+            model.addAttribute("error", "Error: " + e.getMessage());
+            logger.error("Error al iniciar la batalla:", e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error interno del servidor: " + e.getMessage());
+            model.addAttribute("error", "Error interno del servidor: " + e.getMessage());
+            logger.error("Error al iniciar la batalla", e.getMessage());
         }
+
+        return "batalla"; // volvemos a la misma vista
     }
 }
