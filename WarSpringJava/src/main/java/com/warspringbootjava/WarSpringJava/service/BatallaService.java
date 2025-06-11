@@ -1,4 +1,5 @@
 package com.warspringbootjava.WarSpringJava.service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +12,7 @@ import com.warspringbootjava.WarSpringJava.repositories.VehiculosGuerraRepositor
 
 @Service
 public class BatallaService {
-	    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BatallaService.class);
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BatallaService.class);
 
     @Autowired
     private VehiculosGuerraRepository vehiculosGuerraRepository;
@@ -22,10 +23,21 @@ public class BatallaService {
         VehiculosGuerra vehiculo1 = vehiculosGuerraRepository.findById(vehiculoId1)
                 .orElseThrow(() -> new IllegalArgumentException("El vehículo con ID " + vehiculoId1 + " no existe."));
         logger.info("Vehículo 1: {}", vehiculo1.getNombreVehiculo());
-        
+
         VehiculosGuerra vehiculo2 = vehiculosGuerraRepository.findById(vehiculoId2)
                 .orElseThrow(() -> new IllegalArgumentException("El vehículo con ID " + vehiculoId2 + " no existe."));
         logger.info("Vehículo 2: {}", vehiculo2.getNombreVehiculo());
+
+        // Validar que ambos vehículos tengan guerreros embarcados
+        if (vehiculo1.getGuerreros() == null || vehiculo1.getGuerreros().isEmpty()) {
+            logger.warn("El vehículo {} no tiene guerreros embarcados, no se puede iniciar la batalla.", vehiculo1.getNombreVehiculo());
+            throw new IllegalArgumentException("El vehículo " + vehiculo1.getNombreVehiculo() + " no tiene guerreros embarcados.");
+        }
+
+        if (vehiculo2.getGuerreros() == null || vehiculo2.getGuerreros().isEmpty()) {
+            logger.warn("El vehículo {} no tiene guerreros embarcados, no se puede iniciar la batalla.", vehiculo2.getNombreVehiculo());
+            throw new IllegalArgumentException("El vehículo " + vehiculo2.getNombreVehiculo() + " no tiene guerreros embarcados.");
+        }
 
         // Copiar puntos de vida para no modificar la BD
         int vida1 = vehiculo1.getPuntosVida();

@@ -1,6 +1,7 @@
 package com.warspringbootjava.WarSpringJava.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +16,10 @@ import com.warspringbootjava.WarSpringJava.entities.VehiculosGuerra;
 import com.warspringbootjava.WarSpringJava.repositories.VehiculosGuerraRepository;
 import com.warspringbootjava.WarSpringJava.service.BatallaService;
 
-
-
 @Controller
 @RequestMapping("/batalla")
 public class BatallaController {
-	  private static final Logger logger = LoggerFactory.getLogger(BatallaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BatallaController.class);
 
     @Autowired
     private BatallaService batallaService;
@@ -32,6 +31,15 @@ public class BatallaController {
     @GetMapping
     public String mostrarPagina(Model model) {
         List<VehiculosGuerra> vehiculos = vehiculosGuerraRepository.findAll();
+
+        // Construir los strings con nombres de guerreros para cada vehículo
+        vehiculos.forEach(vehiculo -> {
+            String guerrerosNombres = vehiculo.getGuerreros().stream()
+                .map(g -> g.getNombre())
+                .collect(Collectors.joining(", "));
+            vehiculo.setGuerrerosNombres(guerrerosNombres); // nuevo atributo que debes agregar en VehiculosGuerra
+        });
+
         model.addAttribute("vehiculos", vehiculos);
         return "batalla"; // nombre de la plantilla HTML sin extensión
     }
@@ -44,6 +52,15 @@ public class BatallaController {
             Model model) {
 
         List<VehiculosGuerra> vehiculos = vehiculosGuerraRepository.findAll();
+
+        // Construir los strings con nombres de guerreros para cada vehículo
+        vehiculos.forEach(vehiculo -> {
+            String guerrerosNombres = vehiculo.getGuerreros().stream()
+                .map(g -> g.getNombre())
+                .collect(Collectors.joining(", "));
+            vehiculo.setGuerrerosNombres(guerrerosNombres);
+        });
+
         model.addAttribute("vehiculos", vehiculos);
 
         try {
@@ -51,10 +68,10 @@ public class BatallaController {
             model.addAttribute("logBatalla", log);
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", "Error: " + e.getMessage());
-            logger.error("Error al iniciar la batalla:", e.getMessage());
+            logger.error("Error al iniciar la batalla: {}", e.getMessage());
         } catch (Exception e) {
             model.addAttribute("error", "Error interno del servidor: " + e.getMessage());
-            logger.error("Error al iniciar la batalla", e.getMessage());
+            logger.error("Error al iniciar la batalla: {}", e.getMessage());
         }
 
         return "batalla"; // volvemos a la misma vista

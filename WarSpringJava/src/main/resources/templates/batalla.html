@@ -1,57 +1,136 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
-    <meta charset="UTF-8" />
-    <title>Batalla entre Vehículos</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-        th { background-color: #f4f4f4; }
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        #logBatalla { white-space: pre-line; background: #f9f9f9; padding: 10px; border: 1px solid #ccc; height: 300px; overflow-y: scroll; }
-    </style>
+<meta charset="UTF-8" />
+<title>JavaWar | Batalla entre Vehículos</title>
+<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/loading.css}" />
+<noscript>
+  <link rel="stylesheet" th:href="@{/assets/css/noscript.css}" />
+</noscript>
+<style>
+  /* Estilo para el log de la batalla */
+  #logBatalla {
+    white-space: pre-line;
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ccc;
+    height: 300px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+  .form-batalla {
+    margin-bottom: 2rem;
+  }
+  .form-batalla label {
+    margin-right: 0.5rem;
+  }
+  .form-batalla input {
+    width: 6rem;
+    padding: 0.3rem 0.5rem;
+    margin-right: 1rem;
+  }
+  .form-batalla button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .form-batalla button:hover {
+    background-color: #0056b3;
+  }
+</style>
 </head>
+
 <body>
-    <h1>Lista de Vehículos y Guerreros</h1>
-    <table>
-        <thead>
+
+<div id="wrapper">
+  <section class="container-cuenta">
+    <!-- Puedes poner aquí tu bloque de usuario si lo tienes -->
+  </section>
+
+  <header id="header">
+    <h1>Batalla entre Vehículos</h1>
+  </header>
+
+  <main id="mains">
+
+    <article id="section-vehiculos">
+      <section id="section-filters">
+        <!-- Tabla de vehículos -->
+        <table class="alt">
+          <thead>
             <tr>
-                <th>ID Vehículo</th>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Puntos de Vida</th>
-                <th>Ataque Base</th>
-                <th>Defensa Base</th>
-                <th>Guerreros</th>
+              <th>ID Vehículo</th>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Puntos de Vida</th>
+              <th>Ataque Base</th>
+              <th>Defensa Base</th>
+              <th>Guerreros</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <tr th:each="vehiculo : ${vehiculos}">
-                <td th:text="${vehiculo.id}"></td>
-                <td th:text="${vehiculo.nombreVehiculo}"></td>
-                <td th:text="${vehiculo.tipoVehiculo}"></td>
-                <td th:text="${vehiculo.puntosVida}"></td>
-                <td th:text="${vehiculo.ataqueBase}"></td>
-                <td th:text="${vehiculo.defensaBase}"></td>
-                <td th:text="${#strings.join(vehiculo.guerreros.stream().map(g -> g.nombre).toList(), ', ')}"></td>
+              <td th:text="${vehiculo.id}">1</td>
+              <td th:text="${vehiculo.nombreVehiculo}">Nombre</td>
+              <td th:text="${vehiculo.tipoVehiculo}">Tipo</td>
+              <td th:text="${vehiculo.puntosVida}">100</td>
+              <td th:text="${vehiculo.ataqueBase}">50</td>
+              <td th:text="${vehiculo.defensaBase}">40</td>
+              <!-- Aquí mostramos el atributo preparado en el backend -->
+              <td th:text="${vehiculo.guerrerosNombres}">Guerreros</td>
             </tr>
-        </tbody>
-    </table>
+          </tbody>
+        </table>
+      </section>
 
-    <h2>Iniciar Batalla</h2>
-    <form th:action="@{/batalla/iniciar}" method="get">
-        <label for="vehiculo1">ID Vehículo 1:</label>
-        <input type="number" id="vehiculo1" name="idVehiculo1" required />
-        <label for="vehiculo2">ID Vehículo 2:</label>
-        <input type="number" id="vehiculo2" name="idVehiculo2" required />
-        <button type="submit">Iniciar Batalla</button>
-    </form>
+      <section class="form-batalla">
+        <h2>Iniciar Batalla</h2>
+        <form th:action="@{/batalla/iniciar}" method="get">
+          <label for="vehiculo1">ID Vehículo 1:</label>
+          <input type="number" id="vehiculo1" name="idVehiculo1" required />
+          <label for="vehiculo2">ID Vehículo 2:</label>
+          <input type="number" id="vehiculo2" name="idVehiculo2" required />
+          <button type="submit">Iniciar Batalla</button>
+        </form>
+      </section>
 
-    <div th:if="${logBatalla != null}">
+      <section th:if="${error != null}" style="color: red; font-weight: bold; margin-top: 1rem;">
+        <p th:text="${error}">Error al iniciar la batalla</p>
+      </section>
+
+      <section th:if="${logBatalla != null}">
         <h2>Log de la Batalla</h2>
-        <div id="logBatalla" th:each="linea : ${logBatalla}" th:text="${linea}"></div>
-    </div>
+        <div id="logBatalla" th:each="linea : ${logBatalla}" th:text="${linea}">Detalle de la batalla</div>
+      </section>
+
+    </article>
+
+  </main>
+
+  <footer id="footer">
+    <p class="copyright">
+      &copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
+    </p>
+  </footer>
+
+  <div id="bg" style="z-index: -1;"></div>
+</div>
+
+<div id="loading" style="display: none;" class="loader"></div>
+
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
 </body>
+
 </html>
