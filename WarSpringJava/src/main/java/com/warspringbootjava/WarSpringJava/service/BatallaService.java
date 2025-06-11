@@ -11,6 +11,7 @@ import com.warspringbootjava.WarSpringJava.repositories.VehiculosGuerraRepositor
 
 @Service
 public class BatallaService {
+	    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BatallaService.class);
 
     @Autowired
     private VehiculosGuerraRepository vehiculosGuerraRepository;
@@ -20,8 +21,11 @@ public class BatallaService {
     public List<String> iniciarBatallaPorTurnos(Long vehiculoId1, Long vehiculoId2) {
         VehiculosGuerra vehiculo1 = vehiculosGuerraRepository.findById(vehiculoId1)
                 .orElseThrow(() -> new IllegalArgumentException("El vehículo con ID " + vehiculoId1 + " no existe."));
+        logger.info("Vehículo 1: {}", vehiculo1.getNombreVehiculo());
+        
         VehiculosGuerra vehiculo2 = vehiculosGuerraRepository.findById(vehiculoId2)
                 .orElseThrow(() -> new IllegalArgumentException("El vehículo con ID " + vehiculoId2 + " no existe."));
+        logger.info("Vehículo 2: {}", vehiculo2.getNombreVehiculo());
 
         // Copiar puntos de vida para no modificar la BD
         int vida1 = vehiculo1.getPuntosVida();

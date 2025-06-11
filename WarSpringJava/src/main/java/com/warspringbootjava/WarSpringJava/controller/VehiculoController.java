@@ -26,6 +26,7 @@ import jakarta.validation.Valid;
 
 @Controller
 public class VehiculoController {
+	    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(VehiculoController.class);
 
     @Autowired
     private VehiculoService vehiculoService;
@@ -36,14 +37,17 @@ public class VehiculoController {
 		        Model model) {
     	        if (br.hasErrors()) {
     	         model.addAttribute("error", "Corrige los datos del vehículo.");
+    	        logger.error("Errores en el formulario de creación de vehículo: {}", br.getAllErrors()); 
         	     return "vehiculo-form"; // Retorna al formulario con errores
     	        }
     	
 		try {
 			vehiculoService.guardarVehiculo(vehiculo);
 			model.addAttribute("success", "Vehículo creado exitosamente.");
+			logger.info("Vehículo creado: {}", vehiculo);
 		} catch (Exception e) {
 			model.addAttribute("error", e.getMessage());
+			logger.error("Error al crear vehículo: {}", e.getMessage());
 		}
 		return "redirect:/listado-vehiculos"; // Redirige a la lista de vehículos
 	}
@@ -81,20 +85,17 @@ public class VehiculoController {
         try {
 			vehiculoService.guardarVehiculo(vehiculo);
 		} catch (VidaMaximaPermitidaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error al guardar vehículo: {}", e.getMessage());
 		} catch (AtaqueDefensaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error al guardar vehículo: {}", e.getMessage());
 		} catch (AtaqueMuyPoderosoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error al guardar vehículo: {}", e.getMessage());
 		} catch (DefensaMuyPoderosaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    logger.error("Error al guardar vehículo: {}", e.getMessage());
 		} catch (EmbarcarGuerrerosException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error al guardar vehículo: {}", e.getMessage());
+		} catch (Exception e) {
+			logger.error("Error inesperado al guardar vehículo: {}", e.getMessage());
 		}
         return "redirect:/listado-vehiculos";
     }

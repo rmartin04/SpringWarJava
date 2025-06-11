@@ -15,6 +15,8 @@ import com.warspringbootjava.WarSpringJava.repositories.GuerreroRepository;
 
 @Service
 public class GuerreroService {
+	
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(GuerreroService.class);
 
 	private final GuerreroRepository repository;
 

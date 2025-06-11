@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 
 @Controller
 public class UsuarioController {
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(UsuarioController.class);
 
 	private final UsuarioService usuarioService;
 
@@ -45,13 +46,16 @@ public class UsuarioController {
 	public String registrar(@Valid @ModelAttribute("usuarioBean") UsuarioBean bean, BindingResult rs, Model m) {
 		if (rs.hasErrors()) {
 			m.addAttribute("error", "Corrige los errores.");
+			logger.error("Errores en el formulario de registro: {}", rs.getAllErrors());
 			return "login";
 		}
 		try {
 			usuarioService.registrarUsuario(bean);
 			m.addAttribute("success", "Cuenta creada.");
+			logger.info("Usuario registrado exitosamente: {}", bean.getUsuario());
 		} catch (UsuarioExisteException e) {
 			m.addAttribute("error", e.getMessage());
+			logger.error("Error al registrar usuario: {}", e.getMessage());
 		}
 		return "login";
 	}
@@ -61,14 +65,17 @@ public class UsuarioController {
 			Model m) {
 		if (rs.hasErrors()) {
 			m.addAttribute("error", "Corrige los errores.");
+			logger.error("Errores en el formulario de login: {}", rs.getAllErrors());
 			return "login";
 		}
 		try {
 			UsuarioBean u = usuarioService.validarUsuario(bean.getUsuario(), bean.getContrasenia());
 			session.setAttribute("usuarioLogueado", u);
+			logger.info("Usuario logueado exitosamente: {}", u.getUsuario());
 			return "redirect:/index";
 		} catch (UsuarioNoEncontradoException e) {
 			m.addAttribute("error", e.getMessage());
+			logger.error("Error al iniciar sesión: {}", e.getMessage());
 			return "login";
 		}
 	}
