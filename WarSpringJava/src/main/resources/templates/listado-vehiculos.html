@@ -3,13 +3,12 @@
 
 <head>
 <meta charset="UTF-8">
-<title>JavaWar | Listado de Guerreros</title>
+<title>JavaWar | Listado de Vehículos</title>
 <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
 <noscript>
 	<link rel="stylesheet" th:href="@{assets/css/noscript.css}" />
 </noscript>
 </head>
-
 
 <body>
 
@@ -30,37 +29,41 @@
 		</section>
 
 		<header id="header">
-			<h1>LISTADO GUERREROS</h1>
+			<h1>LISTADO VEHÍCULOS</h1>
 
 		</header>
 
 		<main id="mains">
 
-			<!-- Tabla de guerreros -->
-			<article id="section-guerreros">
+			<!-- Tabla de vehiculos -->
+			<article id="section-vehiculos">
 				<section id="section-filters">
 					<!-- Filtro por tipo -->
 					<article class="filter-container">
 
 						<div class="filter-content_left">
-							<a th:href="@{/guerreros/nuevo}">Añadir Vehículos</a> <a
-								th:href="@{/listado-guerreros}">Lista de Guerreros</a>
+							<a th:href="@{/vehiculos/nuevo}">Añadir Vehículos</a> <a
+								th:href="@{guerreros/listado-guerreros}">Lista de Guerreros</a>
 						</div>
 
 						<div class="filter-content_right">
 							<div class="filter-content">
-								<form method="get" action="/guerreros/filtrar">
-									<input type="radio" name="tipo" value="T1" id="tipoT1" /> <label
-										for="tipoT1">Alienigenas</label> <input type="radio"
-										name="tipo" value="T2" id="tipoT2" /> <label for="tipoT2">Soldado</label>
-								</form>
+								<input type="radio" name="tipo" value="" id="tipoAll" checked />
+								<label for="tipoAll">Todos</label>
+								
+								<input type="radio" name="tipo" value="Alienigena" id="tipoT1" /> 
+								<label for="tipoT1">Nave</label> 
+								
+								<input type="radio" name="tipo" value="Soldado" id="tipoT2" /> 
+								<label for="tipoT2">Tanque</label>
 							</div>
 
 							<div class="filter-content">
-								<form class="search-box">
-									<input type="text" placeholder=" " />
-									<button type="reset"></button>
-								</form>
+								<div class="search-box">
+									<input type="text" id="searchBox" placeholder=" " />
+									<button type="reset"
+										onclick="searchBox.value=''; cargarGuerreros();"></button>
+								</div>
 							</div>
 						</div>
 					</article>
@@ -69,21 +72,23 @@
 					<thead>
 						<tr>
 							<th>Nombre</th>
+							<th>Vida</th>
 							<th>Tipo</th>
 							<th>Ataque</th>
 							<th>Defensa</th>
 							<th>Acciones</th>
-						</tr>  
+						</tr>
 					</thead>
-					<tbody>
-						<tr th:each="guerrero : ${guerreros}">
-							<td th:text="${guerrero.nombre}">Nombre</td>
-							<td th:text="${guerrero.tipo}">Tipo</td>
-							<td th:text="${guerrero.fuerzaBase}">Ataque</td>
-							<td th:text="${guerrero.resistencia}">Defensa</td>
+					<tbody id="vehiculos-body">
+						<tr th:each="vehiculo : ${vehiculos}">
+							<td th:text="${vehiculo.nombreVehiculo}">Nombre</td>
+							<td th:text="${vehiculo.puntosVida}">Vida</td>
+							<td th:text="${vehiculo.tipoVehiculo}">Tipo</td>
+							<td th:text="${vehiculo.ataqueBase}">Ataque</td>
+							<td th:text="${vehiculo.defensaBase}">Defensa</td>
 							<td><a
-								th:href="@{/guerreros/{id}/editar(id=${guerrero.id})}">Editar</a>
-								<a th:href="@{/guerreros/{id}/eliminar(id=${guerrero.id})}"
+								th:href="@{/vehiculos/{id}/editar(id=${vehiculos.id})}">Editar</a>
+								<a th:href="@{/vehiculos/{id}/eliminar(id=${vehiculos.id})}"
 								onclick="return confirm('¿Eliminar este guerrero?')">Eliminar</a>
 							</td>
 						</tr>
@@ -93,13 +98,14 @@
 					<tfoot>
 						<tr>
 							<td colspan="6"
-								th:text="'Total Guerreros: ' + ${#lists.size(guerreros)}">
-								Total Guerreros: 0</td>
+								th:text="'Total Vehículos: ' + ${#lists.size(vehiculos)}"
+								id="total-vehiculos">Total Vehículos: 0</td>
 						</tr>
 					</tfoot>
 				</table>
 
 			</article>
+
 
 		</main>
 
@@ -114,7 +120,67 @@
 		<div id="bg" style="z-index: -1;"></div>
 
 	</div>
+	<div id="loading" style="display: none;" class="loader"></div>
 	<!-- Scripts -->
+	<script th:inline="javascript">
+//<![CDATA[
+  const radios    = document.querySelectorAll('input[name="tipo"]');
+  const searchBox = document.getElementById('searchBox');
+  const tbody     = document.getElementById('vehiculos-body');
+  const totalTd   = document.getElementById('total-vehiculos');
+  const loading   = document.getElementById('loading');
+
+  function cargarGuerreros() {
+    // Muestra spinner
+    loading.style.display = 'block';
+
+    // Construye query
+    const tipoEl = document.querySelector('input[name="tipo"]:checked');
+    const tipo   = tipoEl ? tipoEl.value : '';
+    const search = searchBox.value.trim();
+    const params = new URLSearchParams();
+    if (tipo)   params.append('tipo',  tipo);
+    if (search) params.append('search', search);
+
+    fetch(`/api/vehiculos?${params}`)
+    .then(res => res.json())
+    .then(data => {
+      loading.style.display = 'none';
+      tbody.innerHTML = '';
+      data.forEach(v => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${v.nombreVehiculo}</td>
+          <td>${v.puntosVida}</td>
+          <td>${v.tipoVehiculo}</td>
+          <td>${v.ataqueBase}</td>
+          <td>${v.defensaBase}</td>
+          <td>
+            <a href="/vehiculos/${v.id}/editar">Editar</a>
+            <a href="/vehiculos/${v.id}/eliminar"
+               onclick="return confirm('¿Eliminar este vehículo?')">Eliminar</a>
+          </td>`;
+        tbody.appendChild(tr);
+      });
+      totalTd.textContent = 'Total Vehículos: ' + data.length;
+    })
+      .catch(err => {
+        loading.style.display = 'none';
+        console.error(err);
+      });
+  }
+
+  // Eventos
+  radios.forEach(r => r.addEventListener('change', cargarGuerreros));
+  searchBox.addEventListener('input', () => {
+    clearTimeout(window._debounce);
+    window._debounce = setTimeout(cargarGuerreros, 300);
+  });
+
+  document.addEventListener('DOMContentLoaded', cargarGuerreros);
+//]]>
+</script>
+
 	<script th:src="@{/assets/js/jquery.min.js}"></script>
 	<script th:src="@{/assets/js/browser.min.js}"></script>
 	<script th:src="@{/assets/js/breakpoints.min.js}"></script>

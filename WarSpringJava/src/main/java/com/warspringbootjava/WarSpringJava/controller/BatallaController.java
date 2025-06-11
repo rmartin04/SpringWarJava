@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.warspringbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warspringbootjava.WarSpringJava.entities.VehiculoGuerra;
 import com.warspringbootjava.WarSpringJava.repositories.VehiculosGuerraRepository;
 import com.warspringbootjava.WarSpringJava.service.BatallaService;
 
@@ -30,14 +30,14 @@ public class BatallaController {
     // Mostrar la página con la lista de vehículos y el formulario
     @GetMapping
     public String mostrarPagina(Model model) {
-        List<VehiculosGuerra> vehiculos = vehiculosGuerraRepository.findAll();
+        List<VehiculoGuerra> vehiculos = vehiculosGuerraRepository.findAll();
 
         // Construir los strings con nombres de guerreros para cada vehículo
         vehiculos.forEach(vehiculo -> {
             String guerrerosNombres = vehiculo.getGuerreros().stream()
                 .map(g -> g.getNombre())
                 .collect(Collectors.joining(", "));
-            vehiculo.setGuerrerosNombres(guerrerosNombres); // nuevo atributo que debes agregar en VehiculosGuerra
+            //vehiculo.setGuerrerosNombres(guerrerosNombres); // nuevo atributo que debes agregar en VehiculosGuerra
         });
 
         model.addAttribute("vehiculos", vehiculos);
@@ -51,14 +51,14 @@ public class BatallaController {
             @RequestParam Long idVehiculo2,
             Model model) {
 
-        List<VehiculosGuerra> vehiculos = vehiculosGuerraRepository.findAll();
+        List<VehiculoGuerra> vehiculos = vehiculosGuerraRepository.findAll();
 
         // Construir los strings con nombres de guerreros para cada vehículo
         vehiculos.forEach(vehiculo -> {
             String guerrerosNombres = vehiculo.getGuerreros().stream()
                 .map(g -> g.getNombre())
                 .collect(Collectors.joining(", "));
-            vehiculo.setGuerrerosNombres(guerrerosNombres);
+            //vehiculo.setGuerrerosNombres(guerrerosNombres);
         });
 
         model.addAttribute("vehiculos", vehiculos);

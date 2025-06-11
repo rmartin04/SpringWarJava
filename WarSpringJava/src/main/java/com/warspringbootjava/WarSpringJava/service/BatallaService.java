@@ -7,7 +7,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.warspringbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warspringbootjava.WarSpringJava.entities.VehiculoGuerra;
 import com.warspringbootjava.WarSpringJava.repositories.VehiculosGuerraRepository;
 
 @Service
@@ -20,11 +20,11 @@ public class BatallaService {
     private final Random random = new Random();
 
     public List<String> iniciarBatallaPorTurnos(Long vehiculoId1, Long vehiculoId2) {
-        VehiculosGuerra vehiculo1 = vehiculosGuerraRepository.findById(vehiculoId1)
+        VehiculoGuerra vehiculo1 = vehiculosGuerraRepository.findById(vehiculoId1)
                 .orElseThrow(() -> new IllegalArgumentException("El vehículo con ID " + vehiculoId1 + " no existe."));
         logger.info("Vehículo 1: {}", vehiculo1.getNombreVehiculo());
 
-        VehiculosGuerra vehiculo2 = vehiculosGuerraRepository.findById(vehiculoId2)
+        VehiculoGuerra vehiculo2 = vehiculosGuerraRepository.findById(vehiculoId2)
                 .orElseThrow(() -> new IllegalArgumentException("El vehículo con ID " + vehiculoId2 + " no existe."));
         logger.info("Vehículo 2: {}", vehiculo2.getNombreVehiculo());
 
@@ -96,7 +96,7 @@ public class BatallaService {
         return logBatalla;
     }
 
-    private int calcularPuntaje(VehiculosGuerra vehiculo, String tipo) {
+    private int calcularPuntaje(VehiculoGuerra vehiculo, String tipo) {
         double factorVehiculo = random.nextDouble();
         double base = tipo.equals("ataque") ? vehiculo.getAtaqueBase() : vehiculo.getDefensaBase();
         double puntajeVehiculo = base * factorVehiculo;

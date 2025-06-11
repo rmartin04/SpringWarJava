@@ -12,9 +12,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-
 @Entity
-
 public  class Guerrero{
 
     // Atributos que van a tener y heredar los guerreros
@@ -44,7 +42,7 @@ public  class Guerrero{
 	
 	@ManyToOne
 	@JoinColumn(name = "vehiculo_guerra_id")
-	private VehiculosGuerra vehiculoGuerra;
+	private VehiculoGuerra vehiculoGuerra;
 
     public Guerrero() {
     }
@@ -96,6 +94,14 @@ public  class Guerrero{
 
     public void setResistencia(int resistencia) {
         this.resistencia = resistencia;
+    }
+    
+    public VehiculoGuerra getVehiculoGuerra() {
+        return vehiculoGuerra;
+    }
+
+    public void setVehiculoGuerra(VehiculoGuerra vehiculoGuerra) {
+        this.vehiculoGuerra = vehiculoGuerra;
     }
 
     @Override

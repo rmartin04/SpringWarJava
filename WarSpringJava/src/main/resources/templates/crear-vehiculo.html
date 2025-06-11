@@ -1,102 +1,113 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Añadir Vehículo</title>
-    <style>
-        body {
-            background-color: #0b0f1a;
-            color: #e0e6f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+<meta charset="UTF-8">
+<title>JavaWar | Crear Vehículos</title>
 
-        h2 {
-            text-align: center;
-            color: #00ffcc;
-            text-shadow: 0 0 10px #00ffcc;
-        }
+<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+<noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/noscript.css}" />
+</noscript>
 
-        form {
-            background-color: #1a1f2b;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
-            width: 300px;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #a0b0c0;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: none;
-            border-radius: 8px;
-            background-color: #2a2f3d;
-            color: #ffffff;
-            font-size: 14px;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            box-shadow: 0 0 5px #00ffcc;
-        }
-
-        button {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background-color: #00ffcc;
-            color: #0b0f1a;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        button:hover {
-            background-color: #00ccaa;
-            transform: scale(1.05);
-        }
-    </style>
 </head>
+
 <body>
-    <form th:action="@{/vehiculo/guardar}" th:object="${vehiculo}" method="post">
-        <h2>Añadir Vehículo</h2>
+	<div id="wrapper">
+		<section class="container-cuenta">
+			<div class="content-count">
+				<img th:src="@{/assets/img/user-circle.svg}" alt="Usuario"
+					class="user-icon" width="32" /> <span th:if="${usuarioLogueado}"
+					th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">¡Hola,
+					invitado!</span>
+			</div>
 
-        <label>Nombre:</label>
-        <input type="text" th:field="*{nombreVehiculo}" required />
+			<div class="container-logout">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit">Cerrar sesión</button>
+				</form>
+			</div>
+		</section>
 
-        <label>Tipo:</label>
-        <select th:field="*{tipoVehiculo}">
-            <option value="T1">Tanque</option>
-            <option value="T2">Nave</option>
-            <!-- Agrega más tipos si es necesario -->
-        </select>
-	     <label>Puntos de Vida:</label>
-        <input type="number" th:field="*{puntosVida}" required />
-        <label>Ataque:</label>
-        <input type="number" th:field="*{ataqueBase}" required />
+		<main id="crear-vehiculo-form">
+			<!-- crear-guerrero -->
+			<section id="crear-vehiculos<">
+				<h2 class="major">Crea tus vehículos</h2>
+				<form th:action="@{/vehiculos}" th:object="${vehiculo}"
+					method="post">
+					<div class="field">
+						<label for="nombreVehiculo">Nombre</label> 
+						<input type="text" th:field="*{nombreVehiculo}" id="nombreVehiculo" placeholder="Ej. Destructor X9"/>
+						<p th:if="${#fields.hasErrors('nombreVehiculo')}"
+							th:errors="*{nombreVehiculo}" class="error-message"></p>
+					</div>
 
-        <label>Defensa:</label>
-        <input type="number" th:field="*{defensaBase}" required />
+					<div class="field">
+						<label for="puntosVida">Vida</label> 
+						<input type="number" th:field="*{puntosVida}" id="puntosVida" />
+						<p th:if="${#fields.hasErrors('puntosVida')}"
+							th:errors="*{puntosVida}" class="error-message"></p>
+					</div>
 
-        <button type="submit">Guardar</button>
-    </form>
+					<div class="field half">
+						<label for="ataqueBase">Fuerza</label> 
+						<input type="number" th:field="*{ataqueBase}" id="ataqueBase" />
+						<p th:if="${#fields.hasErrors('ataqueBase')}"
+							th:errors="*{ataqueBase}" class="error-message"></p>
+					</div>
+					<div class="field half">
+						<label for="defensaBase">Defensa</label> 
+						<input type="number" th:field="*{defensaBase}" id="defensaBase" />
+						<p th:if="${#fields.hasErrors('defensaBase')}"
+							th:errors="*{defensaBase}" class="error-message"></p>
+					</div>
+
+
+					<div class="field">
+						<input type="radio" th:field="*{tipoVehiculo}" value="Nave"	id="tipoT1" /> 
+						<label for="tipoT1">Nave</label> 
+						
+						<input type="radio" th:field="*{tipoVehiculo}" value="Tanque" id="tipoT2" />
+						<label for="tipoT2">Tanque</label>
+						<p th:if="${#fields.hasErrors('tipoVehiculo')}"	th:errors="*{tipoVehiculo}" class="error-message"></p>
+					</div>
+
+					<div class="field">
+						<ul class="actions">
+							<li><input type="submit" value="Añadir" class="primary" /></li>
+							<li><input type="reset" value="Borrar" /></li>
+						</ul>
+					</div>
+
+				</form>
+
+				<a th:href="@{/vehiculos/listado}" class="button">Volver al
+					listado</a>
+
+				<div class="error-container">
+					<p th:if="${error}" class="error-message" th:text="${error}"></p>
+					<p th:if="${success}" class="success-message" th:text="${success}"></p>
+				</div>
+
+			</section>
+
+		</main>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<p class="copyright">
+				&copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
+			</p>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script th:src="@{/assets/js/jquery.min.js}"></script>
+	<script th:src="@{/assets/js/browser.min.js}"></script>
+	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+	<script th:src="@{/assets/js/util.js}"></script>
+	<script th:src="@{/assets/js/main.js}"></script>
 </body>
+
 </html>

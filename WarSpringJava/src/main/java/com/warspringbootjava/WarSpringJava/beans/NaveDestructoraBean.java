@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.warspringbootjava.WarSpringJava.entities.Guerrero;
-import com.warspringbootjava.WarSpringJava.entities.VehiculosGuerra;
+import com.warspringbootjava.WarSpringJava.entities.VehiculoGuerra;
 import com.warspringbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosDiferentesException;
 import com.warspringbootjava.WarSpringJava.excepciones.EmbarcarGuerrerosException;
 @Component
-public class NaveDestructoraBean extends VehiculosGuerra {
+public class NaveDestructoraBean extends VehiculoGuerra {
 	
-	private static final Logger logger = LoggerFactory.getLogger(VehiculosGuerra.class);
+	private static final Logger logger = LoggerFactory.getLogger(VehiculoGuerra.class);
 	
 	
 	 	private Long idNaveDestructora;

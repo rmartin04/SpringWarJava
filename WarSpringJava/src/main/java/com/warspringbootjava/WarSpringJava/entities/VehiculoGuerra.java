@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.warspringbootjava.WarSpringJava.interfaces.Tripulable;
 
 import jakarta.persistence.CascadeType;
@@ -23,9 +20,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class VehiculosGuerra implements Tripulable {
-
-    private static final Logger logger = LoggerFactory.getLogger(VehiculosGuerra.class);
+public class VehiculoGuerra implements Tripulable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,12 +56,45 @@ public class VehiculosGuerra implements Tripulable {
 
     // NUEVO ATRIBUTO transitorio para nombres concatenados de guerreros
     @Transient
-    private String guerrerosNombres;
+    public String getGuerrerosNombres() {
+        return guerreros.stream()
+            .map(Guerrero::getNombre)
+            .reduce((a, b) -> a + ", " + b)
+            .orElse("Sin guerreros");
+    }
+    
+    @Override
+    public int atacar() {
+        Random random = new Random();
 
-    public VehiculosGuerra() {
+        double factorVehiculo = random.nextDouble();
+        double ataqueVehiculo = ataqueBase * factorVehiculo;
+
+        double factorGuerreros = random.nextDouble() * 0.5;
+        int sumaAtaqueGuerreros = guerreros.stream().mapToInt(Guerrero::getFuerzaBase).sum();
+        double ataqueGuerreros = sumaAtaqueGuerreros * factorGuerreros;
+
+        return (int) Math.round(ataqueVehiculo + ataqueGuerreros);
     }
 
-    public VehiculosGuerra(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
+    @Override
+    public int defender(int ataqueEntrante) {
+        Random random = new Random();
+
+        double factorVehiculo = random.nextDouble();
+        double defensaVehiculo = defensaBase * factorVehiculo;
+
+        double factorGuerreros = random.nextDouble() * 0.5;
+        int sumaResistenciaGuerreros = guerreros.stream().mapToInt(Guerrero::getResistencia).sum();
+        double defensaGuerreros = sumaResistenciaGuerreros * factorGuerreros;
+
+        return (int) Math.round(defensaVehiculo + defensaGuerreros);
+    }
+
+    public VehiculoGuerra() {
+    }
+
+    public VehiculoGuerra(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
             List<Guerrero> guerreros) {
         this.puntosVida = 1000; // Valor por defecto
         this.nombreVehiculo = nombreVehiculo;
@@ -134,15 +162,6 @@ public class VehiculosGuerra implements Tripulable {
         this.guerreros = guerreros;
     }
 
-    // Getter y Setter para guerrerosNombres (transitorio)
-
-    public String getGuerrerosNombres() {
-        return guerrerosNombres;
-    }
-
-    public void setGuerrerosNombres(String guerrerosNombres) {
-        this.guerrerosNombres = guerrerosNombres;
-    }
 
     // Métodos de la clase (toString, atacar, defender) mantienen igual
 
@@ -158,33 +177,16 @@ public class VehiculosGuerra implements Tripulable {
         sb.append("\tGuerreros a bordo: ").append(guerreros.size());
         return sb.toString();
     }
-
-    @Override
-    public int atacar() {
-        Random random = new Random();
-
-        double factorVehiculo = random.nextDouble();
-        double ataqueVehiculo = ataqueBase * factorVehiculo;
-
-        double factorGuerreros = random.nextDouble() * 0.5;
-        int sumaAtaqueGuerreros = guerreros.stream().mapToInt(g -> g.getFuerzaBase()).sum();
-        double ataqueGuerreros = sumaAtaqueGuerreros * factorGuerreros;
-
-        return (int) Math.round(ataqueVehiculo + ataqueGuerreros);
+    
+    public void addGuerrero(Guerrero guerrero) {
+        guerreros.add(guerrero);
+        guerrero.setVehiculoGuerra(this); // vincula el otro lado
     }
 
-    @Override
-    public int defender(int ataqueEntrante) {
-        Random random = new Random();
-
-        double factorVehiculo = random.nextDouble();
-        double defensaVehiculo = defensaBase * factorVehiculo;
-
-        double factorGuerreros = random.nextDouble() * 0.5;
-        int sumaResistenciaGuerreros = guerreros.stream().mapToInt(g -> g.getResistencia()).sum();
-        double defensaGuerreros = sumaResistenciaGuerreros * factorGuerreros;
-
-        int defensaTotal = (int) Math.round(defensaVehiculo + defensaGuerreros);
-        return defensaTotal;
+    public void removeGuerrero(Guerrero guerrero) {
+        guerreros.remove(guerrero);
+        guerrero.setVehiculoGuerra(null); // desvincula el otro lado
     }
+
+
 }
