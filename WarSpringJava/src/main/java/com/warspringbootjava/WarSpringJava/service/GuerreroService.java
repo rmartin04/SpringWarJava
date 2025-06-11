@@ -4,7 +4,6 @@ package com.warspringbootjava.WarSpringJava.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.warspringbootjava.WarSpringJava.entities.Guerrero;
@@ -28,6 +27,7 @@ public class GuerreroService {
 		int fuerza = guerrero.getFuerzaBase();
 		int resistencia = guerrero.getResistencia();
 		int fuerzaYResistencia = fuerza + resistencia;
+		long cantidadPorTipo = repository.countByTipo(guerrero.getTipo());
 
 		if (fuerza < 0 || fuerza > 10) {
 			throw new FuerzaGuerreroException("La fuerza debe estar entre 0 y 10");
@@ -39,10 +39,10 @@ public class GuerreroService {
 			throw new FuerzaYResistenciaException("La fuerza y resistencia deben estar entre 0 y 10");
 		}
 
-		if ("SOLDADO".equalsIgnoreCase(guerrero.getTipo()) && repository.count() >= 10) {
+		if ("SOLDADO".equalsIgnoreCase(guerrero.getTipo()) && cantidadPorTipo >= 10) {
 			throw new NumeroGuerrerosException("No se pueden crear más de 10 soldados");
 		}
-		if ("ALIENIGENA".equalsIgnoreCase(guerrero.getTipo()) && repository.count() >= 10) {
+		if ("ALIENIGENA".equalsIgnoreCase(guerrero.getTipo()) && cantidadPorTipo >= 10) {
 			throw new NumeroGuerrerosException("No se pueden crear más de 10 alienígenas");
 		}
 

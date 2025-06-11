@@ -2,100 +2,124 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>JavaWar | Listado de Vehículos</title>
-    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
-    <noscript>
-        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}" />
-    </noscript>
+<meta charset="UTF-8">
+<title>JavaWar | Listado de Guerreros</title>
+<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+<noscript>
+	<link rel="stylesheet" th:href="@{assets/css/noscript.css}" />
+</noscript>
 </head>
 
+
 <body>
-    <div id="wrapper">
-        <section class="container-cuenta">
-            <div class="content-count">
-                <img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32" />
-                <span th:if="${usuarioLogueado}" th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">
-                    ¡Hola, invitado!</span>
-            </div>
-            <div class="container-logout">
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit">Cerrar sesión</button>
-                </form>
-            </div>
-        </section>
 
-        <header id="header">
-            <h1>LISTADO VEHÍCULOS DE GUERRA</h1>
-        </header>
+	<div id="wrapper">
+		<section class="container-cuenta">
+			<div class="content-count">
+				<img th:src="@{/assets/img/user-circle.svg}" alt="Usuario"
+					class="user-icon" width="32" /> <span th:if="${usuarioLogueado}"
+					th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">¡Hola,
+					invitado!</span>
+			</div>
 
-        <main id="mains">
-            <article id="section-vehiculos">
-                <section id="section-filters">
-                    <article class="filter-container">
-                        <div class="filter-content_left">
-                            <a th:href="@{/vehiculo/nuevo}">Añadir Vehículo</a>
-                            <a th:href="@{/guerreros/listado}">Lista de Guerreros</a>
-                        </div>
-                        <div class="filter-content_right">
-                            <!-- Aquí podrías agregar filtros o búsqueda si quieres -->
-                        </div>
-                    </article>
-                </section>
+			<div class="container-logout">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit">Cerrar sesión</button>
+				</form>
+			</div>
+		</section>
 
-                <table class="alt">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Puntos Vida</th>
-                            <th>Ataque</th>
-                            <th>Defensa</th>
-                            <th>Guerreros</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="vehiculo : ${vehiculos}">
-                            <td th:text="${vehiculo.nombreVehiculo}">Nombre</td>
-                            <td th:text="${vehiculo.tipoVehiculo}">Tipo</td>
-                            <td th:text="${vehiculo.puntosVida}">Puntos Vida</td>
-                            <td th:text="${vehiculo.ataqueBase}">Ataque</td>
-                            <td th:text="${vehiculo.defensaBase}">Defensa</td>
-                            <td th:text=" ${#lists.size(vehiculos.guerreros)}">Guerreros</td>
-                            <td>
-                                <a th:href="@{/vehiculos/{id}/editar(id=${vehiculo.id})}">Editar</a> |
-                                <a th:href="@{/vehiculos/{id}/eliminar(id=${vehiculo.id})}" 
-                                   onclick="return confirm('¿Eliminar este vehículo?')">Eliminar</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                           <td colspan="6" th:text="${vehiculos != null and !vehiculos.isEmpty()} ? 'Total Vehículos: ' + ${#lists.size(vehiculos)} : 'Total Vehículos: 0'">
-    Total Vehículos: 0
-</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </article>
-        </main>
+		<header id="header">
+			<h1>LISTADO GUERREROS</h1>
 
-        <footer id="footer">
-            <p class="copyright">
-                &copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
-            </p>
-        </footer>
+		</header>
 
-        <div id="bg" style="z-index: -1;"></div>
-    </div>
+		<main id="mains">
 
-    <!-- Scripts -->
-    <script th:src="@{/assets/js/jquery.min.js}"></script>
-    <script th:src="@{/assets/js/browser.min.js}"></script>
-    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
-    <script th:src="@{/assets/js/util.js}"></script>
-    <script th:src="@{/assets/js/main.js}"></script>
+			<!-- Tabla de guerreros -->
+			<article id="section-guerreros">
+				<section id="section-filters">
+					<!-- Filtro por tipo -->
+					<article class="filter-container">
+
+						<div class="filter-content_left">
+							<a th:href="@{/guerreros/nuevo}">Añadir Vehículos</a> <a
+								th:href="@{/listado-guerreros}">Lista de Guerreros</a>
+						</div>
+
+						<div class="filter-content_right">
+							<div class="filter-content">
+								<form method="get" action="/guerreros/filtrar">
+									<input type="radio" name="tipo" value="T1" id="tipoT1" /> <label
+										for="tipoT1">Alienigenas</label> <input type="radio"
+										name="tipo" value="T2" id="tipoT2" /> <label for="tipoT2">Soldado</label>
+								</form>
+							</div>
+
+							<div class="filter-content">
+								<form class="search-box">
+									<input type="text" placeholder=" " />
+									<button type="reset"></button>
+								</form>
+							</div>
+						</div>
+					</article>
+				</section>
+				<table class="alt">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Tipo</th>
+							<th>Ataque</th>
+							<th>Defensa</th>
+							<th>Acciones</th>
+						</tr>  
+					</thead>
+					<tbody>
+						<tr th:each="guerrero : ${guerreros}">
+							<td th:text="${guerrero.nombre}">Nombre</td>
+							<td th:text="${guerrero.tipo}">Tipo</td>
+							<td th:text="${guerrero.fuerzaBase}">Ataque</td>
+							<td th:text="${guerrero.resistencia}">Defensa</td>
+							<td><a
+								th:href="@{/guerreros/{id}/editar(id=${guerrero.id})}">Editar</a>
+								<a th:href="@{/guerreros/{id}/eliminar(id=${guerrero.id})}"
+								onclick="return confirm('¿Eliminar este guerrero?')">Eliminar</a>
+							</td>
+						</tr>
+
+					</tbody>
+
+					<tfoot>
+						<tr>
+							<td colspan="6"
+								th:text="'Total Guerreros: ' + ${#lists.size(guerreros)}">
+								Total Guerreros: 0</td>
+						</tr>
+					</tfoot>
+				</table>
+
+			</article>
+
+		</main>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<p class="copyright">
+				&copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
+			</p>
+		</footer>
+
+		<!-- BG -->
+		<div id="bg" style="z-index: -1;"></div>
+
+	</div>
+	<!-- Scripts -->
+	<script th:src="@{/assets/js/jquery.min.js}"></script>
+	<script th:src="@{/assets/js/browser.min.js}"></script>
+	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+	<script th:src="@{/assets/js/util.js}"></script>
+	<script th:src="@{/assets/js/main.js}"></script>
 </body>
 
 </html>
