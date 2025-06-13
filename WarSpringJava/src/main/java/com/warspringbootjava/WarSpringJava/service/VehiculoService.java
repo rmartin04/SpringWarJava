@@ -2,6 +2,7 @@
 package com.warspringbootjava.WarSpringJava.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -74,7 +75,6 @@ public class VehiculoService {
     }
 
     public VehiculoGuerra embarcarGuerreros(Long vehiculoId, List<Long> idsGuerreros) throws EmbarcarGuerrerosException {
-    	Guerrero guerrero = new Guerrero();
         VehiculoGuerra vehiculo = obtenerVehiculoPorId(vehiculoId);
 
         if (idsGuerreros == null || idsGuerreros.isEmpty()) {
@@ -83,15 +83,36 @@ public class VehiculoService {
 
         List<Guerrero> guerrerosAEmbarcar = guerreroRepo.findAllById(idsGuerreros);
         if (vehiculo.getGuerreros().size() + guerrerosAEmbarcar.size() > 10) {
-            throw new EmbarcarGuerrerosException("Excede el límite máximo de " + guerrero.getTipo() + " por " + vehiculo.getTipoVehiculo() + " (10).");
+        	throw new EmbarcarGuerrerosException("Excede el límite máximo de guerreros permitidos para el vehículo tipo " + vehiculo.getTipoVehiculo() + " (10).");
         }
 
         for (Guerrero g : guerrerosAEmbarcar) {
-            vehiculo.addGuerrero(g);
+            // VALIDACIÓN DE COMPATIBILIDAD
+            if (vehiculo.getTipoVehiculo().equalsIgnoreCase("Tanque") &&
+                !g.getTipo().equalsIgnoreCase("Soldado")) {
+                throw new EmbarcarGuerrerosException("Solo soldados pueden embarcar en tanques.");
+            }
+
+            if (vehiculo.getTipoVehiculo().equalsIgnoreCase("Nave") &&
+                !g.getTipo().equalsIgnoreCase("Alienigena")) {
+                throw new EmbarcarGuerrerosException("Solo alienígenas pueden embarcar en naves.");
+            }
+
+            vehiculo.addGuerrero(g); // método que setea bidireccional
+        }
+
+        if (vehiculo.getId() == null) {
+            throw new RuntimeException("El vehículo no tiene ID, no puede persistirse.");
         }
 
         return repo.save(vehiculo);
     }
+    
+
+    public VehiculoGuerra actualizarVehiculo(VehiculoGuerra vehiculo) {
+        return repo.save(vehiculo);
+    }
+
 
     public void eliminarVehiculo(Long id) {
         if (!repo.existsById(id)) {

@@ -1172,8 +1172,9 @@ input, select, textarea {
    		align-items: center;
    }
     
-    #crear-guerreros-form,
-    #crear-vehiculos-form {
+    #crear-guerreros,
+    #crear-vehiculos,
+    #detalle-vehiculo {
 
     	max-width: 700px;
     }
@@ -1276,7 +1277,7 @@ input, select, textarea {
 		.button.primary {
 			background-color: #ffffff;
 			color: #1b1f22 !important;
-			font-weight: 600;
+			font-weight: 400;
 		}
 
 		input[type="submit"].disabled, input[type="submit"]:disabled,

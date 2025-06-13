@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.warspringbootjava.WarSpringJava.interfaces.Tripulable;
 
 import jakarta.persistence.CascadeType;
@@ -13,20 +14,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "VEHICULO_GUERRA")
 public class VehiculoGuerra implements Tripulable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
-
+    
+    @NotNull(message = "La vida es obligatoria")
     @Min(value = 0, message = "Los puntos de vida mínimos son 0")
     @Max(value = 1000, message = "Los puntos de vida máximos son 1000")
     @Column(name = "PUNTOS_VIDA")
@@ -41,17 +46,20 @@ public class VehiculoGuerra implements Tripulable {
     @Column(name = "TIPO_VEHICULO")
     private String tipoVehiculo;
 
+    @NotNull(message = "La fuerza es obligatoria")
     @Min(value = 0, message = "El ataque mínimo es 0")
     @Max(value = 10, message = "El ataque máximo es 10")
     @Column(name = "ATAQUE_BASE")
-    private int ataqueBase;
+    private Integer ataqueBase;
 
+    @NotNull(message = "La defensa es obligatoria")
     @Min(value = 0, message = "La defensa mínima es 0")
     @Max(value = 10, message = "La defensa máxima es 10")
     @Column(name = "DEFENSA_BASE")
-    private int defensaBase;
+    private Integer defensaBase;
 
-    @OneToMany(mappedBy = "vehiculoGuerra", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vehiculoGuerra", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Guerrero> guerreros = new ArrayList<>();
 
     // NUEVO ATRIBUTO transitorio para nombres concatenados de guerreros
@@ -94,9 +102,9 @@ public class VehiculoGuerra implements Tripulable {
     public VehiculoGuerra() {
     }
 
-    public VehiculoGuerra(String nombreVehiculo, String tipoVehiculo, int ataqueBase, int defensaBase,
+    public VehiculoGuerra(int puntosVida, String nombreVehiculo, String tipoVehiculo, Integer ataqueBase, Integer defensaBase,
             List<Guerrero> guerreros) {
-        this.puntosVida = 1000; // Valor por defecto
+    	this.puntosVida = puntosVida; // Asignar puntos de vida por defecto
         this.nombreVehiculo = nombreVehiculo;
         this.tipoVehiculo = tipoVehiculo;
         this.ataqueBase = ataqueBase;
@@ -130,19 +138,19 @@ public class VehiculoGuerra implements Tripulable {
         this.nombreVehiculo = nombreVehiculo;
     }
 
-    public int getAtaqueBase() {
+    public Integer getAtaqueBase() {
         return ataqueBase;
     }
 
-    public void setAtaqueBase(int ataqueBase) {
+    public void setAtaqueBase(Integer ataqueBase) {
         this.ataqueBase = ataqueBase;
     }
 
-    public int getDefensaBase() {
+    public Integer getDefensaBase() {
         return defensaBase;
     }
 
-    public void setDefensaBase(int defensaBase) {
+    public void setDefensaBase(Integer defensaBase) {
         this.defensaBase = defensaBase;
     }
 

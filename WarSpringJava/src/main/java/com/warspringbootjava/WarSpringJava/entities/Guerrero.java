@@ -1,5 +1,7 @@
  package com.warspringbootjava.WarSpringJava.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -30,25 +33,28 @@ public  class Guerrero{
 	@Column(name = "TIPO_GUERRERO")
     private String tipo;
 	
+	@NotNull(message = "La fuerza es obligatoria")
     @Min(value = 0, message = "La fuerza mínima es 0")
     @Max(value = 10, message = "La fuerza máxima es 10")
 	@Column(name = "FUERZA_BASE")
-    private int fuerzaBase;
+    private Integer fuerzaBase;
 	
+	@NotNull(message = "La resistencia es obligatoria")
     @Min(value = 0, message = "La resistencia mínima es 0")
     @Max(value = 10, message = "La resistencia máxima es 10")
 	@Column(name = "RESISTENCIA")
-    private int resistencia;
+    private Integer resistencia;
 	
 	@ManyToOne
 	@JoinColumn(name = "vehiculo_guerra_id")
+	@JsonBackReference
 	private VehiculoGuerra vehiculoGuerra;
 
     public Guerrero() {
     }
 
     // Constructor
-    public Guerrero(String nombre, String tipoGuerrero, int fuerzaBase, int resistencia) {
+    public Guerrero(String nombre, String tipoGuerrero, Integer fuerzaBase, Integer resistencia) {
     	this.nombre = nombre;
         this.tipo = tipoGuerrero;
         this.fuerzaBase = fuerzaBase;
@@ -80,19 +86,19 @@ public  class Guerrero{
         this.tipo = tipo;
     }
 
-    public int getFuerzaBase() {
+    public Integer getFuerzaBase() {
         return fuerzaBase;
     }
 
-    public void setFuerzaBase(int fuerzaBase) {
+    public void setFuerzaBase(Integer fuerzaBase) {
         this.fuerzaBase = fuerzaBase;
     }
 
-    public int getResistencia() {
+    public Integer getResistencia() {
         return resistencia;
     }
 
-    public void setResistencia(int resistencia) {
+    public void setResistencia(Integer resistencia) {
         this.resistencia = resistencia;
     }
     

@@ -15,7 +15,7 @@ import com.warspringbootjava.WarSpringJava.repositories.GuerreroRepository;
 
 @Service
 public class GuerreroService {
-	
+
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(GuerreroService.class);
 
 	private final GuerreroRepository repository;
@@ -71,10 +71,15 @@ public class GuerreroService {
 	}
 
 	public void eliminarGuerrero(Long id) {
-		if (!repository.existsById(id)) {
-			throw new IllegalArgumentException("El guerrero con ID " + id + " no existe.");
+		Guerrero guerrero = repository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Guerrero no encontrado"));
+
+		if (guerrero.getVehiculoGuerra() != null) {
+			guerrero.getVehiculoGuerra().getGuerreros().remove(guerrero);
+			guerrero.setVehiculoGuerra(null);
 		}
-		repository.deleteById(id);
+
+		repository.delete(guerrero);
 	}
 
 	/**
@@ -95,4 +100,13 @@ public class GuerreroService {
 			return repository.findAll();
 		}
 	}
+
+	public List<Guerrero> listarGuerrerosSinVehiculo() {
+		return repository.findByVehiculoGuerraIsNull();
+	}
+	
+	public Optional<Guerrero> obtenerGuerreroPorIdConVehiculo(Long id) {
+	    return repository.findWithVehiculoGuerraById(id);
+	}
+
 }

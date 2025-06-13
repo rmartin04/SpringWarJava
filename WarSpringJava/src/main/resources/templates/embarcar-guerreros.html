@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Embarcar Guerreros</title>
+<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+</head>
+<body>
+	<div id="wrapper">
+		<header id="header">
+			<h1 th:text="'Embarcar Guerreros en: ' + ${vehiculo.nombreVehiculo}">Embarcar</h1>
+		</header>
+
+		<main id="mains">
+			<form th:action="@{/vehiculos/{id}/embarcar(id=${vehiculo.id})}"
+				method="post">
+				<table class="alt">
+					<thead>
+						<tr>
+							<th>Seleccionar</th>
+							<th>Tipo</th>
+							<th>Fuerza</th>
+							<th>Resistencia</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${guerreros.isEmpty()}">
+							<td colspan="5" style="text-align: center;">No hay guerreros
+								disponibles para embarcar.</td>
+						</tr>
+						<tr th:each="guerrero : ${guerreros}">
+							<td><input type="checkbox" name="guerreroIds"
+								th:id="'g-' + ${guerrero.id}" th:value="${guerrero.id}" /> <label
+								th:for="'g-' + ${guerrero.id}" th:text="${guerrero.nombre}">Nombre</label>
+							</td>
+							<td th:text="${guerrero.tipo}">Tipo</td>
+							<td th:text="${guerrero.fuerzaBase}">Fuerza</td>
+							<td th:text="${guerrero.resistencia}">Resistencia</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="acciones" th:if="${not guerreros.isEmpty()}">
+					<button type="submit" class="button primary">Embarcar
+						Seleccionados</button>
+					<a th:href="@{/vehiculos/{id}(id=${vehiculo.id})}" class="button">Cancelar</a>
+				</div>
+
+				<div class="acciones" th:if="${guerreros.isEmpty()}">
+					<a th:href="@{/vehiculos/{id}(id=${vehiculo.id})}" class="button">Volver</a>
+				</div>
+			</form>
+
+			<div class="error-container">
+				<p th:if="${error}" class="error-message" th:text="${error}"></p>
+				<p th:if="${success}" class="success-message" th:text="${success}"></p>
+			</div>
+		</main>
+
+		<footer id="footer">
+			<p class="copyright">
+				&copy; JavaWar - <a href="https://daroscode.es">DarosCode</a>
+			</p>
+		</footer>
+	</div>
+</body>
+</html>

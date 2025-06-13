@@ -1,79 +1,59 @@
 package com.warspringbootjava.WarSpringJava.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.warspringbootjava.WarSpringJava.beans.BatallaResultadoDTO;
 import com.warspringbootjava.WarSpringJava.entities.VehiculoGuerra;
-import com.warspringbootjava.WarSpringJava.repositories.VehiculosGuerraRepository;
 import com.warspringbootjava.WarSpringJava.service.BatallaService;
+import com.warspringbootjava.WarSpringJava.service.VehiculoService;
 
 @Controller
 @RequestMapping("/batalla")
 public class BatallaController {
-    private static final Logger logger = LoggerFactory.getLogger(BatallaController.class);
 
-    @Autowired
-    private BatallaService batallaService;
+    private final VehiculoService vehiculoService;
+    private final BatallaService batallaService;
 
-    @Autowired
-    private VehiculosGuerraRepository vehiculosGuerraRepository;
-
-    // Mostrar la página con la lista de vehículos y el formulario
-    @GetMapping
-    public String mostrarPagina(Model model) {
-        List<VehiculoGuerra> vehiculos = vehiculosGuerraRepository.findAll();
-
-        // Construir los strings con nombres de guerreros para cada vehículo
-        vehiculos.forEach(vehiculo -> {
-            String guerrerosNombres = vehiculo.getGuerreros().stream()
-                .map(g -> g.getNombre())
-                .collect(Collectors.joining(", "));
-            //vehiculo.setGuerrerosNombres(guerrerosNombres); // nuevo atributo que debes agregar en VehiculosGuerra
-        });
-
-        model.addAttribute("vehiculos", vehiculos);
-        return "batalla"; // nombre de la plantilla HTML sin extensión
+    public BatallaController(VehiculoService vehiculoService, BatallaService batallaService) {
+        this.vehiculoService = vehiculoService;
+        this.batallaService = batallaService;
     }
 
-    // Manejar la petición para iniciar la batalla
-    @GetMapping("/iniciar")
-    public String empezarBatalla(
-            @RequestParam Long idVehiculo1,
-            @RequestParam Long idVehiculo2,
-            Model model) {
-
-        List<VehiculoGuerra> vehiculos = vehiculosGuerraRepository.findAll();
-
-        // Construir los strings con nombres de guerreros para cada vehículo
-        vehiculos.forEach(vehiculo -> {
-            String guerrerosNombres = vehiculo.getGuerreros().stream()
-                .map(g -> g.getNombre())
-                .collect(Collectors.joining(", "));
-            //vehiculo.setGuerrerosNombres(guerrerosNombres);
-        });
-
+    @GetMapping
+    public String formularioBatalla(Model model) {
+        List<VehiculoGuerra> vehiculos = vehiculoService.listarVehiculos();
         model.addAttribute("vehiculos", vehiculos);
+        return "batalla-formulario";
+    }
 
+    @PostMapping("/iniciar")
+    public String iniciarBatalla(
+            @RequestParam Long vehiculo1Id,
+            @RequestParam Long vehiculo2Id,
+            Model model) {
+    	
+        if (vehiculo1Id.equals(vehiculo2Id)) {
+            model.addAttribute("error", "No puedes enfrentar un vehículo contra sí mismo.");
+            model.addAttribute("vehiculos", vehiculoService.listarVehiculos());
+            return "batalla-formulario";
+        }
+        
         try {
-            List<String> log = batallaService.iniciarBatallaPorTurnos(idVehiculo1, idVehiculo2);
-            model.addAttribute("logBatalla", log);
+            BatallaResultadoDTO resultado = batallaService.iniciarBatallaPorTurnos(vehiculo1Id, vehiculo2Id);
+            model.addAttribute("resultado", resultado);
         } catch (IllegalArgumentException e) {
-            model.addAttribute("error", "Error: " + e.getMessage());
-            logger.error("Error al iniciar la batalla: {}", e.getMessage());
-        } catch (Exception e) {
-            model.addAttribute("error", "Error interno del servidor: " + e.getMessage());
-            logger.error("Error al iniciar la batalla: {}", e.getMessage());
+            model.addAttribute("error", e.getMessage());
         }
 
-        return "batalla"; // volvemos a la misma vista
+        List<VehiculoGuerra> vehiculos = vehiculoService.listarVehiculos();
+        model.addAttribute("vehiculos", vehiculos);
+        return "batalla-formulario";
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,6 +35,7 @@ public class GuerreroController {
 		model.addAttribute("guerreros", guerreros);
 		return "listado-guerreros";
 	}
+	
 
 	@GetMapping("/nuevo")
 	public String nuevo(Model model) {
@@ -60,6 +62,48 @@ public class GuerreroController {
 			logger.error("Error al crear guerrero: {}", e.getMessage());
 		}
 		return "crear-guerrero";
+	}
+	
+	@GetMapping("/{id}/editar")
+	public String editarGuerrero(@PathVariable Long id, Model model) {
+	    Guerrero guerrero = guerreroService.obtenerGuerreroPorId(id)
+	        .orElseThrow(() -> new RuntimeException("Guerrero no encontrado"));
+	    model.addAttribute("guerrero", guerrero);
+	    return "editar-guerrero"; // nombre del HTML
+	}
+	
+	@PostMapping("/{id}/editar")
+	public String guardarCambiosGuerrero(
+	        @PathVariable Long id,
+	        @Valid @ModelAttribute("guerrero") Guerrero guerrero,
+	        BindingResult result,
+	        Model model) {
+
+	    if (result.hasErrors()) {
+	        model.addAttribute("error", "Corrige los datos del guerrero.");
+	        return "editar-guerrero";
+	    }
+
+	    try {
+	        guerrero.setId(id); // aseguramos que se use el ID del path
+	        guerreroService.actualizarGuerrero(guerrero);
+	        model.addAttribute("success", "Guerrero actualizado correctamente.");
+	        return "redirect:/guerreros/listado";
+	    } catch (Exception e) {
+	        model.addAttribute("error", "Error al actualizar el guerrero: " + e.getMessage());
+	        return "editar-guerrero";
+	    }
+	}
+	
+	@GetMapping("/{id}/eliminar")
+	public String eliminarGuerrero(@PathVariable Long id, Model model) {
+	    try {
+	        guerreroService.eliminarGuerrero(id);
+	        model.addAttribute("success", "Guerrero eliminado correctamente.");
+	    } catch (Exception e) {
+	        model.addAttribute("error", "Error al eliminar el guerrero: " + e.getMessage());
+	    }
+	    return "redirect:/guerreros/listado";
 	}
 
 }

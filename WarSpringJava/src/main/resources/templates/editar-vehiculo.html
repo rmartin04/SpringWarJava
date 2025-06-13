@@ -33,8 +33,7 @@
 			<!-- crear-guerrero -->
 			<section id="crear-vehiculos">
 				<h2 class="major">Crea tus vehículos</h2>
-				<form th:action="@{/vehiculos}" th:object="${vehiculo}"
-					method="post">
+				<form th:action="@{'/vehiculos/' + ${vehiculo.id} + '/editar'}" method="post" th:object="${vehiculo}">
 					<div class="fields">
 
 						<div class="field">
@@ -77,7 +76,7 @@
 
 						<div class="field">
 							<ul class="actions">
-								<li><input type="submit" value="Añadir" class="primary" /></li>
+								<li><input type="submit" value="Guardar Cambios" class="primary" /></li>
 								<li><input type="reset" value="Borrar" /></li>
 							</ul>
 						</div>

@@ -1,7 +1,9 @@
 package com.warspringbootjava.WarSpringJava.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.warspringbootjava.WarSpringJava.entities.Guerrero;
@@ -37,6 +39,15 @@ public interface GuerreroRepository extends JpaRepository<Guerrero, Long> {
 	 * @return el número de guerreros del tipo especificado
 	 */
     long countByTipo(String tipo);
+    
+    /**
+     * 
+     * @return lista de guerreros que no están embarcados en ningún vehículo de guerra
+     */
+    List<Guerrero> findByVehiculoGuerraIsNull();
 
+    
+    @EntityGraph(attributePaths = "vehiculoGuerra")
+    Optional<Guerrero> findWithVehiculoGuerraById(Long id);
 
 }

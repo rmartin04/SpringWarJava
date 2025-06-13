@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JavaWar | Editar Guerrero</title>
+
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}" />
+    </noscript>
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <section class="container-cuenta">
+            <div class="content-count">
+                <img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32" />
+               	<span th:if="${usuarioLogueado}" th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">¡Hola, invitado!</span>
+            </div>
+
+            <div class="container-logout">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        </section>
+        
+        <main id="crear-guerreros-form">
+            <!-- crear-guerrero -->
+            <section id="crear-guerreros">
+                <h2 class="major">Editar Guerrero</h2>
+                <form th:action="@{'/guerreros/' + ${guerrero.id} + '/editar'}" method="post" th:object="${guerrero}">
+                    <div class="fields">
+                        <div class="field">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" th:field="*{nombre}" id="nombre" />
+                            <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+                                class="error-message"></p>
+                        </div>
+
+                        <div class="field half">
+                            <label for="fuerzaBase">Fuerza</label>
+                            <input type="number" th:field="*{fuerzaBase}" id="fuerzaBase" />
+                            <p th:if="${#fields.hasErrors('fuerzaBase')}" th:errors="*{fuerzaBase}"
+                                class="error-message"></p>
+                        </div>
+                        <div class="field half">
+                            <label for="resistencia">Resistencia</label>
+                            <input type="number" th:field="*{resistencia}" id="resistencia" />
+                            <p th:if="${#fields.hasErrors('resistencia')}" th:errors="*{resistencia}"
+                                class="error-message"></p>
+                        </div>
+
+
+                        <div class="field">
+                            <input type="radio" th:field="*{tipo}" value="Alienigena" id="tipoT1" />
+                            <label for="tipoT1">Alienigena</label>
+
+                            <input type="radio" th:field="*{tipo}" value="Soldado" id="tipoT2" />
+                            <label for="tipoT2">Soldado</label>
+                            <p th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" class="error-message"></p>
+                        </div>
+
+                        <div class="field">
+                            <ul class="actions">
+                                <li><input type="submit" value="Guardar Cambios" class="primary" /></li>
+                                <li><input type="reset" value="Borrar" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+
+
+                <a th:href="@{/guerreros/listado}" class="button">Volver al listado</a>
+
+				<div class="error-container">
+			        <p th:if="${error}" class="error-message" th:text="${error}"></p>
+			        <p th:if="${success}" class="success-message" th:text="${success}"></p>
+		        </div>
+
+            </section>
+
+        </main>
+        
+        <!-- Footer -->
+		<footer id="footer">
+			<p class="copyright">
+				&copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
+			</p>
+		</footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/browser.min.js}"></script>
+    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script th:src="@{/assets/js/util.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+</body>
+
+</html>

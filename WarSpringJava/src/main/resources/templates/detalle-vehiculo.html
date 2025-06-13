@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaWar | Detalle Vehículo</title>
+  <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+  <noscript>
+	<link rel="stylesheet" th:href="@{assets/css/noscript.css}" />
+	</noscript>
+</head>
+<body>
+  <div id="wrapper">
+
+    <section class="container-cuenta">
+      <div class="content-count">
+        <img th:src="@{/assets/img/user-circle.svg}" alt="Usuario" class="user-icon" width="32" />
+        <span th:if="${usuarioLogueado}" th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">¡Hola, invitado!</span>
+      </div>
+    </section>
+
+    <header id="header">
+      <h1 th:text="'Vehículo: ' + ${vehiculo.nombreVehiculo}">Detalle Vehículo</h1>
+    </header>
+
+    <main >
+      <section id="detalle-vehiculo">
+        <h2>Características</h2>
+        <ul>
+          <li><strong>Tipo:</strong> <span th:text="${vehiculo.tipoVehiculo}">Tipo</span></li>
+          <li><strong>Puntos de Vida:</strong> <span th:text="${vehiculo.puntosVida}">1000</span></li>
+          <li><strong>Ataque Base:</strong> <span th:text="${vehiculo.ataqueBase}">5</span></li>
+          <li><strong>Defensa Base:</strong> <span th:text="${vehiculo.defensaBase}">5</span></li>
+          <li><strong>Potencial Ataque:</strong> <span th:text="${vehiculo.atacar()}">45</span></li>
+          <li><strong>Potencial Defensa:</strong> <span th:text="${vehiculo.defender(0)}">30</span></li>
+        </ul>
+
+        <h3>Guerreros Embarcados</h3>
+        <table class="alt">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Fuerza</th>
+              <th>Resistencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="guerrero : ${vehiculo.guerreros}">
+              <td th:text="${guerrero.nombre}">Nombre</td>
+              <td th:text="${guerrero.tipo}">Tipo</td>
+              <td th:text="${guerrero.fuerzaBase}">Fuerza</td>
+              <td th:text="${guerrero.resistencia}">Resistencia</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="acciones">
+          <a th:href="@{/vehiculos/{id}/embarcar(id=${vehiculo.id})}" class="button">Embarcar Guerreros</a>
+          <a th:href="@{/vehiculos/listado}" class="button">Volver</a>
+          <!-- futuro: embarcar, combatir, editar -->
+        </div>
+
+      </section>
+    </main>
+
+    <footer id="footer">
+      <p class="copyright">&copy; JavaWar - <a href="https://daroscode.es">DarosCode</a></p>
+    </footer>
+
+  </div>
+</body>
+</html>

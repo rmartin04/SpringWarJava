@@ -42,8 +42,9 @@
 					<article class="filter-container">
 
 						<div class="filter-content_left">
-							<a th:href="@{/vehiculos/nuevo}">Añadir Vehículos</a> <a
-								th:href="@{guerreros/listado-guerreros}">Lista de Guerreros</a>
+							<a th:href="@{/vehiculos/nuevo}">Añadir Vehículos</a> 
+							<a th:href="@{/guerreros/listado}">Lista de Guerreros</a>
+							<a th:href="@{/batalla}">Iniciar Batalla</a>
 						</div>
 
 						<div class="filter-content_right">
@@ -51,10 +52,10 @@
 								<input type="radio" name="tipo" value="" id="tipoAll" checked />
 								<label for="tipoAll">Todos</label>
 								
-								<input type="radio" name="tipo" value="Alienigena" id="tipoT1" /> 
+								<input type="radio" name="tipo" value="Nave" id="tipoT1" /> 
 								<label for="tipoT1">Nave</label> 
 								
-								<input type="radio" name="tipo" value="Soldado" id="tipoT2" /> 
+								<input type="radio" name="tipo" value="Tanque" id="tipoT2" /> 
 								<label for="tipoT2">Tanque</label>
 							</div>
 
@@ -62,7 +63,7 @@
 								<div class="search-box">
 									<input type="text" id="searchBox" placeholder=" " />
 									<button type="reset"
-										onclick="searchBox.value=''; cargarGuerreros();"></button>
+										onclick="searchBox.value=''; cargarVehiculos();"></button>
 								</div>
 							</div>
 						</div>
@@ -86,10 +87,10 @@
 							<td th:text="${vehiculo.tipoVehiculo}">Tipo</td>
 							<td th:text="${vehiculo.ataqueBase}">Ataque</td>
 							<td th:text="${vehiculo.defensaBase}">Defensa</td>
-							<td><a
-								th:href="@{/vehiculos/{id}/editar(id=${vehiculos.id})}">Editar</a>
-								<a th:href="@{/vehiculos/{id}/eliminar(id=${vehiculos.id})}"
-								onclick="return confirm('¿Eliminar este guerrero?')">Eliminar</a>
+							<td>
+								<a th:href="@{/vehiculos/{id}/editar(id=${vehiculo.id})}">Editar</a>
+								<a th:href="@{/vehiculos/{id}/eliminar(id=${vehiculo.id})}" onclick="return confirm('¿Eliminar este guerrero?')">Eliminar</a>
+								<a th:href="@{/vehiculos/{id}(id=${vehiculo.id})}">Detalles</a>
 							</td>
 						</tr>
 
@@ -130,7 +131,7 @@
   const totalTd   = document.getElementById('total-vehiculos');
   const loading   = document.getElementById('loading');
 
-  function cargarGuerreros() {
+  function cargarVehiculos() {
     // Muestra spinner
     loading.style.display = 'block';
 
@@ -156,9 +157,10 @@
           <td>${v.ataqueBase}</td>
           <td>${v.defensaBase}</td>
           <td>
-            <a href="/vehiculos/${v.id}/editar">Editar</a>
-            <a href="/vehiculos/${v.id}/eliminar"
-               onclick="return confirm('¿Eliminar este vehículo?')">Eliminar</a>
+	          <a href="/vehiculos/${v.id}/editar">Editar</a>
+	          <a href="/vehiculos/${v.id}/eliminar"
+	             onclick="return confirm('¿Eliminar este vehículo?')">Eliminar</a>
+	          <a href="/vehiculos/${v.id}">Detalles</a>
           </td>`;
         tbody.appendChild(tr);
       });
@@ -171,13 +173,13 @@
   }
 
   // Eventos
-  radios.forEach(r => r.addEventListener('change', cargarGuerreros));
+  radios.forEach(r => r.addEventListener('change', cargarVehiculos));
   searchBox.addEventListener('input', () => {
     clearTimeout(window._debounce);
-    window._debounce = setTimeout(cargarGuerreros, 300);
+    window._debounce = setTimeout(cargarVehiculos, 300);
   });
 
-  document.addEventListener('DOMContentLoaded', cargarGuerreros);
+  document.addEventListener('DOMContentLoaded', cargarVehiculos);
 //]]>
 </script>
 
