@@ -100,11 +100,11 @@ public class BatallaService {
     }
 
     private int calcularPuntaje(VehiculoGuerra vehiculo, String tipo) {
-        double factorVehiculo = random.nextDouble();
+        double factorVehiculo = random.nextDouble()*2;
         double base = tipo.equals("ataque") ? vehiculo.getAtaqueBase() : vehiculo.getDefensaBase();
         double puntajeVehiculo = base * factorVehiculo;
 
-        double factorGuerreros = random.nextDouble() * 0.5;
+        double factorGuerreros = random.nextDouble() * 5;
         int sumaAtributosGuerreros = vehiculo.getGuerreros().stream()
                 .mapToInt(guerrero -> tipo.equals("ataque") ? guerrero.getFuerzaBase() : guerrero.getResistencia())
                 .sum();
