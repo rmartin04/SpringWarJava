@@ -1,79 +1,102 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>JavaWar | Batalla</title>
-    <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/logs.css}" />
+<meta charset="UTF-8">
+<title>JavaWar | Batalla</title>
+<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/logs.css}" />
 </head>
 <body>
-<div id="wrapper">
-    <header>
-        <h1>Iniciar Batalla</h1>
-    </header>
+	<div id="wrapper">
 
-    <main>
+		<section class="container-cuenta">
+			<div class="content-count">
+				<img th:src="@{/assets/img/user-circle.svg}" alt="Usuario"
+					class="user-icon" width="32" /> <span th:if="${usuarioLogueado}"
+					th:text="'¡Hola, ' + ${usuarioLogueado.usuario} + '!'">¡Hola,
+					invitado!</span>
+			</div>
 
-        <!-- Formulario de selección -->
-        <form th:action="@{/batalla/iniciar}" method="post">
-            <div class="fields">
-                <div class="field">
-                    <label for="vehiculo1">Vehículo 1:</label>
-                    <select name="vehiculo1Id" id="vehiculo1" required>
-                        <option value="" disabled selected>Selecciona un vehículo</option>
-                        <option th:each="v : ${vehiculos}" th:value="${v.id}" th:text="${v.nombreVehiculo}"></option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="vehiculo2">Vehículo 2:</label>
-                    <select name="vehiculo2Id" id="vehiculo2" required>
-                        <option value="" disabled selected>Selecciona un vehículo</option>
-                        <option th:each="v : ${vehiculos}" th:value="${v.id}" th:text="${v.nombreVehiculo}"></option>
-                    </select>
-                </div>
-                <div class="field">
-                    <button type="submit">¡Combatir!</button>
-                    <a th:href="@{/vehiculos/listado}" class="button">Volver a Vehículos</a>
-                    <a th:href="@{/guerreros/listado}" class="button">Volver a Guerreros</a>
-                </div>
-            </div>
-            <div class="error-message" th:if="${error}" th:text="${error}"></div>
-        </form>
+			<div class="container-logout">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit">Cerrar sesión</button>
+				</form>
+			</div>
+		</section>
+		<header>
+			<h1>Iniciar Batalla</h1>
+		</header>
 
-        <!-- Log de batalla con animación -->
-        <div class="log-batalla" th:if="${resultado}">
-            <h3>Resumen de la batalla:</h3>
-            <ul id="log-container" class="log-batalla"></ul>
-            <script th:inline="javascript">
+		<main>
+
+			<!-- Formulario de selección -->
+			<form th:action="@{/batalla/iniciar}" method="post">
+				<div class="fields">
+					<div class="field">
+						<label for="vehiculo1">Vehículo 1:</label> <select
+							name="vehiculo1Id" id="vehiculo1" required>
+							<option value="" disabled selected>Selecciona un
+								vehículo</option>
+							<option th:each="v : ${vehiculos}" th:value="${v.id}"
+								th:text="${v.nombreVehiculo}"></option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="vehiculo2">Vehículo 2:</label> <select
+							name="vehiculo2Id" id="vehiculo2" required>
+							<option value="" disabled selected>Selecciona un
+								vehículo</option>
+							<option th:each="v : ${vehiculos}" th:value="${v.id}"
+								th:text="${v.nombreVehiculo}"></option>
+						</select>
+					</div>
+					<div class="field">
+						<button type="submit">¡Combatir!</button>
+						<a th:href="@{/vehiculos/listado}" class="button">Volver a
+							Vehículos</a> <a th:href="@{/guerreros/listado}" class="button">Volver
+							a Guerreros</a>
+					</div>
+				</div>
+				<div class="error-message" th:if="${error}" th:text="${error}"></div>
+			</form>
+
+			<!-- Log de batalla con animación -->
+			<div class="log-batalla" th:if="${resultado}">
+				<h3>Resumen de la batalla:</h3>
+				<ul id="log-container" class="log-batalla"></ul>
+				<script th:inline="javascript">
                 /*<![CDATA[*/
                 window.logData = [[${resultado.log}]];
                 /*]]>*/
             </script>
-        </div>
+			</div>
 
-        <!-- Resultado final -->
-        <section th:if="${resultado}" id="resultado-batalla" style="display: none;">
-            <h2>Resultado de la batalla</h2>
-            <p th:if="${resultado.ganador != 'Empate'}" th:text="'Ganador: ' + ${resultado.ganador}"></p>
-            <p th:if="${resultado.ganador == 'Empate'}">La batalla ha terminado en empate.</p>
-            <p th:text="'Turnos totales: ' + ${resultado.turnosTotales}"></p>
-        </section>
+			<!-- Resultado final -->
+			<section th:if="${resultado}" id="resultado-batalla"
+				style="display: none;">
+				<h2>Resultado de la batalla</h2>
+				<p th:if="${resultado.ganador != 'Empate'}"
+					th:text="'Ganador: ' + ${resultado.ganador}"></p>
+				<p th:if="${resultado.ganador == 'Empate'}">La batalla ha
+					terminado en empate.</p>
+				<p th:text="'Turnos totales: ' + ${resultado.turnosTotales}"></p>
+			</section>
 
-        <!-- Botón para reiniciar -->
-        <form th:action="@{/batalla}" method="get">
-            <button type="submit">Nueva Batalla</button>
-        </form>
-    </main>
+			<!-- Botón para reiniciar -->
+			<form th:action="@{/batalla}" method="get">
+				<button type="submit">Nueva Batalla</button>
+			</form>
+		</main>
 
-    <footer id="footer">
-        <p class="copyright">
-            &copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
-        </p>
-    </footer>
-</div>
+		<footer id="footer">
+			<p class="copyright">
+				&copy; JavaWar: <a href="https://daroscode.es">DarosCode</a>.
+			</p>
+		</footer>
+	</div>
 
-<!-- Script de animación con iconos -->
-<script>
+	<!-- Script de animación con iconos -->
+	<script>
 document.addEventListener("DOMContentLoaded", () => {
     if (typeof window.logData === "undefined") return;
 
